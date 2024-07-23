@@ -1,4 +1,4 @@
 package com.semicolon.EaziRent.dtos.requests;
 
-public class AddLandlordRequest {
+public class RegisterLandlordRequest {
 }
