@@ -9,7 +9,6 @@ import java.util.List;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @Entity
 @Table(name = "landlords")
 public class Landlord {
