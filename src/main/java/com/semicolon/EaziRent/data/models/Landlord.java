@@ -18,6 +18,5 @@ public class Landlord {
     @OneToOne
     private BioData bioData;
 
-    @OneToMany
-    private Set<AccountDetails> accountDetails;
+
 }

@@ -15,4 +15,7 @@ public class AccountDetails {
     private String accountNumber;
     private String accountName;
     private String bankName;
+
+    @ManyToOne
+    private Landlord landlord;
 }
