@@ -2,23 +2,17 @@ package com.semicolon.EaziRent.data.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@Table(name = "landlords")
-public class Landlord {
+@Table(name = "account_details")
+public class AccountDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    private BioData bioData;
-
-    @OneToOne
-    private AccountDetails accountDetails;
+    private String accountNumber;
+    private String accountName;
+    private String bankName;
 }

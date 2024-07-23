@@ -1,9 +1,6 @@
 package com.semicolon.EaziRent.data.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,4 +14,9 @@ public class Renter {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+
+    @OneToOne
+    private BioData bioData;
+
+    private String occupation;
 }
