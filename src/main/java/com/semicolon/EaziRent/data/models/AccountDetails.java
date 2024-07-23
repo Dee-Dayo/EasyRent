@@ -4,19 +4,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
-
 @Setter
 @Getter
 @Entity
-@Table(name = "landlords")
-public class Landlord {
+@Table(name = "account_details")
+public class AccountDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String accountNumber;
+    private String accountName;
+    private String bankName;
 
-    @OneToOne
-    private BioData bioData;
-
-
+    @ManyToOne
+    private Landlord landlord;
 }
