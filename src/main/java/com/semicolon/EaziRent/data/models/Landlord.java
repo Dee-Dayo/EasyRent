@@ -2,10 +2,9 @@ package com.semicolon.EaziRent.data.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -19,6 +18,6 @@ public class Landlord {
     @OneToOne
     private BioData bioData;
 
-    @OneToOne
-    private AccountDetails accountDetails;
+    @OneToMany
+    private Set<AccountDetails> accountDetails;
 }

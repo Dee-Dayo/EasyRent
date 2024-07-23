@@ -1,6 +1,6 @@
 package com.semicolon.EaziRent.data.models;
 
-import com.semicolon.EaziRent.data.constants.LocalGovernmentArea;
+import com.semicolon.EaziRent.data.constants.LGA;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +21,5 @@ public class Address {
     private String area;
 
     @Enumerated(value = STRING)
-    private LocalGovernmentArea localGovernmentArea;
+    private LGA lga;
 }
