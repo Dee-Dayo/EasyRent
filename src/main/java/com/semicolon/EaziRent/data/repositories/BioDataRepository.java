@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface BioDataRepository extends JpaRepository<BioData, Long> {
     boolean existsByEmail(String email);
+
+    Optional<BioData> findByEmail(String email);
 }

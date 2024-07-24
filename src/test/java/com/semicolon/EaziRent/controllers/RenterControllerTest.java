@@ -21,7 +21,7 @@ public class RenterControllerTest {
     @Test
     public void testRegisterRenter() throws Exception {
         String requestBody = "{\"firstname\": \"first name\",\"lastname\": \"last name\",\"email\": \"newemail@email.com\", \"password\":\"password\"}";
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
                 .andExpect(status().isCreated());
