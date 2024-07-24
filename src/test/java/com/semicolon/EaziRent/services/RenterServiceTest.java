@@ -18,7 +18,7 @@ public class RenterServiceTest {
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("first name");
         request.setLastName("last name");
-        request.setEmail("test@email.com");
+        request.setEmail("sampleemail@email.com");
         request.setPassword("password");
         RegisterResponse response = renterService.register(request);
         assertThat(response).isNotNull();
