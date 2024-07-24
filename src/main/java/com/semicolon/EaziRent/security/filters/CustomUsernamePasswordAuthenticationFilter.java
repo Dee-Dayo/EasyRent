@@ -84,7 +84,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         Algorithm algorithm = Algorithm.RSA512(rsaKeys.publicKey(), rsaKeys.privateKey());
         Instant now = Instant.now();
         return JWT.create()
-                .withIssuer("jwt-project")
+                .withIssuer("EasyRentApp")
                 .withIssuedAt(now)
                 .withExpiresAt(now.plus(24, HOURS))
                 .withSubject(authResult.getPrincipal().toString())

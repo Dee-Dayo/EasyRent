@@ -75,7 +75,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     private void doAuthorization(String token) {
         Algorithm algorithm = Algorithm.RSA512(rsaKeys.publicKey(), rsaKeys.privateKey());
         JWTVerifier jwtVerifier = JWT.require(algorithm)
-                .withIssuer("jwt-project")
+                .withIssuer("EasyRentApp")
                 .withClaimPresence("roles")
                 .withClaimPresence("principal")
                 .withClaimPresence("credentials")
