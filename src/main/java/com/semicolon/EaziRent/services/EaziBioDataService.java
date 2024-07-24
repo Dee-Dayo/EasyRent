@@ -27,8 +27,7 @@ public class EaziBioDataService implements BioDataService{
 
     private void validateEmail(RegisterRequest request) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        String emailRegex2 = "([a-z]\\.)?[a-z]+@(semicolon|enum|learnspace|native.semicolon).africa";
-        if (!request.getEmail().matches(emailRegex) && !request.getEmail().matches(emailRegex2))
+        if (!request.getEmail().matches(emailRegex))
             throw new EasyRentBaseException("Invalid email format");
         validateExistingEmail(request);
     }

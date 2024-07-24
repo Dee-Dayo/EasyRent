@@ -5,10 +5,12 @@ import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Sql(scripts = {"/db/data.sql"})
 public class RenterServiceTest {
     @Autowired
     private RenterService renterService;
