@@ -17,7 +17,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/vi/landlord")
+@RequestMapping("/api/v1/landlord")
 public class LandlordController {
 
     private final LandlordService landlordService;

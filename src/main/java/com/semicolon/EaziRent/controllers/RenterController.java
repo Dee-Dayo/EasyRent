@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class RenterController {
     private final RenterService renterService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
             RegisterResponse response = renterService.register(request);

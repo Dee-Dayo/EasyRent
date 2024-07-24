@@ -22,8 +22,8 @@ public class EaziRenterService implements RenterService{
     @Override
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
+        request.setRole(RENTER);
         BioData data = bioDataService.register(request);
-        data.setRole(RENTER);
         Renter renter = modelMapper.map(request, Renter.class);
         renter.setBioData(data);
         renter = renterRepository.save(renter);
