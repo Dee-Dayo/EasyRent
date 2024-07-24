@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.semicolon.EaziRent.data.constants.Role.RENTER;
+
 @Service
 @AllArgsConstructor
 public class EaziRenterService implements RenterService{
@@ -21,6 +23,7 @@ public class EaziRenterService implements RenterService{
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
         BioData data = bioDataService.register(request);
+        data.setRole(RENTER);
         Renter renter = modelMapper.map(request, Renter.class);
         renter.setBioData(data);
         renter = renterRepository.save(renter);
