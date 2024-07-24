@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -22,11 +23,11 @@ public class RenterController {
 
     @PostMapping
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        try{
+        try {
             RegisterResponse response = renterService.register(request);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), CREATED);
         } catch (EasyRentBaseException exception) {
-            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), CREATED);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
         }
     }
 }
