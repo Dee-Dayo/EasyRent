@@ -1,9 +1,9 @@
 package com.semicolon.EaziRent.services;
 
+import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.repositories.BioDataRepository;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
-import com.semicolon.EaziRent.exceptions.EazyRentBaseExceptions;
+import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class BioDataServiceTest {
         request.setLastName("last name");
         request.setEmail("myemail@email.com");
         request.setPassword("password");
-        RegisterResponse response = bioDataService.register(request);
+        BioData response = bioDataService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getId()).isNotNull();
     }
@@ -49,8 +49,9 @@ public class BioDataServiceTest {
         request2.setLastName("last name");
         request2.setEmail("myemail@email.com");
         request2.setPassword("password");
-        assertThrows(EazyRentBaseExceptions.class,()-> bioDataService.register(request2));
+        assertThrows(EasyRentBaseException.class,()-> bioDataService.register(request2));
     }
+
     @Test
     public void testRegisterBioDataWithInvalidEmailFormat_throwsException(){
         RegisterRequest request = new RegisterRequest();
@@ -58,6 +59,6 @@ public class BioDataServiceTest {
         request.setLastName("last name");
         request.setEmail("testemail.com");
         request.setPassword("password");
-        assertThrows(EazyRentBaseExceptions.class,()-> bioDataService.register(request));
+        assertThrows(EasyRentBaseException.class,()-> bioDataService.register(request));
     }
 }
