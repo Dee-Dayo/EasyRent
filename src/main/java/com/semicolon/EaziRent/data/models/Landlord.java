@@ -18,5 +18,4 @@ public class Landlord {
     @OneToOne
     private BioData bioData;
 
-
 }

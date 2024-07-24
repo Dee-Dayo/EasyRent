@@ -1,28 +1,21 @@
 package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.BioData;
-import com.semicolon.EaziRent.data.repositories.BioDataRepository;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
+@Sql(scripts = {"/db/data.sql"})
 public class BioDataServiceTest {
     @Autowired
     private BioDataService bioDataService;
-    @Autowired
-    private BioDataRepository bioDataRepository;
-
-    @BeforeEach
-    public void setUp() {
-        bioDataRepository.deleteAll();
-    }
 
     @Test
     public void testRegisterBioData(){
