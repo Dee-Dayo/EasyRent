@@ -13,6 +13,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.EAGER;
 import static java.time.LocalDateTime.now;
 
@@ -31,9 +32,9 @@ public class BioData {
     private String email;
     private String password;
 
-//    @ElementCollection(fetch = EAGER)
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
+    @ElementCollection(fetch = EAGER)
+    @Enumerated(STRING)
+    private Set<Role> roles;
 
     @OneToOne
     private Rating rating;

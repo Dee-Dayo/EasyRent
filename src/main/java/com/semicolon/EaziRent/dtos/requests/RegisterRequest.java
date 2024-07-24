@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.dtos.requests;
 
+import com.semicolon.EaziRent.data.constants.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,4 +11,6 @@ public class RegisterRequest {
     private String lastName;
     private String email;
     private String password;
+    private String occupation;
+    private Role role;
 }

@@ -2,7 +2,6 @@ package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Landlord;
-import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.data.repositories.LandlordRepository;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
@@ -23,13 +22,13 @@ public class EaziLandlordService implements LandlordService{
     @Override
     @Transactional
     public RegisterResponse register(RegisterRequest request) {
+        request.setRole(LANDLORD);
         BioData data = bioDataService.register(request);
-        data.setRole(LANDLORD);
         Landlord landlord = modelMapper.map(request, Landlord.class);
         landlord.setBioData(data);
         landlord = landlordRepository.save(landlord);
         RegisterResponse response = modelMapper.map(landlord, RegisterResponse.class);
-        response.setMessage("Renter successfully registered");
+        response.setMessage("Landlord successfully registered");
         return response;
     }
 }
