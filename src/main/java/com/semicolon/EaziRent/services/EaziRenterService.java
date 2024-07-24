@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class EaziRenterService implements RenterService{
     private final RenterRepository renterRepository;
-    private final ModelMapper modelMapper;
     private final BioDataService bioDataService;
 
 
