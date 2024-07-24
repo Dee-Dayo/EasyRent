@@ -30,6 +30,11 @@ public class EaziBioDataService implements BioDataService{
         return response;
     }
 
+    @Override
+    public BioData findByEmail(String email) {
+        return bioDataRepository.findByEmail(email);
+    }
+
     private void validateEmail(RegisterRequest request) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         String emailRegex2 = "([a-z]\\.)?[a-z]+@(semicolon|enum|learnspace|native.semicolon).africa";
@@ -39,8 +44,8 @@ public class EaziBioDataService implements BioDataService{
     }
 
     private void validateExistingEmail(RegisterRequest request) {
-        List<BioData> bioDataList = bioDataRepository.findAll();
-        bioDataList.forEach(bioData -> {if(bioData.getEmail().equalsIgnoreCase(request.getEmail()))
-        throw new EazyRentBaseExceptions(request.getEmail()+"already exists");});
+        BioData bioData = findByEmail(request.getEmail());
+        if (bioData != null)
+            throw new EazyRentBaseExceptions(request.getEmail()+"already exists");
     }
 }

@@ -19,14 +19,15 @@ public class EaziRenterService implements RenterService{
     private final RenterRepository renterRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final BioDataService bioDataService;
 
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
-        BioData data = modelMapper.map(request, BioData.class);
-        data.setPassword(passwordEncoder.encode(request.getPassword()));
+        bioDataService.register(request);
+        BioData bioData = bioDataService.findByEmail(request.getEmail());
         Renter renter = modelMapper.map(request, Renter.class);
-        renter.setBioData(data);
+        renter.setBioData(bioData);
         renterRepository.save(renter);
         return modelMapper.map(renter, RegisterResponse.class);
     }
