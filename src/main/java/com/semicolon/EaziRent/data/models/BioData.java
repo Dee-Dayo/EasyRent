@@ -31,9 +31,9 @@ public class BioData {
     private String email;
     private String password;
 
-    @ElementCollection(fetch = EAGER)
+//    @ElementCollection(fetch = EAGER)
     @Enumerated(value = EnumType.STRING)
-    private Set<Role> roles;
+    private Role role;
 
     @OneToOne
     private Rating rating;
