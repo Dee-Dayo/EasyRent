@@ -1,18 +1,17 @@
 package com.semicolon.EaziRent.utils;
 
 public class TestUtils {
-    public static final String BLACKLISTED_TOKEN = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc" +
-            "3MiOiJqd3QtcHJvamVjdCIsImlhdCI6MTcyMTgzMzY0MSwiZXhwIjoxNzIxOTIwMDQxLCJzdWIiOiJbVXN" +
-            "lcm5hbWU9Y29sZXNhbUBnbWFpbC5jb20sIFBhc3N3b3JkPVtQUk9URUNURURdLCBFbmFibGVkPXRydWUs" +
-            "IEFjY291bnROb25FeHBpcmVkPXRydWUsIENyZWRlbnRpYWxzTm9uRXhwaXJlZD10cnVlLCBBY2NvdW50Tm" +
-            "9uTG9ja2VkPXRydWUsIEdyYW50ZWQgQXV0aG9yaXRpZXM9W11dIiwicHJpbmNpcGFsIjoiW1VzZXJuYW1l" +
-            "PWNvbGVzYW1AZ21haWwuY29tLCBQYXNzd29yZD1bUFJPVEVDVEVEXSwgRW5hYmxlZD10cnVlLCBBY2Nvd" +
-            "W50Tm9uRXhwaXJlZD10cnVlLCBDcmVkZW50aWFsc05vbkV4cGlyZWQ9dHJ1ZSwgQWNjb3VudE5vbkxvY2tl" +
-            "ZD10cnVlLCBHcmFudGVkIEF1dGhvcml0aWVzPVtdXSIsImNyZWRlbnRpYWxzIjoiW1BST1RFQ1RFRF0iLCJ" +
-            "yb2xlcyI6W119.FLRQp22a_IWbeDh345Qo6hL3JLOVnxlne45IbrlFxEsrV-c2-Ba2ag03CjkPtXehGKno" +
-            "NvlUzKZIwWKHmb4VHFcXaj6XWG3G-IrsBZeJ6Fo2QwSx-1_363sCG7AH8qEI7ldDfmnbzENV30vgmm806r" +
-            "L8oCYpk_Sh3KmykfcZenJ_VCqy1MFYRXC_YyEVPxCqAWwWe51FSyadcdbXzYUnpYV5A6nwMLy6j0jKrM21Z" +
-            "cb2Kb1q-o0C841l154NVuh6LtcAf_9lmP85bs8ljomYArLa5D4k6DNCfr4ZAEk9iU3N8jcCH_BhuNeicPa" +
-            "HRQIuPaYxwk6hh7Aa6_60kWVdaQ";
+    public static final String BLACKLISTED_TOKEN = "eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOi" +
+            "JFYXN5UmVudEFwcCIsImlhdCI6MTcyMTgzNTkwMSwiZXhwIjoxNzIxOTIyMzAxLCJzdWIiOiJbVXNlcm5hbWU" +
+            "9Y29sZXNhbUBnbWFpbC5jb20sIFBhc3N3b3JkPVtQUk9URUNURURdLCBFbmFibGVkPXRydWUsIEFjY291bnROb" +
+            "25FeHBpcmVkPXRydWUsIENyZWRlbnRpYWxzTm9uRXhwaXJlZD10cnVlLCBBY2NvdW50Tm9uTG9ja2VkPXRydWUs" +
+            "IEdyYW50ZWQgQXV0aG9yaXRpZXM9W1JFTlRFUl1dIiwicHJpbmNpcGFsIjoiW1VzZXJuYW1lPWNvbGVzYW1AZ21ha" +
+            "WwuY29tLCBQYXNzd29yZD1bUFJPVEVDVEVEXSwgRW5hYmxlZD10cnVlLCBBY2NvdW50Tm9uRXhwaXJlZD10cnVlLCBD" +
+            "cmVkZW50aWFsc05vbkV4cGlyZWQ9dHJ1ZSwgQWNjb3VudE5vbkxvY2tlZD10cnVlLCBHcmFudGVkIEF1dGhvcml0aWVz" +
+            "PVtSRU5URVJdXSIsImNyZWRlbnRpYWxzIjoiW1BST1RFQ1RFRF0iLCJyb2xlcyI6WyJSRU5URVIiXX0.KPeayLBkPl_EZ2" +
+            "PvR-rddNr-uo3G0Sa21aGeLE84NqrFxGLNKyeBuPn0xGRjJS2amVp9rwR7e7ijs0lW6c-XBBPmq5o4NnKK16wey9fd8GB" +
+            "Im4k_MtUUq5aHAOpJsPGwYwlfJG3ecLO8Ov6OZDnxsduUNhTBw5m3-HNCjdDBWK8gkaRlzDh7WCX-1cPs8aeMz6imwPiAEG" +
+            "UcgPQJ8bthZCF_ZtkBNLY6snO8oS93mbDWOpEQ8KS9RkuzELX5pXy9xo1y2mEyICe_mLqhTeiX7aPK9u4Tie4elhhk7jsu" +
+            "NzmxX6KHHbxu49PdeNMRXF0cFYf4f79sRmpENtwP0hDNwQ";
 
 }
