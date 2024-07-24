@@ -25,6 +25,11 @@ public class EaziBioDataService implements BioDataService{
         return bioDataRepository.save(bioData);
     }
 
+    @Override
+    public BioData findByEmail(String email) {
+        return bioDataRepository.findByEmail(email);
+    }
+
     private void validateEmail(RegisterRequest request) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         String emailRegex2 = "([a-z]\\.)?[a-z]+@(semicolon|enum|learnspace|native.semicolon).africa";
