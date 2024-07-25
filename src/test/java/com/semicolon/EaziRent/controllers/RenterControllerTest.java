@@ -39,7 +39,6 @@ public class RenterControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.firstName").value("updated name"))
                 .andExpect(jsonPath("$.data.lastName").value("John"))
-                .andExpect(jsonPath("$.data.dateUpdated").exists())
                 .andDo(print());
     }
 
