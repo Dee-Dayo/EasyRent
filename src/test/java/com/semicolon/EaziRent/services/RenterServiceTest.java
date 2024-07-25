@@ -7,6 +7,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
@@ -49,14 +50,13 @@ public class RenterServiceTest {
     }
 
     @Test
-    public void updateRenterDetailsTest() throws JsonPointerException {
-        List<JsonPatchOperation> operations = List.of(
-                new ReplaceOperation(new JsonPointer("/firstName"), new TextNode("updated name")),
-                new ReplaceOperation(new JsonPointer("/lastName"), new TextNode("new last name")),
-                new ReplaceOperation(new JsonPointer("/occupation"), new TextNode("Farmer")));
-        JsonPatch request = new JsonPatch(operations);
+    public void updateRenterDetailsTest() {
+        UpdateRequest request = new UpdateRequest();
+        request.setFirstName("updated name");
+        request.setLastName("last name");
+        request.setOccupation("Banker");
         UpdateDataResponse response = renterService.update(200L, request);
         assertThat(response.getFirstName()).isEqualTo("updated name");
-        assertThat(response.getLastName()).isEqualTo("new last name");
+        assertThat(response.getLastName()).isEqualTo("last name");
     }
 }

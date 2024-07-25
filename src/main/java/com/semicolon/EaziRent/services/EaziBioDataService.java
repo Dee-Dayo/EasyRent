@@ -1,12 +1,9 @@
 package com.semicolon.EaziRent.services;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchException;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.repositories.BioDataRepository;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.exceptions.EmailExistsException;
@@ -17,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+
+import static com.semicolon.EaziRent.utils.EaziUtils.copyNonNullProperties;
 
 @Service
 @AllArgsConstructor
@@ -48,18 +47,13 @@ public class EaziBioDataService implements BioDataService{
     }
 
     @Override
-    public UpdateDataResponse update(Long id, JsonPatch jsonPatch) {
-        try{
-            BioData bioData = findBioDataBy(id);
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.convertValue(bioData, JsonNode.class);
-            jsonNode = jsonPatch.apply(jsonNode);
-            bioData = objectMapper.convertValue(jsonNode, BioData.class);
-            bioDataRepository.save(bioData);
-            return modelMapper.map(bioData, UpdateDataResponse.class);
-        } catch (JsonPatchException exception) {
-            throw new RuntimeException(exception.getMessage());
-        }
+    public UpdateDataResponse update(Long id, UpdateRequest request) {
+        BioData bioData = findBioDataBy(id);
+        BioData tempData = modelMapper.map(request, BioData.class);
+        copyNonNullProperties(tempData, bioData);
+        bioDataRepository.save(bioData);
+        return modelMapper.map(bioData, UpdateDataResponse.class);
+
     }
 
     private void validateEmail(RegisterRequest request) {

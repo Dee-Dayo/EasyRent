@@ -3,6 +3,7 @@ package com.semicolon.EaziRent.services;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 
 public interface BioDataService {
@@ -13,5 +14,5 @@ public interface BioDataService {
 
     BioData findBioDataBy(Long bioDataId);
 
-    UpdateDataResponse update(Long id, JsonPatch jsonPatch);
+    UpdateDataResponse update(Long id, UpdateRequest request);
 }
