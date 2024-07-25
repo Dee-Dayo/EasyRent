@@ -1,4 +1,4 @@
-package com.semicolon.EaziRent.services;
+package com.semicolon.EaziRent.services.impls;
 
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.repositories.BioDataRepository;
@@ -8,6 +8,7 @@ import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.exceptions.EmailExistsException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
+import com.semicolon.EaziRent.services.BioDataService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,7 @@ import static com.semicolon.EaziRent.utils.EaziUtils.copyNonNullProperties;
 
 @Service
 @AllArgsConstructor
-public class EaziBioDataService implements BioDataService{
+public class EaziBioDataService implements BioDataService {
     private final BioDataRepository bioDataRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
