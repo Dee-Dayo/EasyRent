@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 import static jakarta.persistence.EnumType.STRING;
 
 @Setter
@@ -24,6 +22,7 @@ public class Property {
     @OneToOne
     private Address address;
 
+    private String mediaUrl;
     private int noOfApartments;
 
     @Enumerated(value = STRING)

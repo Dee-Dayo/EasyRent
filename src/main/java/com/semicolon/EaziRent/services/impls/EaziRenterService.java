@@ -1,10 +1,12 @@
-package com.semicolon.EaziRent.services;
+package com.semicolon.EaziRent.services.impls;
 
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.data.repositories.RenterRepository;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
+import com.semicolon.EaziRent.services.BioDataService;
+import com.semicolon.EaziRent.services.RenterService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ import static com.semicolon.EaziRent.data.constants.Role.RENTER;
 
 @Service
 @AllArgsConstructor
-public class EaziRenterService implements RenterService{
+public class EaziRenterService implements RenterService {
     private final RenterRepository renterRepository;
     private final ModelMapper modelMapper;
     private final BioDataService bioDataService;

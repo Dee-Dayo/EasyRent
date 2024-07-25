@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
@@ -83,12 +84,13 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     private String generateAccessToken(Authentication authResult) {
         Algorithm algorithm = Algorithm.RSA512(rsaKeys.publicKey(), rsaKeys.privateKey());
         Instant now = Instant.now();
+        UserDetails principal = (UserDetails) authResult.getPrincipal();
         return JWT.create()
                 .withIssuer("EasyRentApp")
                 .withIssuedAt(now)
                 .withExpiresAt(now.plus(24, HOURS))
-                .withSubject(authResult.getPrincipal().toString())
-                .withClaim("principal", authResult.getPrincipal().toString())
+                .withSubject(principal.getUsername())
+                .withClaim("principal", principal.toString())
                 .withClaim("credentials", authResult.getCredentials().toString())
                 .withArrayClaim("roles", extractAuthorities(authResult.getAuthorities()))
                 .sign(algorithm);

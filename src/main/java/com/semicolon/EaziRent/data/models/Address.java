@@ -1,6 +1,6 @@
 package com.semicolon.EaziRent.data.models;
 
-import com.semicolon.EaziRent.data.constants.LGA;
+import com.semicolon.EaziRent.data.constants.State;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +20,8 @@ public class Address {
     private String street;
     private String area;
 
-    @Enumerated(value = STRING)
-    private LGA lga;
+    @Enumerated(STRING)
+    private State state;
+
+   private String lga;
 }
