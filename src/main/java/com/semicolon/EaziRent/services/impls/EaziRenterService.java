@@ -7,6 +7,7 @@ import com.semicolon.EaziRent.data.repositories.RenterRepository;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
+import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 import com.semicolon.EaziRent.services.BioDataService;
 import com.semicolon.EaziRent.services.RenterService;
 import lombok.AllArgsConstructor;
