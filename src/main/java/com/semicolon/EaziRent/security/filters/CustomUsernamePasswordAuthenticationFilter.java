@@ -90,7 +90,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
                 .withIssuedAt(now)
                 .withExpiresAt(now.plus(24, HOURS))
                 .withSubject(principal.getUsername())
-                .withClaim("principal", principal.toString())
+                .withClaim("principal", principal.getUsername())
                 .withClaim("credentials", authResult.getCredentials().toString())
                 .withArrayClaim("roles", extractAuthorities(authResult.getAuthorities()))
                 .sign(algorithm);

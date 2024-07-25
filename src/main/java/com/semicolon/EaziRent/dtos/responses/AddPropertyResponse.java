@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class AddPropertyResponse {
     private LocalDateTime responseTime;
     private String message;
+    private Long landlordId;
     private Type type;
     private int noOfApartments;
     private AddressResponse address;

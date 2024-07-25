@@ -44,20 +44,35 @@ public class EaziPropertyService implements PropertyService {
     @Override
     @Transactional
     public EaziRentAPIResponse<AddPropertyResponse> addProperty(AddPropertyRequest request, String email) throws IOException {
-        String url = getMediaUrl(request.getMediaFile());
         Landlord landlord = landlordService.findLandlordBy(email);
+        String mediaUrl = getMediaUrl(request.getMediaFile());
+        Address address = saveAddress(request);
+        Property property = saveProperty(request, landlord, mediaUrl, address);
+        AddPropertyResponse response = createResponse(property, landlord);
+        return new EaziRentAPIResponse<>(true, response);
+    }
+
+    private Address saveAddress(AddPropertyRequest request) {
         Address address = modelMapper.map(request.getAddressRequest(), Address.class);
-        address = addressRepository.save(address);
+        return addressRepository.save(address);
+    }
+
+    private Property saveProperty(AddPropertyRequest request, Landlord landlord, String mediaUrl, Address address) {
         Property property = modelMapper.map(request, Property.class);
         property.setAddress(address);
         property.setLandlord(landlord);
-        property.setMediaUrl(url);
-        property = propertyRepository.save(property);
+        property.setMediaUrl(mediaUrl);
+        return propertyRepository.save(property);
+    }
+
+    private AddPropertyResponse createResponse(Property property, Landlord landlord) {
         AddPropertyResponse response = modelMapper.map(property, AddPropertyResponse.class);
         response.setResponseTime(now());
         response.setMessage("Successfully added property");
-        return new EaziRentAPIResponse<>(true, response);
+        response.setLandlordId(landlord.getId());
+        return response;
     }
+
 
     private String getMediaUrl(MultipartFile mediaFile) throws IOException {
         Uploader uploader = cloudinary.uploader();

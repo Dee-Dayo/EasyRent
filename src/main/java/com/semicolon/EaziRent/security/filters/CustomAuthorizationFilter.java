@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -83,7 +82,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
         List<? extends GrantedAuthority> authorities = decodedJWT.getClaim("roles")
                 .asList(SimpleGrantedAuthority.class);
-        UserDetails principal = (UserDetails) decodedJWT.getClaim("principal");
+        String principal = decodedJWT.getClaim("principal").asString();
         String credentials = decodedJWT.getClaim("credentials").asString();
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);

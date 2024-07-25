@@ -26,9 +26,10 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    @PostMapping(consumes = {MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(path = "/add", consumes = {MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> addProperty(@ModelAttribute AddPropertyRequest request,
                                          Principal principal) throws IOException {
-        return ResponseEntity.status(CREATED).body(propertyService.addProperty(request, principal.getName()));
+        String email = principal.getName();
+        return ResponseEntity.status(CREATED).body(propertyService.addProperty(request, email));
     }
 }
