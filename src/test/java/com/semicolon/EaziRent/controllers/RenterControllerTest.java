@@ -9,6 +9,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -24,7 +26,20 @@ public class RenterControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody))
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
+    @Test
+    public void testUpdateRenter()throws Exception {
+        String requestBody = "{\"firstName\": \"updated name\", \"occupation\": \"Business Man\"}";
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/renter/update{renterId}", 200)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.firstName").value("updated name"))
+                .andExpect(jsonPath("$.data.lastName").value("John"))
+                .andDo(print());
     }
 
 
