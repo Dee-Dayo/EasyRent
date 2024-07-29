@@ -2,6 +2,7 @@ package com.semicolon.EaziRent.utils;
 
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.AddressRequest;
+import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ public class TestUtils {
             "RAhTEvjREPPTamzglltNlI9FlK1XiorFav2193ZuDwhtd3y0vT6DgB_tMP1Ki5SwvfsAXi9_F456AH" +
             "8k_aF1S-3pSX-MN50wdE-FUiipveHmkH3sdMXQgh9yXKEVFKcLWv2qCAMU66Fu330bI6VIZqV3pQ";
 
-    public static final String TEST_IMAGE_LOCATION = "C:\\Users\\DELL\\Desktop\\Capstone\\EaziRent\\src\\main\\resources\\images\\juno.jpg";
+    public static final String TEST_IMAGE_LOCATION = "C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\images\\juno.jpg";
 
 
     public static AddPropertyRequest buildPropertyRequest(InputStream inputStream) throws IOException {
@@ -37,6 +38,13 @@ public class TestUtils {
         request.setMediaFile(file);
         request.setType(HOSTEL);
         request.setNoOfApartments(50);
+        return request;
+    }
+
+    public static UpdateRequest buildUpdateRequest(String firstName, String lastName) {
+        UpdateRequest request = new UpdateRequest();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
         return request;
     }
 

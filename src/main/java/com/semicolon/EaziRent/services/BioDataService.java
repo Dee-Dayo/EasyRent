@@ -15,4 +15,6 @@ public interface BioDataService {
     BioData findBioDataBy(Long bioDataId);
 
     UpdateDataResponse update(Long id, UpdateRequest request);
+
+    BioData update(BioData bioData, UpdateRequest request);
 }
