@@ -1,6 +1,5 @@
 package com.semicolon.EaziRent.services;
 
-import com.github.fge.jsonpatch.JsonPatch;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;

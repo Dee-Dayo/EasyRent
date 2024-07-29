@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.dtos.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.semicolon.EaziRent.data.constants.Type;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class AddPropertyResponse {
+    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:ss a")
     private LocalDateTime responseTime;
     private String message;
     private Long landlordId;

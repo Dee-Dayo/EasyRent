@@ -1,26 +1,21 @@
 package com.semicolon.EaziRent.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.semicolon.EaziRent.dtos.requests.LoginRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.LoginResponse;
-import com.semicolon.EaziRent.utils.TestUtils;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.semicolon.EaziRent.utils.TestUtils.buildUpdateRequest;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -54,7 +49,7 @@ public class LandlordControllerTest {
     }
 
     @Test
-    public void testUpdateRenter() throws Exception {
+    public void testUpdateLandlordDetails() throws Exception {
         UpdateRequest updateRequest = buildUpdateRequest("john", "doe");
         String token = getToken();
         mockMvc.perform(patch("/api/v1/landlord/update")
