@@ -2,9 +2,11 @@ package com.semicolon.EaziRent.handlers;
 
 import com.semicolon.EaziRent.dtos.responses.ErrorResponse;
 import com.semicolon.EaziRent.exceptions.EmailExistsException;
+import com.semicolon.EaziRent.exceptions.InvalidDataException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -75,6 +77,32 @@ public class GlobalExceptionHandler {
                 .requestTime(now())
                 .success(false)
                 .error("ResourceNotFound")
+                .message(exception.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException exception,
+                                                        HttpServletRequest request) {
+        ErrorResponse response = ErrorResponse.builder()
+                .requestTime(now())
+                .success(false)
+                .error("BadRequest")
+                .message(exception.getMessage())
+                .path(request.getRequestURI())
+                .build();
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(InvalidDataException.class)
+    public ResponseEntity<?> handleInvalidDataException(InvalidDataException exception,
+                                                        HttpServletRequest request) {
+        ErrorResponse response = ErrorResponse.builder()
+                .requestTime(now())
+                .success(false)
+                .error("InvalidData")
                 .message(exception.getMessage())
                 .path(request.getRequestURI())
                 .build();

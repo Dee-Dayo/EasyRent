@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.controllers;
 
+import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
@@ -35,5 +36,10 @@ public class LandlordController {
     @PatchMapping("/update")
     public ResponseEntity<?> updateLandlordDetails(@RequestBody UpdateRequest request, Principal principal) {
         return ResponseEntity.ok(landlordService.update(request, principal.getName()));
+    }
+
+    @PostMapping("/add-account-details")
+    public ResponseEntity<?> addAccountDetails(@RequestBody AddAccountDetailsRequest request, Principal principal) {
+        return ResponseEntity.status(CREATED).body(landlordService.addAccountDetails(request, principal.getName()));
     }
 }

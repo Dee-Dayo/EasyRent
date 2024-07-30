@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
 import com.semicolon.EaziRent.dtos.requests.LoginRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
@@ -34,6 +35,8 @@ public class LandlordControllerTest {
     @Autowired
     private ModelMapper modelMapper;
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
     @Test
     public void testRegisterLandlordController() throws Exception {
         RegisterRequest request = new RegisterRequest();
@@ -43,7 +46,7 @@ public class LandlordControllerTest {
         request.setPassword("password");
         mockMvc.perform(post("/api/v1/landlord/register")
                         .contentType(APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsBytes(request)))
+                        .content(objectMapper.writeValueAsBytes(request)))
                 .andExpect(status().isCreated())
                 .andDo(print());
     }
@@ -54,7 +57,7 @@ public class LandlordControllerTest {
         String token = getToken();
         mockMvc.perform(patch("/api/v1/landlord/update")
                         .contentType(APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsBytes(updateRequest))
+                        .content(objectMapper.writeValueAsBytes(updateRequest))
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.firstName").value("john"))
@@ -62,11 +65,26 @@ public class LandlordControllerTest {
                 .andDo(print());
     }
 
+    @Test
+
+    public void addAccountDetailsTest() throws Exception {
+        AddAccountDetailsRequest request = new AddAccountDetailsRequest();
+        request.setAccountName("accountName");
+        request.setAccountNumber("1234567890");
+        request.setBankName("bankName");
+        String token = getToken();
+        mockMvc.perform(post("/api/v1/landlord/add-account-details")
+                        .content(objectMapper.writeValueAsBytes(request))
+                        .contentType(APPLICATION_JSON)
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isCreated())
+                .andDo(print());
+    }
+
     private String getToken() throws Exception {
         LoginRequest request = new LoginRequest();
         request.setEmail("jamespalmer@gmail.com");
         request.setPassword("password");
-        ObjectMapper objectMapper = new ObjectMapper();
         byte[] content = objectMapper.writeValueAsBytes(request);
         MvcResult result = mockMvc.perform(post("/api/v1/auth/login")
                         .contentType(APPLICATION_JSON)
