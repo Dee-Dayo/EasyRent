@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class AddPropertyResponse {
-    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:ss a")
+    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
     private LocalDateTime responseTime;
     private String message;
     private Long landlordId;

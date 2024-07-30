@@ -1,7 +1,6 @@
 package com.semicolon.EaziRent.services.impls;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.Uploader;
 import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
@@ -13,7 +12,6 @@ import com.semicolon.EaziRent.services.PropertyService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -32,18 +30,20 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public EaziRentAPIResponse<AddApartmentResponse> addApartment(AddApartmentRequest request) throws IOException {
         Property property = propertyService.getPropertyBy(request.getPropertyId());
-        Apartment apartment = modelMapper.map(request, Apartment.class);
-        apartment.setProperty(property);
-        apartment.setMediaUrls(new HashSet<>());
-        Uploader uploader = cloudinary.uploader();
-        for (MultipartFile file : request.getFiles()) {
-            String mediaUrl = getMediaUrl(file, uploader);
-            apartment.getMediaUrls().add(mediaUrl);
-        }
+        Apartment apartment = createApartmentFromRequest(request, property);
+        String mediaUrl = getMediaUrl(request.getMediaFile(), cloudinary.uploader());
+        apartment.getMediaUrls().add(mediaUrl);
         apartment.setIsAvailable(apartment.getNumber() != 0);
         apartment = apartmentRepository.save(apartment);
         AddApartmentResponse response = buildAddApartmentResponse(apartment, property);
         return new EaziRentAPIResponse<>(true, response);
+    }
+
+    private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {
+        Apartment apartment = modelMapper.map(request, Apartment.class);
+        apartment.setProperty(property);
+        apartment.setMediaUrls(new HashSet<>());
+        return apartment;
     }
 
     private AddApartmentResponse buildAddApartmentResponse(Apartment apartment, Property property) {
@@ -52,4 +52,5 @@ public class EaziApartmentService implements ApartmentService {
         response.setPropertyId(property.getId());
         return response;
     }
+
 }

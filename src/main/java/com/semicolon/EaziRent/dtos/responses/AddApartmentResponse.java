@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class AddApartmentResponse {
-    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:ss a")
+    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
     private LocalDateTime responseTime;
     private Long propertyId;
     private String type;

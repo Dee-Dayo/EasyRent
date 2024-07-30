@@ -13,7 +13,6 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
 import static com.semicolon.EaziRent.data.constants.RentType.YEARLY;
 import static com.semicolon.EaziRent.data.constants.State.LAGOS;
@@ -67,14 +66,11 @@ public class TestUtils {
         request.setType(DOUBLE_SHARED_ROOM);
         request.setRentType(YEARLY);
         request.setPrice(BigDecimal.valueOf(500_000));
-        List<Path> paths = List.of(
-                Paths.get(TEST_APARTMENT1_LOCATION), Paths.get(TEST_APARTMENT2_LOCATION));
-        for (Path path : paths) {
-            try(InputStream inputStream = Files.newInputStream(path)) {
-                MultipartFile file = new MockMultipartFile("media", inputStream);
-                request.getFiles().add(file);
-            } catch (IOException ignored) {}
-        }
+        Path path = Paths.get(TEST_APARTMENT2_LOCATION);
+        try(InputStream inputStream = Files.newInputStream(path)) {
+            MultipartFile file = new MockMultipartFile("mediaFile", inputStream);
+            request.setMediaFile(file);
+        } catch (IOException ignored) {}
         return request;
     }
 

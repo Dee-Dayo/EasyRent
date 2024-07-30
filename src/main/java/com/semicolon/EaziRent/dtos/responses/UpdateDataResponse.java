@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 public class UpdateDataResponse {
     private Long id;
-    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:ss a")
+    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
     private LocalDateTime responseTime;
     private String email;
     private String firstName;
     private String lastName;
-    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:ss a")
+    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
     private LocalDateTime dateUpdated;
 }
 

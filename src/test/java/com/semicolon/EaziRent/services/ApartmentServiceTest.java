@@ -26,7 +26,7 @@ public class ApartmentServiceTest {
         EaziRentAPIResponse<AddApartmentResponse> response = apartmentService.addApartment(request);
         assertThat(response).isNotNull();
         assertThat(response.getData().getIsAvailable()).isTrue();
-        assertThat(response.getData().getMediaUrls()).hasSize(2);
+        assertThat(response.getData().getMediaUrls()).isNotEmpty();
     }
 
 
