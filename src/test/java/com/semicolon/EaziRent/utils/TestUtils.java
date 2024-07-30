@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.utils;
 
+import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.AddressRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
@@ -8,8 +9,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
+import static com.semicolon.EaziRent.data.constants.RentType.YEARLY;
 import static com.semicolon.EaziRent.data.constants.State.LAGOS;
+import static com.semicolon.EaziRent.data.constants.SubType.DOUBLE_SHARED_ROOM;
 import static com.semicolon.EaziRent.data.constants.Type.HOSTEL;
 
 public class TestUtils {
@@ -23,6 +31,10 @@ public class TestUtils {
             "8k_aF1S-3pSX-MN50wdE-FUiipveHmkH3sdMXQgh9yXKEVFKcLWv2qCAMU66Fu330bI6VIZqV3pQ";
 
     public static final String TEST_IMAGE_LOCATION = "C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\images\\juno.jpg";
+
+    public static final String TEST_APARTMENT1_LOCATION = "C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\images\\juno_apartment1.jpg";
+
+    public static final String TEST_APARTMENT2_LOCATION = "C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\images\\juno_apartment2.jpg";
 
 
     public static AddPropertyRequest buildPropertyRequest(InputStream inputStream) throws IOException {
@@ -45,6 +57,24 @@ public class TestUtils {
         UpdateRequest request = new UpdateRequest();
         request.setFirstName(firstName);
         request.setLastName(lastName);
+        return request;
+    }
+
+    public static AddApartmentRequest buildAddApartmentRequest() {
+        AddApartmentRequest request = new AddApartmentRequest();
+        request.setPropertyId(500L);
+        request.setNumber(25);
+        request.setType(DOUBLE_SHARED_ROOM);
+        request.setRentType(YEARLY);
+        request.setPrice(BigDecimal.valueOf(500_000));
+        List<Path> paths = List.of(
+                Paths.get(TEST_APARTMENT1_LOCATION), Paths.get(TEST_APARTMENT2_LOCATION));
+        for (Path path : paths) {
+            try(InputStream inputStream = Files.newInputStream(path)) {
+                MultipartFile file = new MockMultipartFile("media", inputStream);
+                request.getFiles().add(file);
+            } catch (IOException ignored) {}
+        }
         return request;
     }
 
