@@ -1,17 +1,20 @@
 package com.semicolon.EaziRent.services;
 
+import com.semicolon.EaziRent.data.models.Landlord;
 import com.semicolon.EaziRent.data.repositories.LandlordRepository;
+import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
+import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
+import com.semicolon.EaziRent.dtos.responses.*;
+import com.semicolon.EaziRent.exceptions.InvalidDataException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import static com.semicolon.EaziRent.utils.TestUtils.buildUpdateRequest;
 import static org.assertj.core.api.Assertions.assertThat;
-
-
-
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Sql(scripts = {"/db/data.sql"})
@@ -33,4 +36,47 @@ public class LandlordServiceTest {
         assertThat(response.getId()).isNotNull();
         assertThat(landlordRepository.count()).isEqualTo(4);
     }
+
+    @Test
+    public void testUpdateLandlordBioData() {
+        UpdateRequest request = buildUpdateRequest("updatedFirstName", "updatedLastName");
+        String email = "jamespalmer@gmail.com";
+        Landlord landlord = landlordService.findLandlordBy(email);
+        assertBioData(landlord, "Palmer", "James");
+        EaziRentAPIResponse<UpdateDataResponse> response = landlordService.update(request, email);
+        assertThat(response).isNotNull();
+        landlord = landlordService.findLandlordBy(email);
+        assertBioData(landlord, "updatedFirstName", "updatedLastName");
+    }
+
+    @Test
+    public void testAddAccountDetails() {
+        AddAccountDetailsRequest request = new AddAccountDetailsRequest();
+        request.setAccountName("accountName");
+        request.setAccountNumber("1234567890");
+        request.setBankName("bankName");
+        String email = "jamespalmer@gmail.com";
+        EaziRentAPIResponse<AddAccountDetailsResponse> response = landlordService.addAccountDetails(request, email);
+        assertThat(response).isNotNull();
+        assertThat(response.getData().getAccountNumber()).isNotNull();
+    }
+
+    @Test
+    public void testThatAccountNumberContainsOnly10DigitNumbers() {
+        AddAccountDetailsRequest request = new AddAccountDetailsRequest();
+        request.setAccountNumber("12345678901");
+        request.setBankName("bankName");
+        String email = "jamespalmer@gmail.com";
+        assertThrows(InvalidDataException.class, ()-> landlordService.addAccountDetails(request, email));
+        request.setAccountNumber("12345S6789");
+        assertThrows(InvalidDataException.class, ()-> landlordService.addAccountDetails(request, email));
+        request.setAccountNumber("123456789");
+        assertThrows(InvalidDataException.class, ()-> landlordService.addAccountDetails(request, email));
+    }
+
+    private void assertBioData(Landlord landlord, String expectedFirstName, String expectedLastName) {
+        assertThat(landlord.getBioData().getFirstName()).isEqualTo(expectedFirstName);
+        assertThat(landlord.getBioData().getLastName()).isEqualTo(expectedLastName);
+    }
+
 }

@@ -57,6 +57,12 @@ public class EaziBioDataService implements BioDataService {
 
     }
 
+    @Override
+    public BioData update(BioData bioData, UpdateRequest request) {
+        modelMapper.map(request, bioData);
+        return bioDataRepository.save(bioData);
+    }
+
     private void validateEmail(RegisterRequest request) {
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         if (!request.getEmail().matches(emailRegex))

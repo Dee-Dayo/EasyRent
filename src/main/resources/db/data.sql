@@ -5,6 +5,9 @@ truncate table landlords cascade;
 TRUNCATE TABLE blacklisted_tokens CASCADE;
 TRUNCATE TABLE addresses CASCADE;
 TRUNCATE TABLE properties CASCADE;
+TRUNCATE TABLE account_details CASCADE;
+TRUNCATE TABLE apartments CASCADE;
+TRUNCATE TABLE apartment_media_urls CASCADE;
 
 
 insert into users(id, first_name, last_name, email, password, date_registered)values
@@ -42,3 +45,13 @@ INSERT INTO addresses(id, area, lga, state, number, street)VALUES
 
 INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, media_url)VALUES
 (500, 50, 400, 300, 'HOSTEL', 'http://res.cloudinary.com/dvliop7es/image/upload/v1721901227/file.jpg');
+
+INSERT INTO account_details(id, account_name, account_number, bank_name, landlord_id) VALUES
+(700, 'account_name', '0123456789', 'bankName', 300);
+
+INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
+(800, 25, 500000.00, 'YEARLY', 'DOUBLE_SHARED_ROOM', true, 500);
+
+INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
+(800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
+(800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372046/file.jpg');

@@ -1,11 +1,13 @@
 package com.semicolon.EaziRent.data.models;
 
+import com.semicolon.EaziRent.data.constants.RentType;
 import com.semicolon.EaziRent.data.constants.SubType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 import static jakarta.persistence.EnumType.STRING;
 
@@ -17,12 +19,17 @@ public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal price;
 
-    @Enumerated(value = STRING)
+    @Enumerated(STRING)
     private SubType type;
+    @Enumerated(STRING)
+    private RentType rentType;
+    private BigDecimal price;
+    private Integer number;
+    private Boolean isAvailable;
 
-    private boolean isAvailable;
+    @ElementCollection
+    private Set<String> mediaUrls;
 
     @ManyToOne
     private Property property;
