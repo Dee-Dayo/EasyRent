@@ -7,6 +7,7 @@ import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,12 @@ public class EaziApartmentService implements ApartmentService {
         apartment = apartmentRepository.save(apartment);
         AddApartmentResponse response = buildAddApartmentResponse(apartment, property);
         return new EaziRentAPIResponse<>(true, response);
+    }
+
+    @Override
+    public Apartment getApartmentBy(Long id) {
+        return apartmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No apartment found with id " + id));
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {

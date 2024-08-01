@@ -50,7 +50,7 @@ INSERT INTO account_details(id, account_name, account_number, bank_name, landlor
 (700, 'account_name', '0123456789', 'bankName', 300);
 
 INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
-(800, 25, 500000.00, 'YEARLY', 'DOUBLE_SHARED_ROOM', true, 500);
+(800, 25, 1000.00, 'YEARLY', 'DOUBLE_SHARED_ROOM', true, 500);
 
 INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
 (800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
