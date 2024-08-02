@@ -1,10 +1,15 @@
 package com.semicolon.EaziRent.utils;
 
+import com.cloudinary.Uploader;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class EaziUtils {
@@ -22,6 +27,15 @@ public class EaziUtils {
         }
         String[] result = new String[nullAttributes.size()];
         return nullAttributes.toArray(result);
+    }
+
+    public static String getMediaUrl(MultipartFile mediaFile, Uploader uploader) throws IOException {
+        Map<?, ?> map = ObjectUtils.asMap(
+         "resource_type", "auto",
+                "use_filename", true
+        );
+        Map<?, ?> uploadResponse = uploader.upload(mediaFile.getBytes(), map);
+        return uploadResponse.get("url").toString();
     }
 
 }

@@ -1,14 +1,23 @@
 package com.semicolon.EaziRent.dtos.responses;
 
-import com.semicolon.EaziRent.data.constants.SubType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Set;
+
 @Getter
+@Setter
 public class AddApartmentResponse {
+    @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
+    private LocalDateTime responseTime;
     private Long propertyId;
-    private Long apartmentId;
-    private boolean isAvailable;
-    private SubType subType;
+    private String type;
+    private String rentType;
+    private BigDecimal price;
+    private Integer number;
+    private Boolean isAvailable;
+    private Set<String> mediaUrls;
 }

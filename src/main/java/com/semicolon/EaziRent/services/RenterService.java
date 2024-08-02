@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.services;
 
 import com.github.fge.jsonpatch.JsonPatch;
+import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
@@ -11,4 +12,6 @@ public interface RenterService {
     RegisterResponse register(RegisterRequest request);
 
     UpdateDataResponse update(Long renterId, UpdateRequest request);
+
+    Renter findById(Long renterId);
 }

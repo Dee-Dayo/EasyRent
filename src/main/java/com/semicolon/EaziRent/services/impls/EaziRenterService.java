@@ -8,6 +8,7 @@ import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.BioDataService;
 import com.semicolon.EaziRent.services.RenterService;
 import lombok.AllArgsConstructor;
@@ -42,7 +43,7 @@ public class EaziRenterService implements RenterService {
     @Override
     @Transactional
     public UpdateDataResponse update(Long renterId, UpdateRequest request) {
-        Renter renter = renterRepository.findById(renterId).orElseThrow();
+        Renter renter = findById(renterId);
         renter.setOccupation(request.getOccupation());
         BioData bioData = renter.getBioData();
         UpdateDataResponse response = bioDataService.update(bioData.getId(), request);
@@ -50,6 +51,12 @@ public class EaziRenterService implements RenterService {
         renter.setBioData(bioData);
         renterRepository.save(renter);
         return response;
+    }
+
+    @Override
+    public Renter findById(Long renterId) {
+        return renterRepository.findById(renterId)
+                .orElseThrow(()->new UserNotFoundException("renter not found"));
     }
 
 

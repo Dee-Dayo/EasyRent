@@ -12,8 +12,10 @@ public class AccountDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String accountNumber;
     private String accountName;
+    @Column(nullable = false)
+    private String accountNumber;
+    @Column(nullable = false)
     private String bankName;
 
     @ManyToOne

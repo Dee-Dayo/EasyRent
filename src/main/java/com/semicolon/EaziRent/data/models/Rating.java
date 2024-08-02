@@ -12,4 +12,14 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int rating;
+    @ManyToOne
+    @JoinColumn(name = "renter_id")
+    private Renter renter;
+    @ManyToOne
+    @JoinColumn(name = "landlord_id")
+    private Landlord landlord;
+    @ManyToOne
+    @JoinColumn(name = "property_id")
+    private Property property;
 }
