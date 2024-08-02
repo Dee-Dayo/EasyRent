@@ -1,6 +1,5 @@
 package com.semicolon.EaziRent.services.impls;
 
-import com.github.fge.jsonpatch.JsonPatch;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.data.repositories.RenterRepository;
@@ -8,6 +7,7 @@ import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.BioDataService;
 import com.semicolon.EaziRent.services.RenterService;
 import lombok.AllArgsConstructor;
@@ -52,5 +52,11 @@ public class EaziRenterService implements RenterService {
         return response;
     }
 
+    @Override
+    public Renter getRenterBy(String email) {
+        BioData bioData = bioDataService.getBioDataBy(email);
+        return renterRepository.findRenterBy(bioData.getId())
+                .orElseThrow(()-> new ResourceNotFoundException("Renter not found with email: " + email));
+    }
 
 }
