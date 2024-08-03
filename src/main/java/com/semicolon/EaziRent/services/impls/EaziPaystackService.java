@@ -14,7 +14,6 @@ import com.semicolon.EaziRent.services.RenterService;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
 import org.cloudinary.json.JSONObject;
-import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,7 +90,7 @@ public class EaziPaystackService implements PaystackService {
             throw new UnsuccessfulTransactionException("Transaction verification failed: transaction " + status);
     }
 
-    private @NotNull PaidRentResponse buildPaidRentResponse(Rent rent, String paystackResponse, Renter renter, Apartment apartment) {
+    private PaidRentResponse buildPaidRentResponse(Rent rent, String paystackResponse, Renter renter, Apartment apartment) {
         PaidRentResponse paidRentResponse = modelMapper.map(rent, PaidRentResponse.class);
         paidRentResponse.setRentId(rent.getId());
         paidRentResponse.setPaystackResponse(paystackResponse);
@@ -101,7 +100,7 @@ public class EaziPaystackService implements PaystackService {
         return paidRentResponse;
     }
 
-    private @NotNull Rent getRent(Apartment apartment, Renter renter) {
+    private Rent getRent(Apartment apartment, Renter renter) {
         Rent rent = new Rent();
         rent.setApartment(apartment);
         rent.setRenter(renter);
