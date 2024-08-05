@@ -1,9 +1,11 @@
 package com.semicolon.EaziRent.services.impls;
 
 import com.semicolon.EaziRent.data.models.BioData;
+import com.semicolon.EaziRent.data.models.Landlord;
 import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.data.repositories.RenterRepository;
+import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
@@ -17,6 +19,7 @@ import com.semicolon.EaziRent.services.LandlordService;
 import com.semicolon.EaziRent.services.RenterService;
 import com.semicolon.EaziRent.services.ReviewService;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,7 @@ public class EaziRenterService implements RenterService {
     private final BioDataService bioDataService;
     private ReviewService reviewService;
     private LandlordService landlordService;
+    private ReviewRepository reviewRepository;
 
     @Autowired
     public void setReviewService(ReviewService reviewService) {
@@ -80,30 +84,46 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public RateUserResponse rateLandlord(RateUserRequest request) {
-        return reviewService.rateRenter(request);
-
+    public RateUserResponse reviewLandlord(RateUserRequest request) {
+        Landlord landlord = landlordService.findLandlordById(request.getLandlordId());
+        Renter renter = findById(request.getRenterId());
+        BioData reviewer = bioDataService.findBioDataBy(landlord.getBioData().getId());
+        BioData reviewee = bioDataService.findBioDataBy(renter.getBioData().getId());
+        Review review = map(request, reviewer, reviewee);
+        reviewRepository.save(review);
+        return map(review, landlord, renter);
     }
+
+    private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {
+        Review review = modelMapper.map(request, Review.class);
+        review.setReviewer(reviewer);
+        review.setReviewee(reviewee);
+        return review;
+    }
+
+    private @NotNull RateUserResponse map(Review review, Landlord landlord, Renter renter) {
+        RateUserResponse response = modelMapper.map(review, RateUserResponse.class);
+        response.setLandLordId(landlord.getId());
+        response.setRenterId(renter.getId());
+        return response;
+    }
+
+
 
     @Override
     public List<Review> getRenterReviews(Long renterId) {
-        return reviewService.getRenterReviews(renterId);
+        Renter renter = findById(renterId);
+        return reviewRepository.findRenterReviews(renter.getBioData().getId());
     }
+
 
     @Override
     public List<Review> getLandlordReviews(long landlordId) {
         return landlordService.findLandlordReviews(landlordId);
     }
 
-    @Override
-    public RateUserResponse reviewRenter(RateUserRequest request) {
-        return reviewService.rateRenter(request);
-    }
 
-    @Override
-    public Renter save(Renter renter) {
-        return renterRepository.save(renter);
-    }
+
 
     @Override
     public Renter getRenterBy(String email) {

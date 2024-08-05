@@ -31,7 +31,7 @@ public class ReviewServiceTest {
     public void rateLandLordTest(){
         RateUserRequest request = new RateUserRequest();
         request.setRenterId(200L);
-        request.setRate(5);
+        request.setRating(5);
         request.setLandlordId(104L);
         request.setComment("very understanding landlord");
         RateUserResponse response = reviewService.rateRenter(request);

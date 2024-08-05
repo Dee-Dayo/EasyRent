@@ -71,30 +71,28 @@ public class RenterServiceTest {
         assertThat(response.getLastName()).isEqualTo("last name");
     }
     @Test
-    public void rateRenterTest(){
+    public void rateLandlordTest(){
         RateUserRequest request = new RateUserRequest();
         request.setRenterId(200L);
-        request.setRate(5);
+        request.setRating(5);
         request.setLandlordId(105L);
-        request.setComment("cooperative tenant");
-        RateUserResponse response = renterService.reviewRenter(request);
+        request.setComment("understanding landlord");
+        RateUserResponse response = renterService.reviewLandlord(request);
         assertThat(response).isNotNull();
         assertThat(response.getRenterId()).isEqualTo(200L);
         assertThat(renterService.getRenterReviews(200L)).size().isEqualTo(1);
         System.out.println(renterService.getRenterReviews(200L));
-        //assertThat(reviewRepository.count()).isEqualTo(1);
 
         RateUserRequest request2 = new RateUserRequest();
         request2.setRenterId(200L);
-        request2.setRate(5);
+        request2.setRating(5);
         request2.setLandlordId(104L);
-        request2.setComment("cooperative tenant");
-        RateUserResponse response2 = renterService.reviewRenter(request2);
+        request2.setComment("understanding landlord");
+        RateUserResponse response2 = renterService.reviewLandlord(request2);
         assertThat(response2).isNotNull();
         assertThat(response2.getRenterId()).isEqualTo(200L);
         assertThat(renterService.getRenterReviews(200L)).size().isEqualTo(2);
         System.out.println(renterService.getRenterReviews(200L));
-        //assertThat(reviewRepository.count()).isEqualTo(2);
     }
 
     @Test

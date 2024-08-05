@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
     @Query("SELECT r FROM Review r where r.reviewee.id=:renterId")
-    List<Review> finAllReviewsFor(Long renterId);
+    List<Review> findRenterReviews(Long renterId);
     @Query("SELECT r FROM Review r where r.property.id=:propertyId")
-    List<Review> findAllReviewsFor(Long propertyId);
+    List<Review> findPropertyReviews(Long propertyId);
+    @Query("SELECT r FROM Review r where r.reviewee.id=:landlordId")
+    List<Review> findLandlordReviews(Long landlordId);
 }

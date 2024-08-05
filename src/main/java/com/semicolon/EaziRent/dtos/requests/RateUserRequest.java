@@ -8,6 +8,6 @@ import lombok.Setter;
 public class RateUserRequest {
     private Long landlordId;
     private Long renterId;
-    private int rate;
+    private int rating;
     private String comment;
 }

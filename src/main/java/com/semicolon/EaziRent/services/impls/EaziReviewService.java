@@ -94,7 +94,7 @@ public class EaziReviewService implements ReviewService {
     @Override
     public List<Review> getRenterReviews(Long renterId) {
         Renter renter = renterService.findById(renterId);
-        return reviewRepository.finAllReviewsFor(renter.getBioData().getId());
+        return reviewRepository.findRenterReviews(renter.getBioData().getId());
     }
 
     @Override
@@ -104,7 +104,7 @@ public class EaziReviewService implements ReviewService {
 
     @Override
     public List<Review> getPropertyReviews(Long propertyId) {
-        return reviewRepository.findAllReviewsFor(propertyId);
+        return reviewRepository.findPropertyReviews(propertyId);
     }
 
 

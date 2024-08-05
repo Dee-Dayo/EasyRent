@@ -21,12 +21,11 @@ public interface RenterService {
 
     Renter findById(Long renterId);
 
-    RateUserResponse rateLandlord(RateUserRequest request);
+    RateUserResponse reviewLandlord(RateUserRequest request);
 
     List<Review> getRenterReviews(Long renterId);
 
     List<Review> getLandlordReviews(long landlordId);
 
-    RateUserResponse reviewRenter(RateUserRequest request);
 
 }

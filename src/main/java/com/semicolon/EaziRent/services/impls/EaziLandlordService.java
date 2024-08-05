@@ -1,24 +1,19 @@
 package com.semicolon.EaziRent.services.impls;
 
-import com.semicolon.EaziRent.data.models.AccountDetails;
-import com.semicolon.EaziRent.data.models.BioData;
-import com.semicolon.EaziRent.data.models.Landlord;
-import com.semicolon.EaziRent.data.models.Review;
+import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.AccountDetailsRepository;
 import com.semicolon.EaziRent.data.repositories.LandlordRepository;
+import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
+import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
-import com.semicolon.EaziRent.dtos.responses.AddAccountDetailsResponse;
-import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
-import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.InvalidDataException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
-import com.semicolon.EaziRent.services.BioDataService;
-import com.semicolon.EaziRent.services.LandlordService;
-import com.semicolon.EaziRent.services.ReviewService;
+import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,11 +31,14 @@ public class EaziLandlordService implements LandlordService {
     private final ModelMapper modelMapper;
     private final BioDataService bioDataService;
     private final AccountDetailsRepository accountDetailsRepository;
-    private ReviewService reviewService;
+    private final ReviewRepository reviewRepository;
+    private RenterService renterService;
+
+
 
     @Autowired
-    public void setReviewService(ReviewService reviewService) {
-        this.reviewService = reviewService;
+    public void setRenterService(RenterService renterService) {
+        this.renterService = renterService;
     }
 
     @Override
@@ -93,8 +91,33 @@ public class EaziLandlordService implements LandlordService {
 
     @Override
     public List<Review> findLandlordReviews(Long landlordId) {
-        return reviewService.findLandlordReviews(landlordId);
+        return reviewRepository.findLandlordReviews(landlordId);
     }
+
+    @Override
+    public RateUserResponse reviewRenter(RateUserRequest request) {
+        Landlord landlord = findLandlordById(request.getLandlordId());
+        Renter renter = renterService.findById(request.getRenterId());
+        BioData reviewer = bioDataService.findBioDataBy(landlord.getBioData().getId());
+        BioData reviewee = bioDataService.findBioDataBy(renter.getBioData().getId());
+        Review review = map(request, reviewer, reviewee);
+        reviewRepository.save(review);
+        return map(review, landlord, renter);
+    }
+    private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {
+        Review review = modelMapper.map(request, Review.class);
+        review.setReviewer(reviewer);
+        review.setReviewee(reviewee);
+        return review;
+    }
+
+    private @NotNull RateUserResponse map(Review review, Landlord landlord, Renter renter) {
+        RateUserResponse response = modelMapper.map(review, RateUserResponse.class);
+        response.setLandLordId(landlord.getId());
+        response.setRenterId(renter.getId());
+        return response;
+    }
+
 
     private void validate(String accountNumber) {
         String regex = "\\d{10}";
