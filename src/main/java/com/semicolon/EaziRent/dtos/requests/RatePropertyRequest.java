@@ -9,4 +9,5 @@ public class RatePropertyRequest {
     private Long propertyId;
     private Long renterId;
     private int rate;
+    private String comment;
 }

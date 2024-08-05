@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RateLandlordRequest {
+public class RateUserRequest {
     private Long landlordId;
     private Long renterId;
     private int rate;
+    private String comment;
 }

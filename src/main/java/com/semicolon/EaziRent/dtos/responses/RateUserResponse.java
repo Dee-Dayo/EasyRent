@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RateLandResponse {
+public class RateUserResponse {
     private Long renterId;
     private Long landLordId;
-    private int landLordRating;
+    private int rating;
+    private String comment;
 }

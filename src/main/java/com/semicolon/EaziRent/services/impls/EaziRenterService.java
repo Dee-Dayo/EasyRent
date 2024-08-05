@@ -2,19 +2,27 @@ package com.semicolon.EaziRent.services.impls;
 
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Renter;
+import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.data.repositories.RenterRepository;
+import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
+import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.BioDataService;
+import com.semicolon.EaziRent.services.LandlordService;
 import com.semicolon.EaziRent.services.RenterService;
+import com.semicolon.EaziRent.services.ReviewService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.semicolon.EaziRent.data.constants.Role.RENTER;
 
@@ -24,6 +32,18 @@ public class EaziRenterService implements RenterService {
     private final RenterRepository renterRepository;
     private final ModelMapper modelMapper;
     private final BioDataService bioDataService;
+    private ReviewService reviewService;
+    private LandlordService landlordService;
+
+    @Autowired
+    public void setReviewService(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
+
+    @Autowired
+    public void setLandlordService(LandlordService landlordService) {
+        this.landlordService = landlordService;
+    }
 
     @Override
     @Transactional
@@ -57,6 +77,32 @@ public class EaziRenterService implements RenterService {
     public Renter findById(Long renterId) {
         return renterRepository.findById(renterId)
                 .orElseThrow(()->new UserNotFoundException("renter not found"));
+    }
+
+    @Override
+    public RateUserResponse rateLandlord(RateUserRequest request) {
+        return reviewService.rateRenter(request);
+
+    }
+
+    @Override
+    public List<Review> getRenterReviews(Long renterId) {
+        return reviewService.getRenterReviews(renterId);
+    }
+
+    @Override
+    public List<Review> getLandlordReviews(long landlordId) {
+        return landlordService.findLandlordReviews(landlordId);
+    }
+
+    @Override
+    public RateUserResponse reviewRenter(RateUserRequest request) {
+        return reviewService.rateRenter(request);
+    }
+
+    @Override
+    public Renter save(Renter renter) {
+        return renterRepository.save(renter);
     }
 
     @Override

@@ -6,9 +6,12 @@ import com.github.fge.jackson.jsonpointer.JsonPointerException;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
+import com.semicolon.EaziRent.data.repositories.ReviewRepository;
+import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.requests.UploadImageRequest;
+import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
@@ -31,6 +34,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class RenterServiceTest {
     @Autowired
     private RenterService renterService;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Test
     public void testRegisterRenter(){
@@ -65,7 +71,34 @@ public class RenterServiceTest {
         assertThat(response.getLastName()).isEqualTo("last name");
     }
     @Test
-    public void uploadRenterPhotoTest(){
+    public void rateRenterTest(){
+        RateUserRequest request = new RateUserRequest();
+        request.setRenterId(200L);
+        request.setRate(5);
+        request.setLandlordId(105L);
+        request.setComment("cooperative tenant");
+        RateUserResponse response = renterService.reviewRenter(request);
+        assertThat(response).isNotNull();
+        assertThat(response.getRenterId()).isEqualTo(200L);
+        assertThat(renterService.getRenterReviews(200L)).size().isEqualTo(1);
+        System.out.println(renterService.getRenterReviews(200L));
+        //assertThat(reviewRepository.count()).isEqualTo(1);
+
+        RateUserRequest request2 = new RateUserRequest();
+        request2.setRenterId(200L);
+        request2.setRate(5);
+        request2.setLandlordId(104L);
+        request2.setComment("cooperative tenant");
+        RateUserResponse response2 = renterService.reviewRenter(request2);
+        assertThat(response2).isNotNull();
+        assertThat(response2.getRenterId()).isEqualTo(200L);
+        assertThat(renterService.getRenterReviews(200L)).size().isEqualTo(2);
+        System.out.println(renterService.getRenterReviews(200L));
+        //assertThat(reviewRepository.count()).isEqualTo(2);
+    }
+
+    @Test
+    public void ratePropertyTest(){
 
     }
 }

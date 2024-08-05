@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 import static jakarta.persistence.EnumType.STRING;
 
 @Setter
@@ -27,4 +29,6 @@ public class Property {
 
     @Enumerated(value = STRING)
     private Type type;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Review> reviews;
 }
