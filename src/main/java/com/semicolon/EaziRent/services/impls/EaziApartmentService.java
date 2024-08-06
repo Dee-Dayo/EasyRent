@@ -12,22 +12,35 @@ import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 
 import static com.semicolon.EaziRent.utils.EaziUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
 
 @Service
-@AllArgsConstructor
 public class EaziApartmentService implements ApartmentService {
     private PropertyService propertyService;
     private final ApartmentRepository apartmentRepository;
     private final ModelMapper modelMapper;
     private final Cloudinary cloudinary;
 
+    public EaziApartmentService(ApartmentRepository apartmentRepository,
+                                ModelMapper modelMapper, Cloudinary cloudinary){
+        this.apartmentRepository = apartmentRepository;
+        this.modelMapper = modelMapper;
+        this.cloudinary = cloudinary;
+    }
+    @Autowired
+    @Lazy
+    public void setPropertyService(PropertyService propertyService) {
+        this.propertyService = propertyService;
+    }
 
 
     @Override
@@ -46,6 +59,11 @@ public class EaziApartmentService implements ApartmentService {
     public Apartment getApartmentBy(Long id) {
         return apartmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No apartment found with id " + id));
+    }
+
+    @Override
+    public List<Apartment> findPropertyApartments(Long id) {
+        return apartmentRepository.findAllApartmentsFor(id);
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {

@@ -1,11 +1,10 @@
 package com.semicolon.EaziRent.services;
 
+import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
+import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.*;
-import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
-import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
-import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,10 @@ public class RenterServiceTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
+    @Autowired
+    private PropertyRepository propertyRepository;
+    @Autowired
+    private ApartmentRepository apartmentRepository;
 
     @Test
     public void testRegisterRenter(){
@@ -81,8 +84,18 @@ public class RenterServiceTest {
         assertThat(response).isNotNull();
         assertThat(renterService.findPropertyReviews(500L).size()).isEqualTo(3);
     }
+
+
     @Test
     public void reviewApartmentTest(){
-
+        ReviewApartmentRequest request = new ReviewApartmentRequest();
+        request.setPropertyId(500L);
+        request.setApartmentId(800L);
+        request.setRenterId(200L);
+        request.setRating(5);
+        request.setComment("good conditions");
+        ReviewApartmentResponse response = renterService.reviewApartment(request);
+        assertThat(response).isNotNull();
+        assertThat(renterService.getApartmentReviews(800L).size()).isEqualTo(1);
     }
 }

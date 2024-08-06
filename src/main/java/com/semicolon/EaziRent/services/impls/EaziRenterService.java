@@ -3,20 +3,11 @@ package com.semicolon.EaziRent.services.impls;
 import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.RenterRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
-import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
-import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
-import com.semicolon.EaziRent.dtos.requests.ReviewPropertyRequest;
-import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
-import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
-import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
-import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.dtos.requests.*;
+import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
-import com.semicolon.EaziRent.services.BioDataService;
-import com.semicolon.EaziRent.services.LandlordService;
-import com.semicolon.EaziRent.services.PropertyService;
-import com.semicolon.EaziRent.services.RenterService;
+import com.semicolon.EaziRent.services.*;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +27,8 @@ public class EaziRenterService implements RenterService {
     private LandlordService landlordService;
     private final ReviewRepository reviewRepository;
     private PropertyService propertyService;
+    private ApartmentService apartmentService;
+
 
     public EaziRenterService(RenterRepository renterRepository,
                              ModelMapper modelMapper,
@@ -58,6 +51,10 @@ public class EaziRenterService implements RenterService {
     public void setPropertyService(PropertyService propertyService) {
         this.propertyService = propertyService;
     }
+    @Autowired
+    public void setApartmentService(ApartmentService apartmentService) {
+        this.apartmentService = apartmentService;
+    }
 
     @Override
     @Transactional
@@ -70,6 +67,7 @@ public class EaziRenterService implements RenterService {
         renter = renterRepository.save(renter);
         RegisterResponse response = modelMapper.map(renter, RegisterResponse.class);
         response.setMessage("Renter successfully registered");
+        response.setDateCreated(data.getDateRegistered());
         return response;
     }
 
@@ -125,7 +123,7 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public List<Review> getLandlordReviews(long landlordId) {
+    public List<Review> getLandlordReviews(Long landlordId) {
         return landlordService.findLandlordReviews(landlordId);
     }
 
@@ -144,6 +142,43 @@ public class EaziRenterService implements RenterService {
     @Override
     public List<Review> findPropertyReviews(Long propertyId) {
         return reviewRepository.findPropertyReviews(propertyId);
+    }
+
+    @Override
+    public ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request) {
+        Property property = propertyService.getPropertyBy(request.getPropertyId());
+        Apartment apartment = apartmentService.getApartmentBy(request.getApartmentId());
+        Renter renter = findById(request.getRenterId());
+        BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
+        //validateExistingApartment(property, apartment);
+        Review review = map(request, apartment, reviewer);
+        return map(renter, review);
+    }
+
+    private @NotNull ReviewApartmentResponse map(Renter renter, Review review) {
+        ReviewApartmentResponse response = modelMapper.map(renter, ReviewApartmentResponse.class);
+        response.setApartmentId(review.getApartment().getId());
+        response.setRenterId(review.getReviewer().getId());
+        return response;
+    }
+
+    private @NotNull Review map(ReviewApartmentRequest request, Apartment apartment, BioData reviewer) {
+        Review review = modelMapper.map(request, Review.class);
+        review.setApartment(apartment);
+        review.setReviewer(reviewer);
+        reviewRepository.save(review);
+        return review;
+    }
+
+    private void validateExistingApartment(Property property, Apartment apartment) {
+        List<Apartment> propertyApartments = apartmentService.findPropertyApartments(property.getId());
+        if(!propertyApartments.contains(apartment))
+            throw new ResourceNotFoundException("no such apartment for this property");
+    }
+
+    @Override
+    public List<Review> getApartmentReviews(Long apartmentId) {
+        return reviewRepository.findApartmentReviews(apartmentId);
     }
 
     private @NotNull RatePropertyResponse map(Review review) {

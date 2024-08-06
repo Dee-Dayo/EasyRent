@@ -13,4 +13,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long> {
     List<Review> findPropertyReviews(Long propertyId);
     @Query("SELECT r FROM Review r where r.reviewee.id=:landlordId")
     List<Review> findLandlordReviews(Long landlordId);
+    @Query("SELECT r FROM Review r WHERE r.apartment.id=:apartmentId")
+    List<Review> findApartmentReviews(Long apartmentId);
 }

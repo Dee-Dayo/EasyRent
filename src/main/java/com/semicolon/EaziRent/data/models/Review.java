@@ -32,6 +32,8 @@ public class Review {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime reviewDate;
+    @ManyToOne
+    private Apartment apartment;
 
     @PrePersist
     private void setReviewDate() {
