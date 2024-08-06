@@ -11,4 +11,6 @@ public interface PropertyService {
     EaziRentAPIResponse<AddPropertyResponse> addProperty(AddPropertyRequest request, String email) throws IOException;
 
     Property getPropertyBy(Long id);
+
+
 }

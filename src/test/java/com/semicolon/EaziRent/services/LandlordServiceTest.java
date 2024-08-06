@@ -3,6 +3,7 @@ package com.semicolon.EaziRent.services;
 import com.semicolon.EaziRent.data.models.Landlord;
 import com.semicolon.EaziRent.data.repositories.LandlordRepository;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
+import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
@@ -74,6 +75,18 @@ public class LandlordServiceTest {
         assertThrows(InvalidDataException.class, ()-> landlordService.addAccountDetails(request, email));
     }
 
+    @Test
+    public void reviewLandlordTest(){
+        RateUserRequest request = new RateUserRequest();
+        request.setLandlordId(104L);
+        request.setRenterId(201L);
+        request.setRating(5);
+        request.setComment("good tenant");
+        RateUserResponse response = landlordService.reviewRenter(request);
+        assertThat(response.getRating()).isEqualTo(5);
+        assertThat(response.getRenterId()).isEqualTo(201);
+        assertThat(landlordService.findRenterReviews(201L).size()).isEqualTo(1);
+    }
     private void assertBioData(Landlord landlord, String expectedFirstName, String expectedLastName) {
         assertThat(landlord.getBioData().getFirstName()).isEqualTo(expectedFirstName);
         assertThat(landlord.getBioData().getLastName()).isEqualTo(expectedLastName);

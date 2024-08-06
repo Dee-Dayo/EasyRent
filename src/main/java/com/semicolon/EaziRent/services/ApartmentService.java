@@ -6,9 +6,12 @@ import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ApartmentService {
     EaziRentAPIResponse<AddApartmentResponse> addApartment(AddApartmentRequest request) throws IOException;
 
     Apartment getApartmentBy(Long id);
+
+    List<Apartment> findPropertyApartments(Long id);
 }

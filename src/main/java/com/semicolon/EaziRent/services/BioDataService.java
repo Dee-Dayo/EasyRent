@@ -16,4 +16,6 @@ public interface BioDataService {
     UpdateDataResponse update(Long id, UpdateRequest request);
 
     BioData update(BioData bioData, UpdateRequest request);
+
+    BioData save(BioData reviewee);
 }

@@ -1,22 +1,15 @@
 package com.semicolon.EaziRent.services;
 
-import com.fasterxml.jackson.databind.node.TextNode;
-import com.github.fge.jackson.jsonpointer.JsonPointer;
-import com.github.fge.jackson.jsonpointer.JsonPointerException;
-import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchOperation;
-import com.github.fge.jsonpatch.ReplaceOperation;
-import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
-import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
-import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
+import com.semicolon.EaziRent.data.repositories.PropertyRepository;
+import com.semicolon.EaziRent.data.repositories.ReviewRepository;
+import com.semicolon.EaziRent.dtos.requests.*;
+import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,6 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class RenterServiceTest {
     @Autowired
     private RenterService renterService;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private PropertyRepository propertyRepository;
+    @Autowired
+    private ApartmentRepository apartmentRepository;
 
     @Test
     public void testRegisterRenter(){
@@ -58,5 +58,44 @@ public class RenterServiceTest {
         UpdateDataResponse response = renterService.update(200L, request);
         assertThat(response.getFirstName()).isEqualTo("updated name");
         assertThat(response.getLastName()).isEqualTo("last name");
+    }
+    @Test
+    public void rateLandlordTest(){
+        RateUserRequest request = new RateUserRequest();
+        request.setRenterId(200L);
+        request.setRating(5);
+        request.setLandlordId(105L);
+        request.setComment("understanding landlord");
+        RateUserResponse response = renterService.reviewLandlord(request);
+        assertThat(response).isNotNull();
+        assertThat(response.getRenterId()).isEqualTo(200L);
+        assertThat(renterService.getRenterReviews(200L)).size().isEqualTo(1);
+
+    }
+
+    @Test
+    public void ratePropertyTest(){
+        ReviewPropertyRequest request = new ReviewPropertyRequest();
+        request.setPropertyId(500L);
+        request.setRenterId(200L);
+        request.setRating(5);
+        request.setComment("good conditions");
+        ReviewPropertyResponse response = renterService.reviewProperty(request);
+        assertThat(response).isNotNull();
+        assertThat(renterService.findPropertyReviews(500L).size()).isEqualTo(3);
+    }
+
+
+    @Test
+    public void reviewApartmentTest(){
+        ReviewApartmentRequest request = new ReviewApartmentRequest();
+        request.setPropertyId(500L);
+        request.setApartmentId(800L);
+        request.setRenterId(200L);
+        request.setRating(5);
+        request.setComment("good conditions");
+        ReviewApartmentResponse response = renterService.reviewApartment(request);
+        assertThat(response).isNotNull();
+        assertThat(renterService.getApartmentReviews(800L).size()).isEqualTo(1);
     }
 }

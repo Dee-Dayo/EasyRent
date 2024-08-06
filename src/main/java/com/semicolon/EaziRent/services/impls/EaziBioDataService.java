@@ -32,7 +32,7 @@ public class EaziBioDataService implements BioDataService {
         bioData.setPassword(passwordEncoder.encode(bioData.getPassword()));
         bioData.setRoles(new HashSet<>());
         bioData.getRoles().add(request.getRole());
-        return bioDataRepository.save(bioData);
+        return save(bioData);
     }
 
     @Override
@@ -60,6 +60,11 @@ public class EaziBioDataService implements BioDataService {
     @Override
     public BioData update(BioData bioData, UpdateRequest request) {
         modelMapper.map(request, bioData);
+        return bioDataRepository.save(bioData);
+    }
+
+    @Override
+    public BioData save(BioData bioData) {
         return bioDataRepository.save(bioData);
     }
 

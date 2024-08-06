@@ -1,13 +1,14 @@
 package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.Landlord;
+import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
+import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
-import com.semicolon.EaziRent.dtos.responses.AddAccountDetailsResponse;
-import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
-import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
+import com.semicolon.EaziRent.dtos.responses.*;
+
+import java.util.List;
 
 public interface LandlordService {
     RegisterResponse register(RegisterRequest request);
@@ -15,4 +16,11 @@ public interface LandlordService {
     EaziRentAPIResponse<UpdateDataResponse> update(UpdateRequest request, String email);
 
     EaziRentAPIResponse<AddAccountDetailsResponse> addAccountDetails(AddAccountDetailsRequest request, String email);
+
+    Landlord findLandlordById(Long landlordId);
+
+    List<Review> findLandlordReviews(Long landlordId);
+    RateUserResponse reviewRenter(RateUserRequest request);
+
+    List<Review> findRenterReviews(Long renterId);
 }

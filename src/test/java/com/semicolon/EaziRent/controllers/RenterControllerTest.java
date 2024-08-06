@@ -42,4 +42,15 @@ public class RenterControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void testReviewProperty()throws Exception {
+        String requestBody = "{\"propertyId\":\"500\", \"renterId\":\"201\", \"rating\":\"5\", \"comment\": \"very secure\"}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/reviewProperty")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isOk())
+                .andDo(print());
+
+    }
+
 }

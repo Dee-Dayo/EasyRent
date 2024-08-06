@@ -2,17 +2,14 @@ package com.semicolon.EaziRent.services.impls;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Uploader;
-import com.semicolon.EaziRent.data.models.Address;
-import com.semicolon.EaziRent.data.models.Landlord;
-import com.semicolon.EaziRent.data.models.Property;
+import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.AddressRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
-import com.semicolon.EaziRent.services.LandlordService;
-import com.semicolon.EaziRent.services.PropertyService;
+import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,8 @@ public class EaziPropertyService implements PropertyService {
     private final AddressRepository addressRepository;
     private final PropertyRepository propertyRepository;
     private LandlordService landlordService;
+
+
 
     @Autowired
     @Lazy
@@ -57,6 +56,8 @@ public class EaziPropertyService implements PropertyService {
         return propertyRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("No property found with id: " + id));
     }
+
+
 
     private Address saveAddress(AddPropertyRequest request) {
         Address address = modelMapper.map(request.getAddressRequest(), Address.class);

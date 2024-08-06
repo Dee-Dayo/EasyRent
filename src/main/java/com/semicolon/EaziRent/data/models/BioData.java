@@ -9,12 +9,15 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.EAGER;
+import static jakarta.persistence.FetchType.LAZY;
 import static java.time.LocalDateTime.now;
 
 @Getter
@@ -32,12 +35,11 @@ public class BioData {
     private String email;
     private String password;
 
-    @ElementCollection(fetch = EAGER)
+    @ElementCollection(fetch=EAGER)
     @Enumerated(STRING)
     private Set<Role> roles;
-
-    @OneToOne
-    private Rating rating;
+    @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
+    private List<Review> reviews;
 
     @Setter(AccessLevel.NONE)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
