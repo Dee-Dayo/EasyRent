@@ -2,11 +2,10 @@ package com.semicolon.EaziRent.dtos.responses;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
-public class RatePropertyResponse {
+public class ReviewPropertyResponse {
     private Long propertyId;
     private Long renterId;
     private int propertyRate;

@@ -80,7 +80,7 @@ public class RenterServiceTest {
         request.setRenterId(200L);
         request.setRating(5);
         request.setComment("good conditions");
-        RatePropertyResponse response = renterService.reviewProperty(request);
+        ReviewPropertyResponse response = renterService.reviewProperty(request);
         assertThat(response).isNotNull();
         assertThat(renterService.findPropertyReviews(500L).size()).isEqualTo(3);
     }

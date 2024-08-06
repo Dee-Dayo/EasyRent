@@ -128,7 +128,7 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public RatePropertyResponse reviewProperty(ReviewPropertyRequest request) {
+    public ReviewPropertyResponse reviewProperty(ReviewPropertyRequest request) {
         Property property = propertyService.getPropertyBy(request.getPropertyId());
         Renter renter = findById(request.getRenterId());
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
@@ -146,11 +146,10 @@ public class EaziRenterService implements RenterService {
 
     @Override
     public ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request) {
-        Property property = propertyService.getPropertyBy(request.getPropertyId());
+        propertyService.getPropertyBy(request.getPropertyId());
         Apartment apartment = apartmentService.getApartmentBy(request.getApartmentId());
         Renter renter = findById(request.getRenterId());
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
-        //validateExistingApartment(property, apartment);
         Review review = map(request, apartment, reviewer);
         return map(renter, review);
     }
@@ -170,19 +169,13 @@ public class EaziRenterService implements RenterService {
         return review;
     }
 
-    private void validateExistingApartment(Property property, Apartment apartment) {
-        List<Apartment> propertyApartments = apartmentService.findPropertyApartments(property.getId());
-        if(!propertyApartments.contains(apartment))
-            throw new ResourceNotFoundException("no such apartment for this property");
-    }
-
     @Override
     public List<Review> getApartmentReviews(Long apartmentId) {
         return reviewRepository.findApartmentReviews(apartmentId);
     }
 
-    private @NotNull RatePropertyResponse map(Review review) {
-        RatePropertyResponse response = modelMapper.map(review, RatePropertyResponse.class);
+    private @NotNull ReviewPropertyResponse map(Review review) {
+        ReviewPropertyResponse response = modelMapper.map(review, ReviewPropertyResponse.class);
         response.setPropertyId(review.getProperty().getId());
         response.setRenterId(review.getReviewer().getId());
         return response;
