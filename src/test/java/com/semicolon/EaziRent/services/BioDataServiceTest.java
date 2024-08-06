@@ -22,7 +22,7 @@ public class BioDataServiceTest {
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("first name");
         request.setLastName("last name");
-        request.setEmail("myemail@email.com");
+        request.setEmail("myemail345@email.com");
         request.setPassword("password");
         BioData response = bioDataService.register(request);
         assertThat(response).isNotNull();
