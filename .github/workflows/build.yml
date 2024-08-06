@@ -42,4 +42,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: your repository on dockerhub
+          tags: olayemi14/eazirent:latest
