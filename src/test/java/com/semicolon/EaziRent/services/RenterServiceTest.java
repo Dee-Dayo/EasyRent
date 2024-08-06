@@ -55,6 +55,7 @@ public class RenterServiceTest {
         request.setFirstName("updated name");
         request.setLastName("last name");
         request.setOccupation("Banker");
+
         UpdateDataResponse response = renterService.update(200L, request);
         assertThat(response.getFirstName()).isEqualTo("updated name");
         assertThat(response.getLastName()).isEqualTo("last name");
