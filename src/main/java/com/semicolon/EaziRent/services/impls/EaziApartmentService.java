@@ -23,10 +23,12 @@ import static java.time.LocalDateTime.now;
 @Service
 @AllArgsConstructor
 public class EaziApartmentService implements ApartmentService {
-    private final PropertyService propertyService;
+    private PropertyService propertyService;
     private final ApartmentRepository apartmentRepository;
     private final ModelMapper modelMapper;
     private final Cloudinary cloudinary;
+
+
 
     @Override
     public EaziRentAPIResponse<AddApartmentResponse> addApartment(AddApartmentRequest request) throws IOException {

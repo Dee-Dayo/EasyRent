@@ -17,11 +17,10 @@ import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.BioDataService;
 import com.semicolon.EaziRent.services.LandlordService;
 import com.semicolon.EaziRent.services.RenterService;
-import com.semicolon.EaziRent.services.ReviewService;
-import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,21 +29,25 @@ import java.util.List;
 import static com.semicolon.EaziRent.data.constants.Role.RENTER;
 
 @Service
-@AllArgsConstructor
 public class EaziRenterService implements RenterService {
     private final RenterRepository renterRepository;
     private final ModelMapper modelMapper;
     private final BioDataService bioDataService;
-    private ReviewService reviewService;
     private LandlordService landlordService;
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
 
-    @Autowired
-    public void setReviewService(ReviewService reviewService) {
-        this.reviewService = reviewService;
+    public EaziRenterService(RenterRepository renterRepository,
+                             ModelMapper modelMapper,
+                             BioDataService bioDataService,
+                             ReviewRepository reviewRepository) {
+        this.renterRepository = renterRepository;
+        this.modelMapper = modelMapper;
+        this.bioDataService = bioDataService;
+        this.reviewRepository = reviewRepository;
     }
 
     @Autowired
+    @Lazy
     public void setLandlordService(LandlordService landlordService) {
         this.landlordService = landlordService;
     }
@@ -108,22 +111,16 @@ public class EaziRenterService implements RenterService {
         return response;
     }
 
-
-
     @Override
     public List<Review> getRenterReviews(Long renterId) {
         Renter renter = findById(renterId);
         return reviewRepository.findRenterReviews(renter.getBioData().getId());
     }
 
-
     @Override
     public List<Review> getLandlordReviews(long landlordId) {
         return landlordService.findLandlordReviews(landlordId);
     }
-
-
-
 
     @Override
     public Renter getRenterBy(String email) {

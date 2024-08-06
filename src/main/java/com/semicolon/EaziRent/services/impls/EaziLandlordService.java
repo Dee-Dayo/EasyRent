@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,6 @@ import static com.semicolon.EaziRent.data.constants.Role.LANDLORD;
 import static java.time.LocalDateTime.now;
 
 @Service
-@AllArgsConstructor
 public class EaziLandlordService implements LandlordService {
     private final LandlordRepository landlordRepository;
     private final ModelMapper modelMapper;
@@ -35,8 +35,20 @@ public class EaziLandlordService implements LandlordService {
     private RenterService renterService;
 
 
+    public EaziLandlordService(LandlordRepository landlordRepository,
+                               ModelMapper modelMapper,
+                               BioDataService bioDataService,
+                               AccountDetailsRepository accountDetailsRepository,
+                               ReviewRepository reviewRepository, RenterService renterService) {
+        this.landlordRepository = landlordRepository;
+        this.modelMapper = modelMapper;
+        this.bioDataService = bioDataService;
+        this.accountDetailsRepository = accountDetailsRepository;
+        this.reviewRepository = reviewRepository;
+    }
 
     @Autowired
+    @Lazy
     public void setRenterService(RenterService renterService) {
         this.renterService = renterService;
     }

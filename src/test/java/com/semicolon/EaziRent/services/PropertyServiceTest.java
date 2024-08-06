@@ -46,17 +46,7 @@ public class PropertyServiceTest {
         }
     }
 
-    @Test
-    public void reviewPropertyTest(){
-        RatePropertyRequest request = new RatePropertyRequest();
-        request.setPropertyId(500L);
-        request.setRate(2);
-        request.setRenterId(202L);
-        request.setComment("good conditions");
-        RatePropertyResponse response = propertyService.reviewProperty(request);
-        assertThat(response).isNotNull();
-        assertThat(response.getPropertyId()).isEqualTo(500L);
-    }
+
 
 
 }

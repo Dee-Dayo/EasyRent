@@ -2,12 +2,10 @@ package com.semicolon.EaziRent.services.impls;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.Uploader;
-import com.semicolon.EaziRent.data.models.Address;
-import com.semicolon.EaziRent.data.models.Landlord;
-import com.semicolon.EaziRent.data.models.Property;
-import com.semicolon.EaziRent.data.models.Review;
+import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.AddressRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
+import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.RatePropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
@@ -15,9 +13,7 @@ import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
-import com.semicolon.EaziRent.services.LandlordService;
-import com.semicolon.EaziRent.services.PropertyService;
-import com.semicolon.EaziRent.services.ReviewService;
+import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +35,8 @@ public class EaziPropertyService implements PropertyService {
     private final AddressRepository addressRepository;
     private final PropertyRepository propertyRepository;
     private LandlordService landlordService;
-    private ReviewService reviewService;
 
-    @Autowired
-    @Lazy
-    public void setReviewService(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
+
 
     @Autowired
     @Lazy
@@ -71,16 +62,7 @@ public class EaziPropertyService implements PropertyService {
                 .orElseThrow(()-> new ResourceNotFoundException("No property found with id: " + id));
     }
 
-    @Override
-    public RatePropertyResponse reviewProperty(RatePropertyRequest request) {
-        return reviewService.rateProperty(request);
 
-    }
-
-    @Override
-    public List<Review> getPropertyReviews(long propertyId) {
-        return reviewService.getPropertyReviews(propertyId);
-    }
 
     private Address saveAddress(AddPropertyRequest request) {
         Address address = modelMapper.map(request.getAddressRequest(), Address.class);

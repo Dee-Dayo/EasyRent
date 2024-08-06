@@ -17,7 +17,5 @@ public interface PropertyService {
 
     Property getPropertyBy(Long id);
 
-    RatePropertyResponse reviewProperty(RatePropertyRequest request);
 
-    List<Review> getPropertyReviews(long propertyId);
 }
