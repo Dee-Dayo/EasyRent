@@ -21,4 +21,6 @@ public interface LandlordService {
 
     List<Review> findLandlordReviews(Long landlordId);
     RateUserResponse reviewRenter(RateUserRequest request);
+
+    List<Review> findRenterReviews(Long renterId);
 }

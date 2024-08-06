@@ -1,12 +1,8 @@
 package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
-import com.semicolon.EaziRent.dtos.requests.RatePropertyRequest;
-import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
-import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

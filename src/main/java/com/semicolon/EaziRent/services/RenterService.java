@@ -4,7 +4,9 @@ import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
+import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
@@ -28,4 +30,7 @@ public interface RenterService {
     List<Review> getLandlordReviews(long landlordId);
 
 
+    RatePropertyResponse reviewProperty(ReviewPropertyRequest request);
+
+    List<Review> findPropertyReviews(Long propertyId);
 }

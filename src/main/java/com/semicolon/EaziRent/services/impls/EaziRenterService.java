@@ -1,14 +1,13 @@
 package com.semicolon.EaziRent.services.impls;
 
-import com.semicolon.EaziRent.data.models.BioData;
-import com.semicolon.EaziRent.data.models.Landlord;
-import com.semicolon.EaziRent.data.models.Renter;
-import com.semicolon.EaziRent.data.models.Review;
+import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.RenterRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
+import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
@@ -16,6 +15,7 @@ import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.BioDataService;
 import com.semicolon.EaziRent.services.LandlordService;
+import com.semicolon.EaziRent.services.PropertyService;
 import com.semicolon.EaziRent.services.RenterService;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
@@ -35,6 +35,7 @@ public class EaziRenterService implements RenterService {
     private final BioDataService bioDataService;
     private LandlordService landlordService;
     private final ReviewRepository reviewRepository;
+    private PropertyService propertyService;
 
     public EaziRenterService(RenterRepository renterRepository,
                              ModelMapper modelMapper,
@@ -50,6 +51,12 @@ public class EaziRenterService implements RenterService {
     @Lazy
     public void setLandlordService(LandlordService landlordService) {
         this.landlordService = landlordService;
+    }
+
+    @Autowired
+    @Lazy
+    public void setPropertyService(PropertyService propertyService) {
+        this.propertyService = propertyService;
     }
 
     @Override
@@ -120,6 +127,30 @@ public class EaziRenterService implements RenterService {
     @Override
     public List<Review> getLandlordReviews(long landlordId) {
         return landlordService.findLandlordReviews(landlordId);
+    }
+
+    @Override
+    public RatePropertyResponse reviewProperty(ReviewPropertyRequest request) {
+        Property property = propertyService.getPropertyBy(request.getPropertyId());
+        Renter renter = findById(request.getRenterId());
+        BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
+        Review review = modelMapper.map(request, Review.class);
+        review.setProperty(property);
+        review.setReviewer(reviewer);
+        reviewRepository.save(review);
+        return map(review);
+    }
+
+    @Override
+    public List<Review> findPropertyReviews(Long propertyId) {
+        return reviewRepository.findPropertyReviews(propertyId);
+    }
+
+    private @NotNull RatePropertyResponse map(Review review) {
+        RatePropertyResponse response = modelMapper.map(review, RatePropertyResponse.class);
+        response.setPropertyId(review.getProperty().getId());
+        response.setRenterId(review.getReviewer().getId());
+        return response;
     }
 
     @Override

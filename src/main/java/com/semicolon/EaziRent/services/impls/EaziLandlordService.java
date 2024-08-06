@@ -116,6 +116,13 @@ public class EaziLandlordService implements LandlordService {
         reviewRepository.save(review);
         return map(review, landlord, renter);
     }
+
+    @Override
+    public List<Review> findRenterReviews(Long renterId) {
+        Renter renter = renterService.findById(renterId);
+        return reviewRepository.findRenterReviews(renter.getBioData().getId());
+    }
+
     private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {
         Review review = modelMapper.map(request, Review.class);
         review.setReviewer(reviewer);

@@ -5,13 +5,9 @@ import com.cloudinary.Uploader;
 import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.AddressRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
-import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
-import com.semicolon.EaziRent.dtos.requests.RatePropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.RatePropertyResponse;
-import com.semicolon.EaziRent.dtos.responses.RateUserResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.List;
 
 import static com.semicolon.EaziRent.utils.EaziUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
