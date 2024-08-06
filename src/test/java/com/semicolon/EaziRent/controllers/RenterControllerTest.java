@@ -50,7 +50,24 @@ public class RenterControllerTest {
                 .content(requestBody))
                 .andExpect(status().isOk())
                 .andDo(print());
+    }
+    @Test
+    public void testReviewLandlord()throws Exception{
+        String requestBody = "{\"landlordId\":\"104\", \"renterId\":\"201\", \"rating\":\"4\", \"comment\": \"understanding landlord\"}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/reviewLandlord")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isOk())
+                .andDo(print());
 
+    }
+
+    @Test
+    public void testGetLandlordReviews()throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/renter/getLandlordReviews{landlordId}", 104)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
 }
