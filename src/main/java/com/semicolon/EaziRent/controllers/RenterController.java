@@ -74,4 +74,25 @@ public class RenterController {
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
         }
     }
+
+    @GetMapping("/getPropertyReviews{propertyId}")
+    public ResponseEntity<?> getPropertyReviews(@PathVariable("propertyId") Long propertyId){
+        try{
+            List<Review>reviews = renterService.findPropertyReviews(propertyId);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+    @GetMapping("/getApartmentReviews{apartmentId}")
+    public ResponseEntity<?> getApartmentReviews(@PathVariable Long apartmentId){
+        try{
+            List<Review> reviews = renterService.getApartmentReviews(apartmentId);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
 }
