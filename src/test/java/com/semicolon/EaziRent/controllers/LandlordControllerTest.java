@@ -66,7 +66,6 @@ public class LandlordControllerTest {
     }
 
     @Test
-
     public void addAccountDetailsTest() throws Exception {
         AddAccountDetailsRequest request = new AddAccountDetailsRequest();
         request.setAccountName("accountName");
