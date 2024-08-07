@@ -36,6 +36,7 @@ public class EaziPaystackService implements PaystackService {
     @Override
     public EaziRentAPIResponse<String> initializePayment(String email, Long apartmentId) throws IOException {
         Apartment apartment = apartmentService.getApartmentBy(apartmentId);
+        validateStatusOf(apartment);
         OkHttpClient client = new OkHttpClient();
         JSONObject json = new JSONObject();
         json.put("email", email);
@@ -57,10 +58,12 @@ public class EaziPaystackService implements PaystackService {
         }
     }
 
+
     @Override
     @Transactional
     public EaziRentAPIResponse<PaidRentResponse> verifyPayment(String reference, String email, Long apartmentId) throws IOException {
         Apartment apartment = apartmentService.getApartmentBy(apartmentId);
+        validateStatusOf(apartment);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(paystackConfig.getVerifyUrl() + reference)
@@ -77,9 +80,14 @@ public class EaziPaystackService implements PaystackService {
             validate(paystackResponse);
             Renter renter = renterService.getRenterBy(email);
             Rent rent = getRent(apartment, renter);
+            apartmentService.updateAndSave(apartment, 1);
             PaidRentResponse paidRentResponse = buildPaidRentResponse(rent, paystackResponse, renter, apartment);
             return new EaziRentAPIResponse<>(true, paidRentResponse);
         }
+    }
+
+    private void validateStatusOf(Apartment apartment) {
+        if (!apartment.getIsAvailable()) throw new IllegalStateException("Apartment is not available");
     }
 
     private static void validate(String paystackResponse) {

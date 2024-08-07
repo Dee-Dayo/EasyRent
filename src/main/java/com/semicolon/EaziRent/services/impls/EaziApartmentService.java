@@ -10,7 +10,6 @@ import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -49,7 +48,7 @@ public class EaziApartmentService implements ApartmentService {
         Apartment apartment = createApartmentFromRequest(request, property);
         String mediaUrl = getMediaUrl(request.getMediaFile(), cloudinary.uploader());
         apartment.getMediaUrls().add(mediaUrl);
-        apartment.setIsAvailable(apartment.getNumber() != 0);
+        apartment.setIsAvailable(apartment.getNumber() > 0);
         apartment = apartmentRepository.save(apartment);
         AddApartmentResponse response = buildAddApartmentResponse(apartment, property);
         return new EaziRentAPIResponse<>(true, response);
@@ -64,6 +63,13 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public List<Apartment> findPropertyApartments(Long id) {
         return apartmentRepository.findAllApartmentsFor(id);
+    }
+
+    @Override
+    public void updateAndSave(Apartment apartment, int number) {
+        apartment.setNumber(apartment.getNumber() - number);
+        apartment.setIsAvailable(apartment.getNumber() > 0);
+        apartmentRepository.save(apartment);
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {
