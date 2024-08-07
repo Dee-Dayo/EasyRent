@@ -14,6 +14,7 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
 @RequestMapping("/api/v1/apartment")
+@CrossOrigin(origins = "*")
 public class ApartmentController {
     private final ApartmentService apartmentService;
 
