@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
-    @Query("SELECT r FROM Review r where r.reviewee.id=:renterId")
-    List<Review> findRenterReviews(Long renterId);
+    @Query("SELECT r FROM Review r where r.reviewee.id=:bioDataId")
+    List<Review> findRenterReviews(Long bioDataId);
     @Query("SELECT r FROM Review r where r.property.id=:propertyId")
     List<Review> findPropertyReviews(Long propertyId);
-    @Query("SELECT r FROM Review r where r.reviewee.id=:landlordId")
-    List<Review> findLandlordReviews(Long landlordId);
+    @Query("SELECT r FROM Review r where r.reviewee.id=:bioDataId")
+    List<Review> findLandlordReviews(Long bioDataId);
     @Query("SELECT r FROM Review r WHERE r.apartment.id=:apartmentId")
     List<Review> findApartmentReviews(Long apartmentId);
 }

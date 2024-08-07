@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.controllers;
 
+import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.ReviewPropertyRequest;
@@ -11,11 +12,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/api/v1/renter")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class RenterController {
     private final RenterService renterService;
 
@@ -63,8 +67,8 @@ public class RenterController {
     @GetMapping("/getLandlordReviews{landlordId}")
     public ResponseEntity<?> getLandlordReviews(@PathVariable("landlordId") Long landlordId){
         try{
-            var response = renterService.getLandlordReviews(landlordId);
-            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+            List<Review> reviews = renterService.getLandlordReviews(landlordId);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
         }
         catch (EasyRentBaseException exception){
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);

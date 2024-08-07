@@ -19,6 +19,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/landlord")
+@CrossOrigin(origins = "*")
 public class LandlordController {
 
     private final LandlordService landlordService;

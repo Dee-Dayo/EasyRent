@@ -8,7 +8,7 @@ TRUNCATE TABLE properties CASCADE;
 TRUNCATE TABLE account_details CASCADE;
 TRUNCATE TABLE apartments CASCADE;
 TRUNCATE TABLE apartment_media_urls CASCADE;
-TRUNCATE TABLE ratings CASCADE;
+TRUNCATE TABLE reviews CASCADE;
 
 
 insert into users(id, first_name, last_name, email, password, date_registered)values
@@ -57,6 +57,6 @@ INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
 (800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
 (800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372046/file.jpg');
 
-INSERT INTO ratings(id, comment, rating,review_date, property_id, reviewer_id)VALUES
+INSERT INTO reviews(id, comment, rating,review_date, property_id, reviewer_id)VALUES
 (40, 'nice house', 5, '2024-07-13T14:02:27.434315200', 500, 104),
 (50, 'bad house', 0, '2024-07-13T14:02:27.434315200', 500, 104)
