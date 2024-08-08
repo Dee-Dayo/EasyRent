@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.semicolon.EaziRent.utils.EaziUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
@@ -57,6 +58,10 @@ public class EaziPropertyService implements PropertyService {
                 .orElseThrow(()-> new ResourceNotFoundException("No property found with id: " + id));
     }
 
+    @Override
+    public List<Property> findAll() {
+        return propertyRepository.findAll();
+    }
 
 
     private Address saveAddress(AddPropertyRequest request) {

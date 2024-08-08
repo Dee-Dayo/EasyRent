@@ -16,4 +16,6 @@ public interface ApartmentService {
     List<Apartment> findPropertyApartments(Long id);
 
     void updateAndSave(Apartment apartment, int number);
+
+    List<Apartment> findAll();
 }

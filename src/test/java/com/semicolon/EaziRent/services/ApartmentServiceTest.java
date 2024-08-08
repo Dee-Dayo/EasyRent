@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.services;
 
+import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.semicolon.EaziRent.utils.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,5 +31,10 @@ public class ApartmentServiceTest {
         assertThat(response.getData().getMediaUrls()).isNotEmpty();
     }
 
+    @Test
+    public void findAllApartment(){
+        List<Apartment> apartments = apartmentService.findAll();
+        assertThat(apartments.size()).isEqualTo(1);
+    }
 
 }

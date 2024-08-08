@@ -72,6 +72,11 @@ public class EaziApartmentService implements ApartmentService {
         apartmentRepository.save(apartment);
     }
 
+    @Override
+    public List<Apartment> findAll() {
+        return apartmentRepository.findAll();
+    }
+
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {
         Apartment apartment = modelMapper.map(request, Apartment.class);
         apartment.setProperty(property);
