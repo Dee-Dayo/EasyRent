@@ -41,9 +41,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/landlord/register").permitAll()
-                        .requestMatchers("/api/v1/renter/**").permitAll()
-                        .requestMatchers("/api/v1/property/add", "/api/v1/landlord/**",
-                                "/api/v1/apartment").hasAnyAuthority("LANDLORD")
+                        .requestMatchers("/api/v1/renter/register").permitAll()
+                        .requestMatchers("/api/v1/property/add",
+                                         "/api/v1/landlord/**",
+                                         "/api/v1/apartment")
+                                    .hasAnyAuthority("LANDLORD")
+                        .requestMatchers("/api/v1/paystack/**").hasAnyAuthority("RENTER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
