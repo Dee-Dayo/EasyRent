@@ -29,7 +29,7 @@ public class TestUtils {
             "RAhTEvjREPPTamzglltNlI9FlK1XiorFav2193ZuDwhtd3y0vT6DgB_tMP1Ki5SwvfsAXi9_F456AH" +
             "8k_aF1S-3pSX-MN50wdE-FUiipveHmkH3sdMXQgh9yXKEVFKcLWv2qCAMU66Fu330bI6VIZqV3pQ";
 
-    public static final String TEST_IMAGE_LOCATION = "C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\images\\juno.jpg";
+    public static final String TEST_IMAGE_LOCATION = "C:\\Users\\DELL\\Desktop\\Capstone\\EaziRent\\src\\main\\resources\\images\\juno.jpg";
 
     public static final String TEST_APARTMENT1_LOCATION = "C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\images\\juno_apartment1.jpg";
 
