@@ -4,6 +4,7 @@ import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,5 +14,5 @@ public interface PropertyService {
 
     Property getPropertyBy(Long id);
 
-    List<Property> findAll();
+    ViewPropertyResponse findAll();
 }

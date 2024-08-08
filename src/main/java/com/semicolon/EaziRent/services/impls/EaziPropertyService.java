@@ -8,6 +8,7 @@ import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
@@ -59,8 +60,11 @@ public class EaziPropertyService implements PropertyService {
     }
 
     @Override
-    public List<Property> findAll() {
-        return propertyRepository.findAll();
+    public ViewPropertyResponse findAll() {
+        List<Property> properties = propertyRepository.findAll();
+        ViewPropertyResponse response = new ViewPropertyResponse();
+        response.setProperties(properties);
+        return response;
     }
 
 

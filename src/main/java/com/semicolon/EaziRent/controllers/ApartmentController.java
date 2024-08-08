@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
+import com.semicolon.EaziRent.dtos.responses.ViewApartmentResponse;
 import com.semicolon.EaziRent.services.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,11 @@ public class ApartmentController {
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addApartment(@ModelAttribute AddApartmentRequest request) throws IOException {
         return ResponseEntity.status(CREATED).body(apartmentService.addApartment(request));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> allApartments(){
+        ViewApartmentResponse response = apartmentService.findAll();
+        return ResponseEntity.ok(response);
     }
 }

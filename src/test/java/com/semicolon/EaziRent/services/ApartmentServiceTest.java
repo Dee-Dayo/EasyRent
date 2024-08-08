@@ -4,6 +4,7 @@ import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.ViewApartmentResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,8 +34,8 @@ public class ApartmentServiceTest {
 
     @Test
     public void findAllApartment(){
-        List<Apartment> apartments = apartmentService.findAll();
-        assertThat(apartments.size()).isEqualTo(1);
+        ViewApartmentResponse apartments = apartmentService.findAll();
+        assertThat(apartments.getApartments().size()).isEqualTo(5);
     }
 
 }

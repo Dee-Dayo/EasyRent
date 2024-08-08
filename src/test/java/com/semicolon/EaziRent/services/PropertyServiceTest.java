@@ -4,6 +4,7 @@ import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +47,8 @@ public class PropertyServiceTest {
 
     @Test
     public void canFindAllProperty(){
-        List<Property> properties = propertyService.findAll();
-        assertThat(properties.size()).isEqualTo(1);
+        ViewPropertyResponse properties = propertyService.findAll();
+        assertThat(properties.getProperties().size()).isEqualTo(5);
     }
 
 }

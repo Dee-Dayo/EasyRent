@@ -9,9 +9,11 @@ import org.springframework.mock.web.MockPart;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.semicolon.EaziRent.utils.TestUtils.buildAddApartmentRequest;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -43,4 +45,11 @@ public class ApartmentControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void findAllApartmentsTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/apartment/all")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

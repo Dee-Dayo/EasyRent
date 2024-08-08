@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockPart;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
@@ -60,6 +61,15 @@ class PropertyControllerTest {
             throw new RuntimeException(e);
         }
     }
+
+    @Test
+    public void findAllPropertiesTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/property/all")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
 
     private String getToken() throws Exception {
         LoginRequest request = new LoginRequest();

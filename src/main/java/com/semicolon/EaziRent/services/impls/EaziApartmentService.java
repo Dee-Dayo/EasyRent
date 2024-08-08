@@ -7,6 +7,7 @@ import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.ViewApartmentResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
@@ -73,8 +74,11 @@ public class EaziApartmentService implements ApartmentService {
     }
 
     @Override
-    public List<Apartment> findAll() {
-        return apartmentRepository.findAll();
+    public ViewApartmentResponse findAll() {
+        List<Apartment> apartments = apartmentRepository.findAll();
+        ViewApartmentResponse response = new ViewApartmentResponse();
+        response.setApartments(apartments);
+        return response;
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {
