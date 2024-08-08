@@ -9,6 +9,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class RenterControllerTest {
     @Autowired
     private MockMvc mockMvc;
+
 
     @Test
     public void testRegisterRenter() throws Exception {
@@ -52,7 +54,51 @@ public class RenterControllerTest {
                 .content(requestBody))
                 .andExpect(status().isOk())
                 .andDo(print());
+    }
+    @Test
+    public void testReviewLandlord()throws Exception{
+        String requestBody = "{\"landlordId\":\"300\", \"renterId\":\"201\", \"rating\":\"4\", \"comment\": \"understanding landlord\"}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/reviewLandlord")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+                .andExpect(status().isOk())
+                .andDo(print());
 
     }
+
+    @Test
+    public void testGetLandlordReviews()throws Exception {
+        createLandlordReview();
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/renter/getLandlordReviews{landlordId}", 300)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    public void testGetPropertyReviews()throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/renter/getPropertyReviews{propertyId}", 300)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+    @Test
+    public void testGetApartmentReviews()throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/renter/getApartmentReviews{apartmentId}", 300)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    private void createLandlordReview() throws Exception {
+        String requestBody = "{\"landlordId\":\"300\", \"renterId\":\"201\", \"rating\":\"5\", \"comment\": \"very secure\"}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/reviewLandlord")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+
 
 }

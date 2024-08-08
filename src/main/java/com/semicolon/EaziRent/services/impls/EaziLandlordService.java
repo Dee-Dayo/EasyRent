@@ -15,6 +15,8 @@ import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ import static java.time.LocalDateTime.now;
 
 @Service
 public class EaziLandlordService implements LandlordService {
+    private static final Logger log = LoggerFactory.getLogger(EaziLandlordService.class);
     private final LandlordRepository landlordRepository;
     private final ModelMapper modelMapper;
     private final BioDataService bioDataService;
@@ -54,7 +57,6 @@ public class EaziLandlordService implements LandlordService {
     }
 
     @Override
-    @Transactional
     public RegisterResponse register(RegisterRequest request) {
         request.setRole(LANDLORD);
         BioData data = bioDataService.register(request);
@@ -100,11 +102,13 @@ public class EaziLandlordService implements LandlordService {
         return landlordRepository.findLandlordBy(landlordId)
                 .orElseThrow(()-> new ResourceNotFoundException("Landlord not found"));
     }
-
     @Override
     public List<Review> findLandlordReviews(Long landlordId) {
-        return reviewRepository.findLandlordReviews(landlordId);
+        Landlord landlord = findBy(landlordId);
+        Long bioDataId = landlord.getBioData().getId();
+        return reviewRepository.findLandlordReviews(bioDataId);
     }
+
 
     @Override
     public RateUserResponse reviewRenter(RateUserRequest request) {
@@ -121,6 +125,12 @@ public class EaziLandlordService implements LandlordService {
     public List<Review> findRenterReviews(Long renterId) {
         Renter renter = renterService.findById(renterId);
         return reviewRepository.findRenterReviews(renter.getBioData().getId());
+    }
+
+    @Override
+    public Landlord findBy(Long landlordId) {
+        return landlordRepository.findById(landlordId)
+                .orElseThrow(()->new ResourceNotFoundException("landlord not found with id " + landlordId));
     }
 
     private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {

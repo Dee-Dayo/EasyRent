@@ -57,7 +57,6 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    @Transactional
     public RegisterResponse register(RegisterRequest request) {
         request.setRole(RENTER);
         BioData data = bioDataService.register(request);
@@ -73,7 +72,6 @@ public class EaziRenterService implements RenterService {
 
 
     @Override
-    @Transactional
     public UpdateDataResponse update(Long renterId, UpdateRequest request) {
         Renter renter = renterRepository.findById(renterId).orElseThrow();
         renter.setOccupation(request.getOccupation());
@@ -93,10 +91,10 @@ public class EaziRenterService implements RenterService {
 
     @Override
     public RateUserResponse reviewLandlord(RateUserRequest request) {
-        Landlord landlord = landlordService.findLandlordById(request.getLandlordId());
+        Landlord landlord = landlordService.findBy(request.getLandlordId());
         Renter renter = findById(request.getRenterId());
-        BioData reviewer = bioDataService.findBioDataBy(landlord.getBioData().getId());
-        BioData reviewee = bioDataService.findBioDataBy(renter.getBioData().getId());
+        BioData reviewee = bioDataService.findBioDataBy(landlord.getBioData().getId());
+        BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, reviewer, reviewee);
         reviewRepository.save(review);
         return map(review, landlord, renter);
@@ -119,7 +117,8 @@ public class EaziRenterService implements RenterService {
     @Override
     public List<Review> getRenterReviews(Long renterId) {
         Renter renter = findById(renterId);
-        return reviewRepository.findRenterReviews(renter.getBioData().getId());
+        Long bioDataId = renter.getBioData().getId();
+        return reviewRepository.findRenterReviews(bioDataId);
     }
 
     @Override
