@@ -14,7 +14,6 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
 @RequestMapping("/api/v1/property")
-@CrossOrigin(origins = "*")
 public class PropertyController {
 
     private final PropertyService propertyService;
