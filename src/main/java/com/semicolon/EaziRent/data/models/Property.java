@@ -29,6 +29,7 @@ public class Property {
 
     @Enumerated(value = STRING)
     private Type type;
-    @OneToMany(cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Review> reviews;
 }

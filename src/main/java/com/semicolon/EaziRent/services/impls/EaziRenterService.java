@@ -134,7 +134,9 @@ public class EaziRenterService implements RenterService {
         Review review = modelMapper.map(request, Review.class);
         review.setProperty(property);
         review.setReviewer(reviewer);
-        reviewRepository.save(review);
+        review = reviewRepository.save(review);
+
+        propertyService.addReview(property, review);
         return map(review);
     }
 

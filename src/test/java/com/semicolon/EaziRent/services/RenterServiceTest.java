@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.services;
 
+import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
@@ -26,6 +27,8 @@ public class RenterServiceTest {
     private PropertyRepository propertyRepository;
     @Autowired
     private ApartmentRepository apartmentRepository;
+    @Autowired
+    private PropertyService propertyService;
 
     @Test
     public void testRegisterRenter(){
@@ -79,12 +82,19 @@ public class RenterServiceTest {
         ReviewPropertyRequest request = new ReviewPropertyRequest();
         request.setPropertyId(500L);
         request.setRenterId(200L);
-        request.setRating(5);
-        request.setComment("good conditions");
+        request.setRating(4);
+        request.setComment("trying it");
+
+        Property property = propertyService.getPropertyBy(500L);
+        assertThat(property.getReviews().size()).isEqualTo(3);
+
         ReviewPropertyResponse response = renterService.reviewProperty(request);
         assertThat(response).isNotNull();
         System.out.println(renterService.findPropertyReviews(500L).size());
-        assertThat(renterService.findPropertyReviews(500L).size()).isEqualTo(3);
+        assertThat(renterService.findPropertyReviews(500L).size()).isEqualTo(5);
+
+        property = propertyService.getPropertyBy(500L);
+        assertThat(property.getReviews().size()).isEqualTo(4);
     }
 
 

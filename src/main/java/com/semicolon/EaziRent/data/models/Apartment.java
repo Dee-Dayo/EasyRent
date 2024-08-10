@@ -1,5 +1,7 @@
 package com.semicolon.EaziRent.data.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.semicolon.EaziRent.data.constants.RentType;
 import com.semicolon.EaziRent.data.constants.SubType;
 import jakarta.persistence.*;
