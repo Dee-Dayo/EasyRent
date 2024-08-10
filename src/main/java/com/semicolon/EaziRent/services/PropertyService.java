@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.Property;
+import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
@@ -15,4 +16,6 @@ public interface PropertyService {
     Property getPropertyBy(Long id);
 
     ViewPropertyResponse findAll();
+
+    void addReview(Property property, Review review);
 }

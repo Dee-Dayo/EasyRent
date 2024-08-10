@@ -39,6 +39,7 @@ public class BioData {
     @ElementCollection(fetch=EAGER)
     @Enumerated(STRING)
     private Set<Role> roles;
+
     @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
 

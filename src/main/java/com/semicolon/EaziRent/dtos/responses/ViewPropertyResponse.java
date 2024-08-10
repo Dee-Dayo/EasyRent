@@ -9,5 +9,5 @@ import java.util.List;
 @Setter
 @Getter
 public class ViewPropertyResponse {
-    private List<Property> properties;
+    private List<PropertyResponse> properties;
 }
