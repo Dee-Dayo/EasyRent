@@ -13,8 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 
 import static com.semicolon.EaziRent.data.constants.Role.RENTER;
@@ -90,7 +91,7 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public RateUserResponse reviewLandlord(RateUserRequest request) {
+    public RateUserResponse reviewLandlord(ReviewUserRequest request) {
         Landlord landlord = landlordService.findBy(request.getLandlordId());
         Renter renter = findById(request.getRenterId());
         BioData reviewee = bioDataService.findBioDataBy(landlord.getBioData().getId());
@@ -100,7 +101,7 @@ public class EaziRenterService implements RenterService {
         return map(review, landlord, renter);
     }
 
-    private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {
+    private @NotNull Review map(ReviewUserRequest request, BioData reviewer, BioData reviewee) {
         Review review = modelMapper.map(request, Review.class);
         review.setReviewer(reviewer);
         review.setReviewee(reviewee);
@@ -173,6 +174,7 @@ public class EaziRenterService implements RenterService {
         return reviewRepository.findApartmentReviews(apartmentId);
     }
 
+
     private @NotNull ReviewPropertyResponse map(Review review) {
         ReviewPropertyResponse response = modelMapper.map(review, ReviewPropertyResponse.class);
         response.setPropertyId(review.getProperty().getId());
@@ -186,5 +188,6 @@ public class EaziRenterService implements RenterService {
         return renterRepository.findRenterBy(bioData.getId())
                 .orElseThrow(()-> new ResourceNotFoundException("Renter not found with email: " + email));
     }
+
 
 }

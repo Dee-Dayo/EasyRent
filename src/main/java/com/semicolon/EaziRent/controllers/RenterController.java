@@ -1,10 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.data.models.Review;
-import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
-import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
-import com.semicolon.EaziRent.dtos.requests.ReviewPropertyRequest;
-import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
+import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.services.RenterService;
@@ -54,7 +51,7 @@ public class RenterController {
        }
     }
     @PostMapping("/reviewLandlord")
-    public ResponseEntity<?> reviewLandlord(@RequestBody RateUserRequest request){
+    public ResponseEntity<?> reviewLandlord(@RequestBody ReviewUserRequest request){
         try{
             RateUserResponse response = renterService.reviewLandlord(request);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true,response), OK);
@@ -95,4 +92,5 @@ public class RenterController {
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
         }
     }
+
 }

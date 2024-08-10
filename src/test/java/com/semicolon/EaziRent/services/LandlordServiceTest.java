@@ -3,7 +3,7 @@ package com.semicolon.EaziRent.services;
 import com.semicolon.EaziRent.data.models.Landlord;
 import com.semicolon.EaziRent.data.repositories.LandlordRepository;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
-import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
@@ -77,7 +77,7 @@ public class LandlordServiceTest {
 
     @Test
     public void reviewLandlordTest(){
-        RateUserRequest request = new RateUserRequest();
+        ReviewUserRequest request = new ReviewUserRequest();
         request.setLandlordId(104L);
         request.setRenterId(201L);
         request.setRating(5);

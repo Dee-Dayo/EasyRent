@@ -5,8 +5,10 @@ import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
+import com.semicolon.EaziRent.dtos.requests.RentApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.RentApartmentResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
@@ -61,10 +63,6 @@ public class EaziApartmentService implements ApartmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("No apartment found with id " + id));
     }
 
-    @Override
-    public List<Apartment> findPropertyApartments(Long id) {
-        return apartmentRepository.findAllApartmentsFor(id);
-    }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {
         Apartment apartment = modelMapper.map(request, Apartment.class);

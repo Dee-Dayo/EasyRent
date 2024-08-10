@@ -62,7 +62,7 @@ public class RenterServiceTest {
     }
     @Test
     public void rateLandlordTest(){
-        RateUserRequest request = new RateUserRequest();
+        ReviewUserRequest request = new ReviewUserRequest();
         request.setRenterId(200L);
         request.setRating(5);
         request.setLandlordId(301L);
