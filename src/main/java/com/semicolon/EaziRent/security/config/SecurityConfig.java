@@ -18,6 +18,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.List;
 
+import static com.semicolon.EaziRent.security.utils.SecurityUtils.*;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -35,22 +36,16 @@ public class SecurityConfig {
                 new CustomUsernamePasswordAuthenticationFilter(authenticationManager, rsaKeys);
         authenticationFilter.setFilterProcessesUrl("/api/v1/auth/login");
 
+
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterAt(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(authorizationFilter, CustomUsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/landlord/register").permitAll()
-                        .requestMatchers("/api/v1/renter/register").permitAll()
-                        .requestMatchers("/api/v1/property/all").permitAll()
-                        .requestMatchers("/api/v1/apartment/all").permitAll()
-                        .requestMatchers("/api/v1/property/add",
-                                         "/api/v1/landlord/**",
-                                         "/api/v1/apartment")
-                                    .hasAnyAuthority("LANDLORD")
-                        .requestMatchers("/api/v1/paystack/**").hasAnyAuthority("RENTER")
+                        .requestMatchers(PUBLIC_ENDPOINTS.toArray(new String[0])).permitAll()
+                        .requestMatchers(LANDLORD_AUTH_ENDPOINTS).hasAnyAuthority("LANDLORD")
+                        .requestMatchers(RENTER_AUTH_ENDPOINTS).hasAnyAuthority("RENTER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

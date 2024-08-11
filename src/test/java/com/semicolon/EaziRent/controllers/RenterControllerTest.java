@@ -34,7 +34,7 @@ public class RenterControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = {"RENTER"})
     public void testUpdateRenter()throws Exception {
         String requestBody = "{\"firstName\": \"updated name\", \"occupation\": \"Business Man\"}";
         mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/renter/update{renterId}", 200)
