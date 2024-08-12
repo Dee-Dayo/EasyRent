@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,10 +116,16 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public List<Review> getRenterReviews(Long renterId) {
+    public ReviewListResponse getRenterReviews(Long renterId) {
         Renter renter = findById(renterId);
         Long bioDataId = renter.getBioData().getId();
-        return reviewRepository.findRenterReviews(bioDataId);
+        List<Review>reviews = reviewRepository.findRenterReviews(bioDataId);
+        List<ReviewResponse> responses =reviews
+                .stream().map(ReviewResponse::new)
+                .collect(Collectors.toList());
+        ReviewListResponse response = new ReviewListResponse();
+        response.setReviews(responses);
+        return response;
     }
 
     @Override

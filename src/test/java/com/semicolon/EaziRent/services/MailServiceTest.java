@@ -16,7 +16,7 @@ public class MailServiceTest {
     @Test
     public void testSendMail() {
         SendMailRequest request = new SendMailRequest();
-        request.setRecipientEmail("victormsonter@gmail.com");
+        request.setRecipientEmail("ameliageorge215@gmail.com");
         request.setRecipientName("Gagnon");
         var response = mailService.sendMail(request);
         assertThat(response).isNotNull();

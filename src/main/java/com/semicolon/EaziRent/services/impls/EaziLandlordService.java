@@ -97,7 +97,7 @@ public class EaziLandlordService implements LandlordService {
 
     @Override
     public Landlord findLandlordById(Long landlordId) {
-        return landlordRepository.findLandlordBy(landlordId)
+        return landlordRepository.findById(landlordId)
                 .orElseThrow(()-> new ResourceNotFoundException("Landlord not found"));
     }
     @Override
@@ -129,6 +129,11 @@ public class EaziLandlordService implements LandlordService {
     public Landlord findBy(Long landlordId) {
         return landlordRepository.findById(landlordId)
                 .orElseThrow(()->new ResourceNotFoundException("landlord not found with id " + landlordId));
+    }
+
+    @Override
+    public ReviewListResponse getRenterReviews(Long renterId) {
+        return renterService.getRenterReviews(renterId);
     }
 
     private @NotNull Review map(ReviewUserRequest request, BioData reviewer, BioData reviewee) {

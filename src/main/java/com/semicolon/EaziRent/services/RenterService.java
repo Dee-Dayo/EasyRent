@@ -1,11 +1,8 @@
 package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.Renter;
-import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
-
-import java.util.List;
 
 public interface RenterService {
 
@@ -19,7 +16,7 @@ public interface RenterService {
 
     RateUserResponse reviewLandlord(ReviewUserRequest request);
 
-    List<Review> getRenterReviews(Long renterId);
+    ReviewListResponse getRenterReviews(Long renterId);
 
     ReviewListResponse getLandlordReviews(Long landlordId);
 

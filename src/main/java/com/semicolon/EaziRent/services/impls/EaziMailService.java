@@ -45,8 +45,7 @@ public class EaziMailService implements MailService {
         headers.set("accept", APPLICATION_JSON.toString());
         RequestEntity<?> httpRequest
                 = new RequestEntity<>(request,headers, HttpMethod.POST, URI.create(url));
-        ResponseEntity<BrevoMailResponse> response
-                = restTemplate.postForEntity(url, httpRequest, BrevoMailResponse.class);
+        ResponseEntity<BrevoMailResponse> response = restTemplate.exchange(url, HttpMethod.POST, httpRequest, BrevoMailResponse.class);
         if(response.getBody() != null
             && response.getStatusCode() == HttpStatusCode.valueOf(201))
             return " registration mail sent successfully";
@@ -56,8 +55,7 @@ public class EaziMailService implements MailService {
     private String loadHtmlTemplate() {
         try {
             return new String(Files.readAllBytes(
-                    Paths.get("C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\templates\\registration_template.html",
-                            "registration_template.html")));
+                    Paths.get("C:\\Users\\DELL\\IdeaProjects\\EasyRent\\src\\main\\resources\\templates\\registration_template.html")));
         }
         catch (IOException exception) {
             return "";
