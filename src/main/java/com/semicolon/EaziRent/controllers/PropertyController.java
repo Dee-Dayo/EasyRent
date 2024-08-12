@@ -2,7 +2,9 @@ package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
+import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
+import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,16 @@ public class PropertyController {
     public ResponseEntity<?> allProperties(){
         ViewPropertyResponse response =  propertyService.findAll();
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/findBy{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        try{
+            PropertyResponse response = propertyService.findBy(id);
+            return ResponseEntity.ok(response);
+        }
+        catch (EasyRentBaseException exception){
+            return ResponseEntity.badRequest().body(exception.getMessage());
+        }
     }
 
 }

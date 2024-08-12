@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RateUserRequest {
+public class ReviewUserRequest {
     private Long landlordId;
     private Long renterId;
     private int rating;

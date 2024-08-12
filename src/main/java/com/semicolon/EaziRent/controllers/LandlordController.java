@@ -1,7 +1,9 @@
 package com.semicolon.EaziRent.controllers;
 
+import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewUserRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
@@ -13,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -39,8 +43,15 @@ public class LandlordController {
         return ResponseEntity.ok(landlordService.update(request, principal.getName()));
     }
 
+    @PostMapping("/review-renter")
+    public ResponseEntity<?> reviewRenter(@RequestBody ReviewUserRequest request){
+        return ResponseEntity.ok(landlordService.reviewRenter(request));
+    }
+
+
     @PostMapping("/add-account-details")
     public ResponseEntity<?> addAccountDetails(@RequestBody AddAccountDetailsRequest request, Principal principal) {
+
         return ResponseEntity.status(CREATED).body(landlordService.addAccountDetails(request, principal.getName()));
     }
 }

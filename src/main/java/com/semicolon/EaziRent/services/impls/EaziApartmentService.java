@@ -6,8 +6,9 @@ import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
+import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.ViewApartmentResponse;
+import com.semicolon.EaziRent.dtos.responses.ListApartmentResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.semicolon.EaziRent.utils.EaziUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
@@ -36,6 +38,7 @@ public class EaziApartmentService implements ApartmentService {
         this.modelMapper = modelMapper;
         this.cloudinary = cloudinary;
     }
+
     @Autowired
     @Lazy
     public void setPropertyService(PropertyService propertyService) {
@@ -74,11 +77,20 @@ public class EaziApartmentService implements ApartmentService {
     }
 
     @Override
-    public ViewApartmentResponse findAll() {
-        List<Apartment> apartments = apartmentRepository.findAll();
-        ViewApartmentResponse response = new ViewApartmentResponse();
-        response.setApartments(apartments);
-        return response;
+    public ListApartmentResponse findAllFor(Long propertyId) {
+        List<Apartment> apartments = apartmentRepository.findAllApartmentsFor(propertyId);
+        List<ApartmentResponse> apartmentResponses = apartments
+                .stream().map(ApartmentResponse::new)
+                .collect(Collectors.toList());
+        ListApartmentResponse listApartmentResponse = new ListApartmentResponse();
+        listApartmentResponse.setApartments(apartmentResponses);
+        return listApartmentResponse;
+    }
+
+    @Override
+    public ApartmentResponse findApartmentBy(Long id) {
+        Apartment apartment = getApartmentBy(id);
+        return new ApartmentResponse(apartment);
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {

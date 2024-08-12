@@ -17,18 +17,18 @@ public interface RenterService {
 
     Renter findById(Long renterId);
 
-    RateUserResponse reviewLandlord(RateUserRequest request);
+    RateUserResponse reviewLandlord(ReviewUserRequest request);
 
     List<Review> getRenterReviews(Long renterId);
 
-    List<Review> getLandlordReviews(Long landlordId);
+    ReviewListResponse getLandlordReviews(Long landlordId);
 
 
     ReviewPropertyResponse reviewProperty(ReviewPropertyRequest request);
 
-    List<Review> findPropertyReviews(Long propertyId);
+    ReviewListResponse findPropertyReviews(Long propertyId);
 
     ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request);
 
-    List<Review> getApartmentReviews(Long l);
+    ReviewListResponse getApartmentReviews(Long l);
 }

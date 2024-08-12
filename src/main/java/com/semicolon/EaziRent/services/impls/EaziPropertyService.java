@@ -78,6 +78,13 @@ public class EaziPropertyService implements PropertyService {
         propertyRepository.save(property);
     }
 
+    @Override
+    public PropertyResponse findBy(Long id) {
+        Property property = getPropertyBy(id);
+        return new PropertyResponse(property);
+    }
+
+
 
     private Address saveAddress(AddPropertyRequest request) {
         Address address = modelMapper.map(request.getAddressRequest(), Address.class);

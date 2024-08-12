@@ -66,13 +66,13 @@ INSERT INTO apartments(id, number, price, rent_type, type, is_available, propert
 (802, 27, 34000.00, 'YEARLY', 'ONE_ROOM', true, 500),
 (803, 28, 16900.00, 'MONTHLY', 'THREE_BEDROOM_FLAT', true, 500),
 (804, 29, 10500.00, 'HALF_YEARLY', 'ROOM_AND_PARLOUR', true, 500),
-(804, 29, 10500.00, 'HALF_YEARLY', 'STUDIO', true, 500),
-(804, 29, 10500.00, 'HALF_YEARLY', 'QUAD_SHARED_ROOM', true, 500),
-(804, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500);
+(805, 29, 10500.00, 'HALF_YEARLY', 'STUDIO', true, 500),
+(806, 29, 10500.00, 'HALF_YEARLY', 'QUAD_SHARED_ROOM', true, 500),
+(807, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500);
 
 INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
-(800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
-(800, 'http://res.cloudinary.com/dvliop7es/image/upload/v1722372046/file.jpg');
+(800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
+(800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372046/file.jpg');
 
 INSERT INTO reviews(id, comment, rating,review_date, property_id, reviewer_id)VALUES
 (40, 'nice house', 5, '2024-07-13T14:02:27.434315200', 500, 104),
