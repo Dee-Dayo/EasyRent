@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class ErrorResponse {
     @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime requestTime;
-    private boolean success;
+    private LocalDateTime responseTime;
+    private boolean isSuccessful;
     private String error;
     private String message;
     private String path;

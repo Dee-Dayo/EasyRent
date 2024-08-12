@@ -10,8 +10,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,6 +46,7 @@ public class RenterControllerTest {
     }
 
     @Test
+    @WithMockUser(authorities = "RENTER")
     public void testReviewProperty()throws Exception {
         String requestBody = "{\"propertyId\":\"500\", \"renterId\":\"201\", \"rating\":\"5\", \"comment\": \"very secure\"}";
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/renter/reviewProperty")
