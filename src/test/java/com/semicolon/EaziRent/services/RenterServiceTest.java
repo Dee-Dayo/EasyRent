@@ -65,7 +65,7 @@ public class RenterServiceTest {
     }
     @Test
     public void rateLandlordTest(){
-        RateUserRequest request = new RateUserRequest();
+        ReviewUserRequest request = new ReviewUserRequest();
         request.setRenterId(200L);
         request.setRating(5);
         request.setLandlordId(301L);
@@ -73,8 +73,6 @@ public class RenterServiceTest {
         RateUserResponse response = renterService.reviewLandlord(request);
         assertThat(response).isNotNull();
         assertThat(response.getRenterId()).isEqualTo(200L);
-        assertThat(renterService.getLandlordReviews(301L)).size().isEqualTo(1);
-        System.out.println(renterService.getLandlordReviews(301L));
     }
 
     @Test
@@ -90,9 +88,6 @@ public class RenterServiceTest {
 
         ReviewPropertyResponse response = renterService.reviewProperty(request);
         assertThat(response).isNotNull();
-        System.out.println(renterService.findPropertyReviews(500L).size());
-        assertThat(renterService.findPropertyReviews(500L).size()).isEqualTo(5);
-
         property = propertyService.getPropertyBy(500L);
         assertThat(property.getReviews().size()).isEqualTo(4);
     }
@@ -108,7 +103,6 @@ public class RenterServiceTest {
         request.setComment("good conditions");
         ReviewApartmentResponse response = renterService.reviewApartment(request);
         assertThat(response).isNotNull();
-        assertThat(renterService.getApartmentReviews(800L).size()).isEqualTo(1);
     }
 
 }

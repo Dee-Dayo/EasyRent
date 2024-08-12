@@ -1,10 +1,13 @@
 package com.semicolon.EaziRent.controllers;
 
+import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewUserRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
+import com.semicolon.EaziRent.dtos.responses.ReviewListResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.services.LandlordService;
 import jakarta.validation.Valid;
@@ -13,9 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @AllArgsConstructor
@@ -39,8 +43,24 @@ public class LandlordController {
         return ResponseEntity.ok(landlordService.update(request, principal.getName()));
     }
 
+    @PostMapping("/review-renter")
+    public ResponseEntity<?> reviewRenter(@RequestBody ReviewUserRequest request){
+        return ResponseEntity.ok(landlordService.reviewRenter(request));
+    }
+
+
     @PostMapping("/add-account-details")
     public ResponseEntity<?> addAccountDetails(@RequestBody AddAccountDetailsRequest request, Principal principal) {
         return ResponseEntity.status(CREATED).body(landlordService.addAccountDetails(request, principal.getName()));
+    }
+    @GetMapping("/getRenterReviews{renterId}")
+    public ResponseEntity<?> getRenterReviews(@PathVariable("renterId") Long renterId) {
+        try{
+            ReviewListResponse response = landlordService.getRenterReviews(renterId);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
     }
 }

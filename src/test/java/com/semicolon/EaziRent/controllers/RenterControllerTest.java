@@ -10,6 +10,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -88,6 +90,8 @@ public class RenterControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+
 
     private void createLandlordReview() throws Exception {
         String requestBody = "{\"landlordId\":\"300\", \"renterId\":\"201\", \"rating\":\"5\", \"comment\": \"very secure\"}";

@@ -13,9 +13,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.semicolon.EaziRent.data.constants.Role.RENTER;
 
@@ -90,7 +91,7 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public RateUserResponse reviewLandlord(RateUserRequest request) {
+    public RateUserResponse reviewLandlord(ReviewUserRequest request) {
         Landlord landlord = landlordService.findBy(request.getLandlordId());
         Renter renter = findById(request.getRenterId());
         BioData reviewee = bioDataService.findBioDataBy(landlord.getBioData().getId());
@@ -100,7 +101,7 @@ public class EaziRenterService implements RenterService {
         return map(review, landlord, renter);
     }
 
-    private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {
+    private @NotNull Review map(ReviewUserRequest request, BioData reviewer, BioData reviewee) {
         Review review = modelMapper.map(request, Review.class);
         review.setReviewer(reviewer);
         review.setReviewee(reviewee);
@@ -115,15 +116,22 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public List<Review> getRenterReviews(Long renterId) {
+    public ReviewListResponse getRenterReviews(Long renterId) {
         Renter renter = findById(renterId);
         Long bioDataId = renter.getBioData().getId();
-        return reviewRepository.findRenterReviews(bioDataId);
+        List<Review>reviews = reviewRepository.findRenterReviews(bioDataId);
+        List<ReviewResponse> responses =reviews
+                .stream().map(ReviewResponse::new)
+                .collect(Collectors.toList());
+        ReviewListResponse response = new ReviewListResponse();
+        response.setReviews(responses);
+        return response;
     }
 
     @Override
-    public List<Review> getLandlordReviews(Long landlordId) {
-        return landlordService.findLandlordReviews(landlordId);
+    public ReviewListResponse getLandlordReviews(Long landlordId) {
+        List<Review>reviews = landlordService.findLandlordReviews(landlordId);
+        return mapReviewResponses(reviews);
     }
 
     @Override
@@ -141,8 +149,9 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public List<Review> findPropertyReviews(Long propertyId) {
-        return reviewRepository.findPropertyReviews(propertyId);
+    public ReviewListResponse findPropertyReviews(Long propertyId) {
+        List<Review>reviews = reviewRepository.findPropertyReviews(propertyId);
+        return mapReviewResponses(reviews);
     }
 
     @Override
@@ -154,6 +163,37 @@ public class EaziRenterService implements RenterService {
         Review review = map(request, apartment, reviewer);
         return map(renter, review);
     }
+
+    @Override
+    public Renter getRenterBy(String email) {
+        BioData bioData = bioDataService.getBioDataBy(email);
+        return renterRepository.findRenterBy(bioData.getId())
+                .orElseThrow(()-> new ResourceNotFoundException("Renter not found with email: " + email));
+    }
+
+    @Override
+    public ReviewListResponse getApartmentReviews(Long apartmentId) {
+        List<Review> reviews = reviewRepository.findApartmentReviews(apartmentId);
+        return mapReviewResponses(reviews);
+    }
+
+    private static @NotNull ReviewListResponse mapReviewResponses(List<Review> reviews) {
+        List<ReviewResponse> reviewResponses
+                = reviews.stream().map(ReviewResponse::new)
+                .collect(Collectors.toList());
+        ReviewListResponse response = new ReviewListResponse();
+        response.setReviews(reviewResponses);
+        return response;
+    }
+
+
+    private @NotNull ReviewPropertyResponse map(Review review) {
+        ReviewPropertyResponse response = modelMapper.map(review, ReviewPropertyResponse.class);
+        response.setPropertyId(review.getProperty().getId());
+        response.setRenterId(review.getReviewer().getId());
+        return response;
+    }
+
 
     private @NotNull ReviewApartmentResponse map(Renter renter, Review review) {
         ReviewApartmentResponse response = modelMapper.map(renter, ReviewApartmentResponse.class);
@@ -170,23 +210,5 @@ public class EaziRenterService implements RenterService {
         return review;
     }
 
-    @Override
-    public List<Review> getApartmentReviews(Long apartmentId) {
-        return reviewRepository.findApartmentReviews(apartmentId);
-    }
-
-    private @NotNull ReviewPropertyResponse map(Review review) {
-        ReviewPropertyResponse response = modelMapper.map(review, ReviewPropertyResponse.class);
-        response.setPropertyId(review.getProperty().getId());
-        response.setRenterId(review.getReviewer().getId());
-        return response;
-    }
-
-    @Override
-    public Renter getRenterBy(String email) {
-        BioData bioData = bioDataService.getBioDataBy(email);
-        return renterRepository.findRenterBy(bioData.getId())
-                .orElseThrow(()-> new ResourceNotFoundException("Renter not found with email: " + email));
-    }
 
 }

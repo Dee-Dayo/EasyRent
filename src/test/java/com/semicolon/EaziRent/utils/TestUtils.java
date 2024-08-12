@@ -1,9 +1,11 @@
 package com.semicolon.EaziRent.utils;
 
+import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.AddressRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
+import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +15,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static com.semicolon.EaziRent.data.constants.RentType.YEARLY;
 import static com.semicolon.EaziRent.data.constants.State.LAGOS;
@@ -72,6 +75,11 @@ public class TestUtils {
             request.setMediaFile(file);
         } catch (IOException ignored) {}
         return request;
+    }
+    public static List<ApartmentResponse> mapApartmentList(List<Apartment> apartmentList) {
+        return apartmentList.stream()
+                .map(ApartmentResponse::new)
+                .toList();
     }
 
 }

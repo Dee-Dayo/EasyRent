@@ -5,6 +5,7 @@ import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
+import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
 
 import java.io.IOException;
@@ -18,4 +19,6 @@ public interface PropertyService {
     ViewPropertyResponse findAll();
 
     void addReview(Property property, Review review);
+
+    PropertyResponse findBy(Long id);
 }

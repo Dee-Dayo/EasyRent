@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RentPropertyRequest {
-    private int apartmentId;
-
+public class SendMailRequest {
+    private String recipientEmail;
+    private String recipientName;
 }

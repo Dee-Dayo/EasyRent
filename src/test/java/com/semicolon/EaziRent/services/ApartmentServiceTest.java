@@ -1,17 +1,15 @@
 package com.semicolon.EaziRent.services;
 
-import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.ViewApartmentResponse;
+import com.semicolon.EaziRent.dtos.responses.ListApartmentResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.io.IOException;
-import java.util.List;
 
 import static com.semicolon.EaziRent.utils.TestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,8 +31,8 @@ public class ApartmentServiceTest {
     }
 
     @Test
-    public void findAllApartment(){
-        ViewApartmentResponse apartments = apartmentService.findAll();
+    public void findAllForApartment(){
+        ListApartmentResponse apartments = apartmentService.findAllFor(500L);
         assertThat(apartments.getApartments().size()).isEqualTo(5);
     }
 

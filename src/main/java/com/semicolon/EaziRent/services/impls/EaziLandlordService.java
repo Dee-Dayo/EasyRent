@@ -5,14 +5,13 @@ import com.semicolon.EaziRent.data.repositories.AccountDetailsRepository;
 import com.semicolon.EaziRent.data.repositories.LandlordRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
-import com.semicolon.EaziRent.dtos.requests.RateUserRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewUserRequest;
 import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.InvalidDataException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
-import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -99,7 +97,7 @@ public class EaziLandlordService implements LandlordService {
 
     @Override
     public Landlord findLandlordById(Long landlordId) {
-        return landlordRepository.findLandlordBy(landlordId)
+        return landlordRepository.findById(landlordId)
                 .orElseThrow(()-> new ResourceNotFoundException("Landlord not found"));
     }
     @Override
@@ -111,7 +109,7 @@ public class EaziLandlordService implements LandlordService {
 
 
     @Override
-    public RateUserResponse reviewRenter(RateUserRequest request) {
+    public RateUserResponse reviewRenter(ReviewUserRequest request) {
         Landlord landlord = findLandlordById(request.getLandlordId());
         Renter renter = renterService.findById(request.getRenterId());
         BioData reviewer = bioDataService.findBioDataBy(landlord.getBioData().getId());
@@ -133,7 +131,12 @@ public class EaziLandlordService implements LandlordService {
                 .orElseThrow(()->new ResourceNotFoundException("landlord not found with id " + landlordId));
     }
 
-    private @NotNull Review map(RateUserRequest request, BioData reviewer, BioData reviewee) {
+    @Override
+    public ReviewListResponse getRenterReviews(Long renterId) {
+        return renterService.getRenterReviews(renterId);
+    }
+
+    private @NotNull Review map(ReviewUserRequest request, BioData reviewer, BioData reviewee) {
         Review review = modelMapper.map(request, Review.class);
         review.setReviewer(reviewer);
         review.setReviewee(reviewee);
