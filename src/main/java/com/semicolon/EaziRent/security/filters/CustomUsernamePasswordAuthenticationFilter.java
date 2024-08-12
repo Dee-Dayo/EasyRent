@@ -10,6 +10,7 @@ import com.semicolon.EaziRent.dtos.responses.ErrorResponse;
 import com.semicolon.EaziRent.dtos.responses.LoginResponse;
 import com.semicolon.EaziRent.security.config.RsaKeyProperties;
 import jakarta.servlet.*;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -68,12 +69,11 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
 
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(generateAccessToken(authResult));
-        loginResponse.setMessage("Authentication succeeded");
-        loginResponse.setResponseTime(now());
-        EaziRentAPIResponse<LoginResponse> apiResponse =
-                new EaziRentAPIResponse<>( true, loginResponse);
+        String token = generateAccessToken(authResult);
+        Cookie cookie = createCookie(token);
+        response.addCookie(cookie);
+        LoginResponse loginResponse = buildLoginResponse(token);
+        EaziRentAPIResponse<LoginResponse> apiResponse = new EaziRentAPIResponse<>( true, loginResponse);
         response.setContentType(APPLICATION_JSON_VALUE);
         response.getOutputStream().write(mapper.writeValueAsBytes(apiResponse));
         response.flushBuffer();
@@ -81,27 +81,6 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         chain.doFilter(request, response);
     }
 
-    private String generateAccessToken(Authentication authResult) {
-        Algorithm algorithm = Algorithm.RSA512(rsaKeys.publicKey(), rsaKeys.privateKey());
-        Instant now = Instant.now();
-        UserDetails principal = (UserDetails) authResult.getPrincipal();
-        return JWT.create()
-                .withIssuer("EasyRentApp")
-                .withIssuedAt(now)
-                .withExpiresAt(now.plus(24, HOURS))
-                .withSubject(principal.getUsername())
-                .withClaim("principal", principal.getUsername())
-                .withClaim("credentials", authResult.getCredentials().toString())
-                .withArrayClaim("roles", extractAuthorities(authResult.getAuthorities()))
-                .sign(algorithm);
-    }
-
-    private String[] extractAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        return authorities
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .toArray(String[]::new);
-    }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request,
@@ -122,4 +101,43 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         log.info("User authentication unsuccessful");
     }
 
+    private static LoginResponse buildLoginResponse(String token) {
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(token);
+        loginResponse.setMessage("Authentication succeeded");
+        loginResponse.setResponseTime(now());
+        return loginResponse;
+    }
+
+    private static Cookie createCookie(String token) {
+        Cookie cookie = new Cookie("EasyRentAuthToken", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400);
+        cookie.setSecure(true);
+//        cookie.setDomain("http://localhost:3000");
+        return cookie;
+    }
+
+    private String[] extractAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        return authorities
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .toArray(String[]::new);
+    }
+
+    private String generateAccessToken(Authentication authResult) {
+        Algorithm algorithm = Algorithm.RSA512(rsaKeys.publicKey(), rsaKeys.privateKey());
+        Instant now = Instant.now();
+        UserDetails principal = (UserDetails) authResult.getPrincipal();
+        return JWT.create()
+                .withIssuer("EasyRentApp")
+                .withIssuedAt(now)
+                .withExpiresAt(now.plus(24, HOURS))
+                .withSubject(principal.getUsername())
+                .withClaim("principal", principal.getUsername())
+                .withClaim("credentials", authResult.getCredentials().toString())
+                .withArrayClaim("roles", extractAuthorities(authResult.getAuthorities()))
+                .sign(algorithm);
+    }
 }

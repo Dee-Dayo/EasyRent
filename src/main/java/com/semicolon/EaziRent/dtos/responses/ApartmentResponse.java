@@ -34,7 +34,10 @@ public class ApartmentResponse {
     }
 
     private int calculateRatings(List<Review> reviews) {
-        int sum = reviews.stream().mapToInt(Review::getRating).sum();
-        return sum / reviews.size();
+        if(!reviews.isEmpty()) {
+            int sum = reviews.stream().mapToInt(Review::getRating).sum();
+            return sum / reviews.size();
+        }
+        return 0;
     }
 }

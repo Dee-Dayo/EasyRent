@@ -31,7 +31,6 @@ public class EaziMailService implements MailService {
         String url = mailConfig.getMailApiUrl();
         String registrationTemplate = loadHtmlTemplate();
         String processedTemplate = registrationTemplate.replace("[Recipient Name]", sendMailRequest.getRecipientName());
-
         BrevoMaiRequest request = new BrevoMaiRequest();
         request.setSubject("registration successful");
         request.setSender(new Sender());
