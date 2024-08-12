@@ -21,14 +21,14 @@ public interface RenterService {
 
     List<Review> getRenterReviews(Long renterId);
 
-    List<Review> getLandlordReviews(Long landlordId);
+    ReviewListResponse getLandlordReviews(Long landlordId);
 
 
     ReviewPropertyResponse reviewProperty(ReviewPropertyRequest request);
 
-    List<Review> findPropertyReviews(Long propertyId);
+    ReviewListResponse findPropertyReviews(Long propertyId);
 
     ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request);
 
-    List<Review> getApartmentReviews(Long l);
+    ReviewListResponse getApartmentReviews(Long l);
 }

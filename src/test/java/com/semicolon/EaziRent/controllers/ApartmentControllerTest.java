@@ -1,7 +1,6 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
-import com.semicolon.EaziRent.dtos.requests.RentApartmentRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,6 +9,7 @@ import org.springframework.mock.web.MockPart;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.semicolon.EaziRent.utils.TestUtils.buildAddApartmentRequest;
@@ -45,8 +45,11 @@ public class ApartmentControllerTest {
                 .andDo(print());
     }
 
-
-
-
-
+    @Test
+    public void findAllApartmentsTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/apartment/all")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 }

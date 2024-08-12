@@ -9,6 +9,7 @@ import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.RegisterResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.services.LandlordService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,12 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/landlord")
-@CrossOrigin(origins = "*")
 public class LandlordController {
 
     private final LandlordService landlordService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerLandlord(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> registerLandlord(@Valid @RequestBody RegisterRequest request) {
         try {
             RegisterResponse response = landlordService.register(request);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), CREATED);

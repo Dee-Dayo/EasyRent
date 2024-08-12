@@ -1,5 +1,7 @@
 package com.semicolon.EaziRent.data.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +19,8 @@ public class Landlord {
     private Long id;
 
     @OneToOne
+    @JsonSerialize(using = BioDataSerializer.class)
+    @JsonDeserialize
     private BioData bioData;
 
 }

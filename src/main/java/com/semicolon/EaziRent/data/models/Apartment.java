@@ -1,12 +1,16 @@
 package com.semicolon.EaziRent.data.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.semicolon.EaziRent.data.constants.RentType;
 import com.semicolon.EaziRent.data.constants.SubType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -28,8 +32,12 @@ public class Apartment {
     private Integer number;
     private Boolean isAvailable;
 
+
     @ElementCollection
     private Set<String> mediaUrls;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Review> reviews;
 
     @ManyToOne
     private Property property;

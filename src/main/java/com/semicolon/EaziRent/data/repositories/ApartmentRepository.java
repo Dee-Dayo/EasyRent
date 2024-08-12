@@ -9,4 +9,5 @@ import java.util.List;
 public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
     @Query("SELECT a from Apartment a WHERE a.property.id=:id")
     List<Apartment> findAllApartmentsFor(Long id);
+
 }

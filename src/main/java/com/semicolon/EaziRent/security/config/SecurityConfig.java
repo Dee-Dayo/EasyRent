@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.List;
+
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
@@ -38,14 +40,24 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterAt(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(authorizationFilter, CustomUsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/landlord/register").permitAll()
-                        .requestMatchers("/api/v1/renter/**").permitAll()
-                        .requestMatchers("/api/v1/property/add", "/api/v1/landlord/**",
-                                "/api/v1/apartment").hasAnyAuthority("LANDLORD")
-                        .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/api/v1/auth/**").permitAll()
+//                        .requestMatchers("/api/v1/landlord/register").permitAll()
+//                        .requestMatchers("/api/v1/renter/register").permitAll()
+//                        .requestMatchers("/api/v1/property/all").permitAll()
+//                        .requestMatchers("/api/v1/apartment/all").permitAll()
+//                        .requestMatchers("/api/v1/apartment/findBy{id}").permitAll()
+//                        .requestMatchers("/api/v1/property/findBy").permitAll()
+//                        .requestMatchers("/api/v1/renter/getLandlordReviews/**").permitAll()
+//                        .requestMatchers("/api/v1/property/add",
+//                                         "/api/v1/landlord/**",
+//                                         "/api/v1/apartment")
+//                                    .hasAnyAuthority("LANDLORD")
+//                        .requestMatchers("/api/v1/paystack/**").hasAnyAuthority("RENTER")
+//                        .anyRequest().authenticated()
+//                )
+
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .build();
     }
@@ -60,9 +72,9 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

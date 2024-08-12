@@ -115,7 +115,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
                 .message(exception.getMessage())
                 .path(request.getRequestURI())
                 .build();
-        response.sendError(SC_UNAUTHORIZED, "Unauthorized");
+        response.setStatus(SC_UNAUTHORIZED);
         response.setContentType(APPLICATION_JSON_VALUE);
         response.getOutputStream().write(mapper.writeValueAsBytes(errorResponse));
         response.flushBuffer();

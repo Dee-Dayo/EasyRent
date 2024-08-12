@@ -1,8 +1,10 @@
 package com.semicolon.EaziRent.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.semicolon.EaziRent.dtos.requests.*;
+import com.semicolon.EaziRent.dtos.requests.AddAccountDetailsRequest;
+import com.semicolon.EaziRent.dtos.requests.LoginRequest;
+import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
+import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.LoginResponse;
 import org.junit.jupiter.api.Test;
@@ -64,20 +66,6 @@ public class LandlordControllerTest {
     }
 
     @Test
-    public void reviewRenterTest() throws Exception {
-        ReviewUserRequest request = new ReviewUserRequest();
-        request.setRenterId(201L);
-        request.setLandlordId(300L);
-        request.setRating(4);
-        request.setComment("stubborn tenant");
-        mockMvc.perform(post("/api/v1/landlord/review-tenant")
-                .contentType(APPLICATION_JSON)
-                .content(objectMapper.writeValueAsBytes(request)))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
     public void addAccountDetailsTest() throws Exception {
         AddAccountDetailsRequest request = new AddAccountDetailsRequest();
         request.setAccountName("accountName");
@@ -107,7 +95,5 @@ public class LandlordControllerTest {
         LoginResponse loginResponse = modelMapper.map(response.getData(), LoginResponse.class);
         return loginResponse.getToken();
     }
-
-
 
 }

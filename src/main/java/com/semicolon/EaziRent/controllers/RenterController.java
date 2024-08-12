@@ -5,6 +5,7 @@ import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.services.RenterService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +17,11 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @RequestMapping("/api/v1/renter")
 @AllArgsConstructor
-@CrossOrigin(origins = "*")
 public class RenterController {
     private final RenterService renterService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try{
             RegisterResponse response = renterService.register(request);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), CREATED);
@@ -64,7 +64,7 @@ public class RenterController {
     @GetMapping("/getLandlordReviews{landlordId}")
     public ResponseEntity<?> getLandlordReviews(@PathVariable("landlordId") Long landlordId){
         try{
-            List<Review> reviews = renterService.getLandlordReviews(landlordId);
+            ReviewListResponse reviews = renterService.getLandlordReviews(landlordId);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
         }
         catch (EasyRentBaseException exception){
@@ -75,7 +75,7 @@ public class RenterController {
     @GetMapping("/getPropertyReviews{propertyId}")
     public ResponseEntity<?> getPropertyReviews(@PathVariable("propertyId") Long propertyId){
         try{
-            List<Review>reviews = renterService.findPropertyReviews(propertyId);
+            ReviewListResponse reviews = renterService.findPropertyReviews(propertyId);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
         }
         catch (EasyRentBaseException exception){
@@ -85,7 +85,7 @@ public class RenterController {
     @GetMapping("/getApartmentReviews{apartmentId}")
     public ResponseEntity<?> getApartmentReviews(@PathVariable Long apartmentId){
         try{
-            List<Review> reviews = renterService.getApartmentReviews(apartmentId);
+            ReviewListResponse reviews = renterService.getApartmentReviews(apartmentId);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
         }
         catch (EasyRentBaseException exception){
