@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.dtos.responses;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,8 @@ import java.util.Set;
 public class AddApartmentResponse {
     @JsonFormat(pattern = "dd-MMMM-yyyy 'at' hh:mm a")
     private LocalDateTime responseTime;
+    @JsonProperty("apartmentId")
+    private Long id;
     private Long propertyId;
     private String type;
     private String rentType;

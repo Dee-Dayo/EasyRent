@@ -3,6 +3,7 @@ package com.semicolon.EaziRent.security.filters;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import com.semicolon.EaziRent.security.config.RsaKeyProperties;
@@ -27,7 +28,6 @@ import java.util.List;
 
 import static com.semicolon.EaziRent.security.utils.SecurityUtils.JWT_PREFIX;
 import static com.semicolon.EaziRent.security.utils.SecurityUtils.PUBLIC_ENDPOINTS;
-import static jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -54,7 +54,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         if (authorizationHeader != null && authorizationHeader.startsWith(JWT_PREFIX)) {
             String token = authorizationHeader.substring(JWT_PREFIX.length()).strip();
             if (isTokenBlacklisted(response, token)) return;
-            doAuthorization(token);
+            if (!isAuthorized(token, response)) return;
         }
         filterChain.doFilter(request, response);
     }
@@ -62,24 +62,30 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     private boolean isTokenBlacklisted(HttpServletResponse response, String token) throws IOException {
         if (authService.isTokenBlacklisted(token)) {
             log.warn("Token is blacklisted: {}", token);
-            response.sendError(SC_UNAUTHORIZED, "Unauthorized");
-            response.setContentType(APPLICATION_JSON_VALUE);
-            response.getWriter().write("{\"error\": \"Token is expired or invalid\"}");
-            response.getWriter().flush();
+            sendErrorResponse(response);
             return true;
         }
         return false;
     }
 
-    private void doAuthorization(String token) {
+    private boolean isAuthorized(String token, HttpServletResponse response) throws IOException {
         Algorithm algorithm = Algorithm.RSA512(rsaKeys.publicKey(), rsaKeys.privateKey());
-        JWTVerifier jwtVerifier = JWT.require(algorithm)
-                .withIssuer("EasyRentApp")
-                .withClaimPresence("roles")
-                .withClaimPresence("principal")
-                .withClaimPresence("credentials")
-                .build();
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+        DecodedJWT decodedJWT;
+        try {
+            JWTVerifier jwtVerifier = JWT.require(algorithm)
+                    .withIssuer("EasyRentApp")
+                    .withClaimPresence("roles")
+                    .withClaimPresence("principal")
+                    .withClaimPresence("credentials")
+                    .build();
+
+            decodedJWT = jwtVerifier.verify(token);
+        } catch (JWTVerificationException exception) {
+            log.error("JWT verification failed: {}", exception.getMessage());
+            sendErrorResponse(response);
+            return false;
+        }
+
         List<? extends GrantedAuthority> authorities = decodedJWT.getClaim("roles")
                 .asList(SimpleGrantedAuthority.class);
         String principal = decodedJWT.getClaim("principal").asString();
@@ -87,5 +93,13 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         Authentication authentication = new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User authorization succeeded");
+        return true;
+    }
+
+    private void sendErrorResponse(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(APPLICATION_JSON_VALUE);
+        response.getWriter().write("{\"error\": \"" + "Token is expired or invalid" + "\"}");
+        response.getWriter().flush();
     }
 }
