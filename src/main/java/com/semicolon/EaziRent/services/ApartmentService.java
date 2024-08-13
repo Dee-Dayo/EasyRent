@@ -2,6 +2,7 @@ package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
+import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
@@ -22,4 +23,6 @@ public interface ApartmentService {
     ListApartmentResponse findAllFor(Long propertyId);
 
     ApartmentResponse findApartmentBy(Long id);
+
+    ListApartmentResponse findApartmentsBy(GetApartmentRequest request);
 }

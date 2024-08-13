@@ -15,6 +15,8 @@ public class PropertyResponse {
     private String state;
     private String mediaUrl;
     private int noOfApartments;
+    private String agentName;
+    private String agentPhoneNumber;
     private String type;
     private int averageRating;
 
@@ -25,6 +27,8 @@ public class PropertyResponse {
         this.mediaUrl = property.getMediaUrl();
         this.noOfApartments = property.getNoOfApartments();
         this.type = property.getType().toString();
+        this.agentName = property.getAgentDetails().getName();
+        this.agentPhoneNumber = property.getAgentDetails().getPhoneNumber();
         this.averageRating = calculateAverageRating(property.getReviews());
     }
 
