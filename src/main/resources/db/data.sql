@@ -52,7 +52,7 @@ INSERT INTO addresses(id, area, lga, state, number, street)VALUES
 INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, media_url)VALUES
 (500, 9, 400, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg'),
 (501, 3, 401, 300, 'DUPLEX', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150403/file_v5traw.jpg'),
-(502, 4, 402, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150486/file_ibvzwj.jpg'),
+(502, 4, 402, 301, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150486/file_ibvzwj.jpg'),
 (503, 2, 403, 300, 'CONDO', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150799/file_jktfbh.jpg'),
 (504, 7, 404, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150840/file_voez6b.jpg'),
 (505, 10, 405, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg');
@@ -63,7 +63,7 @@ INSERT INTO account_details(id, account_name, account_number, bank_name, landlor
 INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
 (800, 25, 1000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (801, 26, 5000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
-(802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
+(802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 502),
 (803, 28, 16900.00, 'MONTHLY', 'THREE_BEDROOM_FLAT', true, 500),
 (804, 29, 10500.00, 'HALF_YEARLY', 'ROOM_AND_PARLOUR', true, 500),
 (805, 29, 10500.00, 'HALF_YEARLY', 'STUDIO', true, 500),

@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<?> handleIOException(IOException exception, HttpServletRequest request) {
-        ErrorResponse response = buildErrorResponse("UploadMediaFailed", exception.getMessage(), request);
+        ErrorResponse response = buildErrorResponse("InputOutputError", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
@@ -60,6 +60,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidDataException.class)
     public ResponseEntity<?> handleInvalidDataException(InvalidDataException exception, HttpServletRequest request) {
         ErrorResponse response = buildErrorResponse("InvalidData", exception.getMessage(), request);
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(UploadMediaFailedException.class)
+    public ResponseEntity<?> handleUploadMediaFailedException(UploadMediaFailedException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("UploadMediaFailed", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 

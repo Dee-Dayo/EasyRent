@@ -2,32 +2,34 @@ package com.semicolon.EaziRent.services.impls;
 
 import com.cloudinary.Cloudinary;
 import com.semicolon.EaziRent.data.models.Apartment;
+import com.semicolon.EaziRent.data.models.BioData;
+import com.semicolon.EaziRent.data.models.Landlord;
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
-import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
-import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
-import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.ListApartmentResponse;
+import com.semicolon.EaziRent.dtos.responses.*;
+import com.semicolon.EaziRent.exceptions.InvalidDataException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.semicolon.EaziRent.utils.EaziUtils.getMediaUrl;
+import static com.semicolon.EaziRent.utils.ServicesUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
 
 @Service
+@Slf4j
 public class EaziApartmentService implements ApartmentService {
     private PropertyService propertyService;
     private final ApartmentRepository apartmentRepository;
@@ -49,7 +51,7 @@ public class EaziApartmentService implements ApartmentService {
 
 
     @Override
-    public EaziRentAPIResponse<AddApartmentResponse> addApartment(AddApartmentRequest request) throws IOException {
+    public EaziRentAPIResponse<AddApartmentResponse> addApartment(AddApartmentRequest request) {
         Property property = propertyService.getPropertyBy(request.getPropertyId());
         Apartment apartment = createApartmentFromRequest(request, property);
         String mediaUrl = getMediaUrl(request.getMediaFile(), cloudinary.uploader());
@@ -104,6 +106,36 @@ public class EaziApartmentService implements ApartmentService {
         List<Apartment> apartments = apartmentRepository.findByStateAndSubtypeAndRentType
                 (request.getState(), request.getType(), request.getRentType());
         return getListApartmentResponse(apartments);
+    }
+
+    @Override
+    public EaziRentAPIResponse<UploadMediaResponse> uploadMedia(List<MultipartFile> mediaFiles,
+                                                                Long id, String email) {
+        log.info("Trying to upload media files for apartment with id: {}", id);
+        Apartment apartment = getApartmentBy(id);
+        validatePropertyOwner(apartment.getProperty(), email);
+        UploadMediaResponse response = uploadMediaAndGetResponse(mediaFiles, apartment);
+        log.info("Successfully uploaded media files for apartment with id: {}", id);
+        return new EaziRentAPIResponse<>(true, response);
+    }
+
+    private UploadMediaResponse uploadMediaAndGetResponse(List<MultipartFile> mediaFiles, Apartment apartment) {
+        for (MultipartFile mediaFile : mediaFiles) {
+            String mediaUrl = getMediaUrl(mediaFile, cloudinary.uploader());
+            apartment.getMediaUrls().add(mediaUrl);
+        }
+        apartment = apartmentRepository.save(apartment);
+        UploadMediaResponse response = modelMapper.map(apartment, UploadMediaResponse.class);
+        response.setPropertyId(apartment.getProperty().getId());
+        return response;
+    }
+
+    private void validatePropertyOwner(Property property, String email) {
+        Landlord landlord = property.getLandlord();
+        BioData bioData = landlord.getBioData();
+        String landlordEmail = bioData.getEmail();
+        if (!landlordEmail.equals(email))
+            throw new InvalidDataException("You are not authorised to perform this action");
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {

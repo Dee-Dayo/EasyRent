@@ -33,7 +33,7 @@ class AuthControllerTest {
     @Test
     public void authenticateUserTest() throws Exception {
         LoginRequest request = new LoginRequest();
-        request.setEmail("colesam@gmail.com");
+        request.setEmail("jamespalmer@gmail.com");
         request.setPassword("password");
         byte[] content = new ObjectMapper().writeValueAsBytes(request);
         mockMvc.perform(post("/api/v1/auth/login")
