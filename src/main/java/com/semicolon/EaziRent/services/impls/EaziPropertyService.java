@@ -20,11 +20,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.semicolon.EaziRent.utils.EaziUtils.getMediaUrl;
+import static com.semicolon.EaziRent.utils.ServicesUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -46,7 +45,7 @@ public class EaziPropertyService implements PropertyService {
 
     @Override
     @Transactional
-    public EaziRentAPIResponse<AddPropertyResponse> addProperty(AddPropertyRequest request, String email) throws IOException {
+    public EaziRentAPIResponse<AddPropertyResponse> addProperty(AddPropertyRequest request, String email) {
         Landlord landlord = landlordService.findLandlordBy(email);
         Uploader uploader = cloudinary.uploader();
         String mediaUrl = getMediaUrl(request.getMediaFile(), uploader);

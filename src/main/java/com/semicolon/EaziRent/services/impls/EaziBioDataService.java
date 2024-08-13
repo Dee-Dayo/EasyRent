@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 
-import static com.semicolon.EaziRent.utils.EaziUtils.copyNonNullProperties;
+import static com.semicolon.EaziRent.utils.ServicesUtils.copyNonNullProperties;
 
 @Service
 @AllArgsConstructor
