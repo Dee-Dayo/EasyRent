@@ -47,9 +47,13 @@ public class ApartmentController {
         }
     }
     @GetMapping("/filterApartment")
-    public ResponseEntity<?> findApartmentByLocationAndSubType(GetApartmentRequest request){
+    public ResponseEntity<?> findApartmentByLocationAndSubType(@RequestBody GetApartmentRequest request){
         try{
             ListApartmentResponse response = apartmentService.findApartmentsBy(request);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
         }
     }
 }
