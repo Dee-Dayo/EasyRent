@@ -1,6 +1,5 @@
 package com.semicolon.EaziRent.dtos.responses;
 
-import com.semicolon.EaziRent.data.constants.SubType;
 import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.data.models.Review;
 import lombok.Getter;

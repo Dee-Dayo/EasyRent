@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 public class GetApartmentRequest {
     private State state;
-    private SubType subType;
+    private SubType type;
     private RentType rentType;
 }

@@ -102,7 +102,7 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public ListApartmentResponse findApartmentsBy(GetApartmentRequest request) {
         List<Apartment> apartments = apartmentRepository.findByStateAndSubtypeAndRentType
-                (request.getState(), request.getSubType(), request.getRentType());
+                (request.getState(), request.getType(), request.getRentType());
         return getListApartmentResponse(apartments);
     }
 

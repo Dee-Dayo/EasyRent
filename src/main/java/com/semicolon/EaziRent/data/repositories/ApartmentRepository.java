@@ -12,6 +12,6 @@ import java.util.List;
 public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
     @Query("SELECT a from Apartment a WHERE a.property.id=:id")
     List<Apartment> findAllApartmentsFor(Long id);
-    @Query("SELECT a from Apartment a WHERE a.property.address.state=:state and a.property.type=:subType and a.rentType=:rentType")
-    List<Apartment> findByStateAndSubtypeAndRentType(State state, SubType subType, RentType rentType);
+    @Query("SELECT a from Apartment a WHERE a.property.address.state=:state and a.type=:type and a.rentType=:rentType")
+    List<Apartment> findByStateAndSubtypeAndRentType(State state, SubType type, RentType rentType);
 }
