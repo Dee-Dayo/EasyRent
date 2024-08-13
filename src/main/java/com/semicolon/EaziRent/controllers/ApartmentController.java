@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
+import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.ListApartmentResponse;
@@ -43,6 +44,11 @@ public class ApartmentController {
         }catch (EasyRentBaseException exception){
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false,exception.getMessage()),BAD_REQUEST);
         }
-
+    }
+    @GetMapping("/filterApartment")
+    public ResponseEntity<?> findApartmentByLocationAndSubType(GetApartmentRequest request){
+        try{
+            ListApartmentResponse response = apartmentService.findApartmentsBy(request);
+        }
     }
 }

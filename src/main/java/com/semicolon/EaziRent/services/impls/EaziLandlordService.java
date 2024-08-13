@@ -63,6 +63,7 @@ public class EaziLandlordService implements LandlordService {
         landlord = landlordRepository.save(landlord);
         RegisterResponse response = modelMapper.map(landlord, RegisterResponse.class);
         response.setMessage("Landlord successfully registered");
+        response.setDateCreated(landlord.getBioData().getDateRegistered());
         return response;
     }
 

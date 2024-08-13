@@ -5,6 +5,7 @@ import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
+import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.AddApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
@@ -12,6 +13,7 @@ import com.semicolon.EaziRent.dtos.responses.ListApartmentResponse;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PropertyService;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -79,6 +81,10 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public ListApartmentResponse findAllFor(Long propertyId) {
         List<Apartment> apartments = apartmentRepository.findAllApartmentsFor(propertyId);
+        return getListApartmentResponse(apartments);
+    }
+
+    private static @NotNull ListApartmentResponse getListApartmentResponse(List<Apartment> apartments) {
         List<ApartmentResponse> apartmentResponses = apartments
                 .stream().map(ApartmentResponse::new)
                 .collect(Collectors.toList());
@@ -91,6 +97,13 @@ public class EaziApartmentService implements ApartmentService {
     public ApartmentResponse findApartmentBy(Long id) {
         Apartment apartment = getApartmentBy(id);
         return new ApartmentResponse(apartment);
+    }
+
+    @Override
+    public ListApartmentResponse findApartmentsBy(GetApartmentRequest request) {
+        List<Apartment> apartments = apartmentRepository.findByStateAndSubtypeAndRentType
+                (request.getState(), request.getSubType(), request.getRentType());
+        return getListApartmentResponse(apartments);
     }
 
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {

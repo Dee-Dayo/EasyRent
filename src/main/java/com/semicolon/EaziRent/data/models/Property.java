@@ -24,6 +24,9 @@ public class Property {
     @OneToOne
     private Address address;
 
+    @ManyToOne
+    private AgentDetails agentDetails;
+
     private String mediaUrl;
     private int noOfApartments;
 
