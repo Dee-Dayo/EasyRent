@@ -68,7 +68,7 @@ INSERT INTO account_details(id, account_name, account_number, bank_name, landlor
 INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
 (800, 25, 1000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (801, 26, 5000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
-(802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
+(802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 502),
 (803, 28, 16900.00, 'MONTHLY', 'THREE_BEDROOM_FLAT', true, 500),
 (804, 29, 10500.00, 'HALF_YEARLY', 'ROOM_AND_PARLOUR', true, 500),
 (805, 29, 10500.00, 'HALF_YEARLY', 'STUDIO', true, 500),
