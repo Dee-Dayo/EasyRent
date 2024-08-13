@@ -21,7 +21,7 @@ public class SecurityUtils {
     public static final String[] LANDLORD_AUTH_ENDPOINTS = {
                 "/api/v1/property/add",
                 "/api/v1/landlord/**",
-                "/api/v1/apartment"
+                "/api/v1/apartment/add"
     };
 
     public static final String[] RENTER_AUTH_ENDPOINTS = {
