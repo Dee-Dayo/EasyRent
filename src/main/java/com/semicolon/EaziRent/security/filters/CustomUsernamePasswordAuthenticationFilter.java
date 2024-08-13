@@ -88,8 +88,8 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
                                               AuthenticationException exception)
             throws IOException, ServletException {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
+                .responseTime(now())
+                .isSuccessful(false)
                 .error("UnsuccessfulAuthentication")
                 .message(exception.getMessage())
                 .path(request.getRequestURI())

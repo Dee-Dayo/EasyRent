@@ -26,7 +26,7 @@ public class ApartmentController {
         this.apartmentService = apartmentService;
     }
 
-    @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/add", consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addApartment(@ModelAttribute AddApartmentRequest request) throws IOException {
         return ResponseEntity.status(CREATED).body(apartmentService.addApartment(request));
     }
@@ -36,6 +36,7 @@ public class ApartmentController {
         ListApartmentResponse response = apartmentService.findAllFor(propertyId);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("findBy{id}")
     public ResponseEntity<?> findApartmentById(@PathVariable Long id){
         try {

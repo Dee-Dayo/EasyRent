@@ -38,7 +38,6 @@ public class EaziPropertyService implements PropertyService {
     private LandlordService landlordService;
 
 
-
     @Autowired
     @Lazy
     public void setLandlordService(LandlordService landlordService) {

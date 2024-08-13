@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -191,6 +190,7 @@ public class EaziRenterService implements RenterService {
         ReviewPropertyResponse response = modelMapper.map(review, ReviewPropertyResponse.class);
         response.setPropertyId(review.getProperty().getId());
         response.setRenterId(review.getReviewer().getId());
+        response.setPropertyRate(review.getRating());
         return response;
     }
 

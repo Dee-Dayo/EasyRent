@@ -16,107 +16,62 @@ import static java.time.LocalDateTime.now;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<?> handleNullPointerException(NullPointerException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("IllegalState")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleNullPointerException(NullPointerException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("IllegalState", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<?> handleIllegalStateException(IllegalStateException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("IllegalState")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleIllegalStateException(IllegalStateException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("IllegalState", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(EmailExistsException.class)
-    public ResponseEntity<?> handleEmailExistsException(EmailExistsException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("EmailExists")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleEmailExistsException(EmailExistsException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("EmailExists", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<?> handleIOException(IOException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("UploadMediaFailed")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleIOException(IOException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("UploadMediaFailed", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("UserNotFound")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("UserNotFound", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("ResourceNotFound")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("ResourceNotFound", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("BadRequest")
-                .message(exception.getMessage())
-                .path(request.getRequestURI())
-                .build();
+    public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("BadRequest", exception.getMessage(), request);
         return ResponseEntity.badRequest().body(response);
     }
 
     @ExceptionHandler(InvalidDataException.class)
-    public ResponseEntity<?> handleInvalidDataException(InvalidDataException exception,
-                                                        HttpServletRequest request) {
-        ErrorResponse response = ErrorResponse.builder()
-                .requestTime(now())
-                .success(false)
-                .error("InvalidData")
-                .message(exception.getMessage())
+    public ResponseEntity<?> handleInvalidDataException(InvalidDataException exception, HttpServletRequest request) {
+        ErrorResponse response = buildErrorResponse("InvalidData", exception.getMessage(), request);
+        return ResponseEntity.badRequest().body(response);
+    }
+
+
+    private static ErrorResponse buildErrorResponse(String error, String message, HttpServletRequest request) {
+        return ErrorResponse.builder()
+                .responseTime(now())
+                .isSuccessful(false)
+                .error(error)
+                .message(message)
                 .path(request.getRequestURI())
                 .build();
-        return ResponseEntity.badRequest().body(response);
     }
 
 }
