@@ -1,6 +1,5 @@
 package com.semicolon.EaziRent.controllers;
 
-import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;

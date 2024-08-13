@@ -61,14 +61,16 @@ INSERT INTO account_details(id, account_name, account_number, bank_name, landlor
 (700, 'account_name', '0123456789', 'bankName', 300);
 
 INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
-(800, 25, 1000.00, 'YEARLY', 'LOFT', true, 500),
-(801, 26, 5000.00, 'MONTHLY', 'DOUBLE_SHARED_ROOM', true, 500),
-(802, 27, 34000.00, 'YEARLY', 'ONE_ROOM', true, 500),
+(800, 25, 1000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
+(801, 26, 5000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
+(802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (803, 28, 16900.00, 'MONTHLY', 'THREE_BEDROOM_FLAT', true, 500),
 (804, 29, 10500.00, 'HALF_YEARLY', 'ROOM_AND_PARLOUR', true, 500),
 (805, 29, 10500.00, 'HALF_YEARLY', 'STUDIO', true, 500),
 (806, 29, 10500.00, 'HALF_YEARLY', 'QUAD_SHARED_ROOM', true, 500),
-(807, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500);
+(807, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500),
+(808, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500);
+
 
 INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
 (800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
