@@ -27,8 +27,15 @@ public class PropertyResponse {
         this.mediaUrl = property.getMediaUrl();
         this.noOfApartments = property.getNoOfApartments();
         this.type = property.getType().toString();
-        this.agentName = property.getAgentDetails().getName();
-        this.agentPhoneNumber = property.getAgentDetails().getPhoneNumber();
+
+        if (property.getAgentDetails() != null) {
+            this.agentName = property.getAgentDetails().getName();
+            this.agentPhoneNumber = property.getAgentDetails().getPhoneNumber();
+        } else {
+            this.agentName = "No agent assigned";
+            this.agentPhoneNumber = "N/A";
+        }
+
         this.averageRating = calculateAverageRating(property.getReviews());
     }
 
