@@ -61,7 +61,8 @@ public class EaziPropertyService implements PropertyService {
         AgentDetails details = new AgentDetails();
         details.setName(request.getAgentName());
         details.setPhoneNumber(request.getAgentPhoneNumber());
-        return agentDetailsRepository.save(details);
+        agentDetailsRepository.save(details);
+        return details;
     }
 
     @Override
@@ -73,11 +74,11 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public ViewPropertyResponse findAll() {
         List<Property> properties = propertyRepository.findAll();
-        List<PropertyResponse> propertyresponses = properties.stream()
+        List<PropertyResponse> propertyresponseList = properties.stream()
             .map(PropertyResponse::new)
             .collect(Collectors.toList());
     ViewPropertyResponse response = new ViewPropertyResponse();
-    response.setProperties(propertyresponses);
+    response.setProperties(propertyresponseList);
     return response;
     }
 

@@ -24,7 +24,7 @@ public class Property {
     @OneToOne
     private Address address;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private AgentDetails agentDetails;
 
     private String mediaUrl;
