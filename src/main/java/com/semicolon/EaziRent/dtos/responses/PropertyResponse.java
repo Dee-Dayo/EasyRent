@@ -19,6 +19,7 @@ public class PropertyResponse {
     private String agentPhoneNumber;
     private String type;
     private int averageRating;
+    private List<ApartmentResponse> apartments;
 
     public PropertyResponse(Property property) {
         this.id = property.getId();
