@@ -7,10 +7,7 @@ import com.semicolon.EaziRent.data.repositories.AddressRepository;
 import com.semicolon.EaziRent.data.repositories.AgentDetailsRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
-import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
-import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
-import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
+import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
@@ -35,12 +32,14 @@ public class EaziPropertyService implements PropertyService {
     private final AgentDetailsRepository agentDetailsRepository;
     private final PropertyRepository propertyRepository;
     private LandlordService landlordService;
+    private ApartmentService apartmentService;
 
 
     @Autowired
     @Lazy
-    public void setLandlordService(LandlordService landlordService) {
+    public void setLandlordService(LandlordService landlordService, ApartmentService apartmentService) {
         this.landlordService = landlordService;
+        this.apartmentService = apartmentService;
     }
 
     @Override
@@ -90,7 +89,10 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public PropertyResponse findBy(Long id) {
         Property property = getPropertyBy(id);
-        return new PropertyResponse(property);
+        ListApartmentResponse apartmentResponse = apartmentService.findAllFor(id);
+        PropertyResponse propertyResponse = new PropertyResponse(property);
+        propertyResponse.setApartments(apartmentResponse.getApartments());
+        return propertyResponse;
     }
 
 
