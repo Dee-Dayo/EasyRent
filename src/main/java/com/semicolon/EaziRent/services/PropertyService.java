@@ -21,4 +21,6 @@ public interface PropertyService {
     void addReview(Property property, Review review);
 
     PropertyResponse findBy(Long id);
+
+    Property save(Property property);
 }

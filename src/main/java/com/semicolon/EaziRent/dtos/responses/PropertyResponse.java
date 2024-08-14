@@ -33,10 +33,12 @@ public class PropertyResponse {
         this.noOfApartments = property.getNoOfApartments();
         this.type = String.valueOf(property.getType());
         this.landlordRating = calculateAverageRating(property.getLandlord().getBioData().getReviews());
-        this.landlordName = property.getLandlord().getBioData().getFirstName();
         if (property.getLandlord().getBioData().getMediaUrl() != null)
             this.landlordMediaUrl = property.getLandlord().getBioData().getMediaUrl();
         else this.landlordMediaUrl = "default";
+        if (property.getLandlord().getBioData().getFirstName() != null)
+            this.landlordName = property.getLandlord().getBioData().getFirstName();
+        else this.landlordName = "default";
 
 
 

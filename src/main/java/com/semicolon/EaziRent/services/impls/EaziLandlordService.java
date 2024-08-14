@@ -117,6 +117,8 @@ public class EaziLandlordService implements LandlordService {
         BioData reviewee = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, reviewer, reviewee);
         reviewRepository.save(review);
+        reviewee.getReviews().add(review);
+        bioDataService.save(reviewee);
         return map(review, landlord, renter);
     }
 
