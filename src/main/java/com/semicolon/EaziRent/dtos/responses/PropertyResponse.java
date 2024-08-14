@@ -17,9 +17,13 @@ public class PropertyResponse {
     private int noOfApartments;
     private String agentName;
     private String agentPhoneNumber;
+    private String landlordMediaUrl;
+    private String landlordName;
+    private int landlordRating;
     private String type;
     private int averageRating;
     private List<ApartmentResponse> apartments;
+
 
     public PropertyResponse(Property property) {
         this.id = property.getId();
@@ -27,7 +31,15 @@ public class PropertyResponse {
         this.state = String.valueOf(property.getAddress().getState());
         this.mediaUrl = property.getMediaUrl();
         this.noOfApartments = property.getNoOfApartments();
-        this.type = property.getType().toString();
+        this.type = String.valueOf(property.getType());
+        this.landlordRating = calculateAverageRating(property.getLandlord().getBioData().getReviews());
+        this.landlordName = property.getLandlord().getBioData().getFirstName();
+        if (property.getLandlord().getBioData().getMediaUrl() != null)
+            this.landlordMediaUrl = property.getLandlord().getBioData().getMediaUrl();
+        else this.landlordMediaUrl = "default";
+
+
+
 
         if (property.getAgentDetails() != null) {
             this.agentName = property.getAgentDetails().getName();

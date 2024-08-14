@@ -35,6 +35,7 @@ public class BioData {
     @Column(unique = true)
     private String email;
     private String password;
+    private String mediaUrl;
 
     @ElementCollection(fetch=EAGER)
     @Enumerated(STRING)
