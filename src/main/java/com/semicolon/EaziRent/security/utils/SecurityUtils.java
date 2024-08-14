@@ -17,7 +17,8 @@ public class SecurityUtils {
                 "/api/v1/property/all",
                 "/api/v1/apartment/all",
                 "/api/v1/apartment/filterApartment",
-                "/api/v1/property/findBy{id}"
+                "/api/v1/property/findBy{id}",
+                "/api/v1/apartment/findBy{id}"
     );
 
     public static final String[] LANDLORD_AUTH_ENDPOINTS = {
