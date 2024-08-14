@@ -50,9 +50,9 @@ INSERT INTO addresses(id, area, lga, state, number, street)VALUES
 (405, 'area', 'Ikotun', 'LAGOS', 'number', 'street');
 
 INSERT INTO agent_details(id, name, phone_number)VALUES
-(9, 'Dayo', '09022334556'),
-(10, 'Ayo', '09022334556'),
-(20, 'Femi', '09022334556');
+(12, 'Dayo', '09022334556'),
+(87, 'Ayo', '09022334556'),
+(76, 'Femi', '09022334556');
 
 INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, media_url, agent_details_id)VALUES
 (500, 9, 400, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg',9),

@@ -11,6 +11,7 @@ import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.BioDataService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class EaziBioDataService implements BioDataService {
         bioData.setPassword(passwordEncoder.encode(bioData.getPassword()));
         bioData.setRoles(new HashSet<>());
         bioData.getRoles().add(request.getRole());
+
         return save(bioData);
     }
 
