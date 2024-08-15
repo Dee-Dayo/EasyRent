@@ -22,6 +22,7 @@ public class PropertyResponse {
     private int landlordRating;
     private String type;
     private int averageRating;
+    private AddressResponse addressResponse;
     private List<ApartmentResponse> apartments;
 
 
@@ -32,6 +33,7 @@ public class PropertyResponse {
         this.mediaUrl = property.getMediaUrl();
         this.noOfApartments = property.getNoOfApartments();
         this.type = String.valueOf(property.getType());
+        this.addressResponse = new AddressResponse(property.getAddress());
         this.landlordRating = calculateAverageRating(property.getLandlord().getBioData().getReviews());
         if (property.getLandlord().getBioData().getMediaUrl() != null)
             this.landlordMediaUrl = property.getLandlord().getBioData().getMediaUrl();
