@@ -18,6 +18,9 @@ public class Landlord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Property> properties;
+
     @OneToOne
     @JsonSerialize(using = BioDataSerializer.class)
     @JsonDeserialize

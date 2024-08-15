@@ -53,7 +53,6 @@ public class EaziMailService implements MailService {
                 && response.getStatusCode()== HttpStatusCode.valueOf(201))
             return "mail sent successfully";
         else throw new RuntimeException("email not sent");
-
     }
 
 }
