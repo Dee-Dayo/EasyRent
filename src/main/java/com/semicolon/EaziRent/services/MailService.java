@@ -4,5 +4,5 @@ import com.semicolon.EaziRent.dtos.requests.SendMailRequest;
 
 public interface MailService {
 
-    void sendMail(SendMailRequest request);
+    String sendMail(SendMailRequest request);
 }
