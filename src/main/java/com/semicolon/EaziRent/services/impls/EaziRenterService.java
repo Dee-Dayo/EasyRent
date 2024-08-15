@@ -97,8 +97,8 @@ public class EaziRenterService implements RenterService {
         BioData reviewee = bioDataService.findBioDataBy(landlord.getBioData().getId());
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, reviewer, reviewee);
+        reviewRepository.save(review);
         review = reviewRepository.save(review);
-
         reviewee.getReviews().add(review);
         bioDataService.save(reviewee);
         return map(review, landlord, renter);
@@ -146,7 +146,8 @@ public class EaziRenterService implements RenterService {
         review.setProperty(property);
         review.setReviewer(reviewer);
         review = reviewRepository.save(review);
-
+        property.getReviews().add(review);
+        propertyService.save(property);
         propertyService.addReview(property, review);
         return map(review);
     }

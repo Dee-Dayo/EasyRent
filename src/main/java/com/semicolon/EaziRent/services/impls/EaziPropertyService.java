@@ -95,6 +95,10 @@ public class EaziPropertyService implements PropertyService {
         return propertyResponse;
     }
 
+    @Override
+    public Property save(Property property) {
+        return propertyRepository.save(property);
+    }
 
 
     private Address saveAddress(AddPropertyRequest request) {

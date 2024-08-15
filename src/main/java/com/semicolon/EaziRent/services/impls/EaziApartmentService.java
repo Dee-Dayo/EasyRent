@@ -68,10 +68,7 @@ public class EaziApartmentService implements ApartmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("No apartment found with id " + id));
     }
 
-    @Override
-    public List<Apartment> findPropertyApartments(Long id) {
-        return apartmentRepository.findAllApartmentsFor(id);
-    }
+
 
     @Override
     public void updateAndSave(Apartment apartment, int number) {
