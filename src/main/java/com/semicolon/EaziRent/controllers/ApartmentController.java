@@ -1,5 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
+import com.semicolon.EaziRent.data.constants.State;
+import com.semicolon.EaziRent.data.constants.SubType;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
@@ -66,5 +68,15 @@ public class ApartmentController {
     public ResponseEntity<?> uploadImages(@ModelAttribute List<MultipartFile> mediaFiles,
                                           @RequestParam Long id, Principal principal) throws IOException {
         return ResponseEntity.status(CREATED).body(apartmentService.uploadMedia(mediaFiles, id, principal.getName()));
+    }
+    @PostMapping("/filter/{state}/{type}")
+    public ResponseEntity<?> findApartmentByLocationAndType(@PathVariable State state, @PathVariable SubType type){
+        try{
+            ListApartmentResponse response = apartmentService.findApartmentsByStateAndType(state, type);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
     }
 }

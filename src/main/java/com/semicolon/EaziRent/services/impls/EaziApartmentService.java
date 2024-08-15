@@ -1,6 +1,8 @@
 package com.semicolon.EaziRent.services.impls;
 
 import com.cloudinary.Cloudinary;
+import com.semicolon.EaziRent.data.constants.State;
+import com.semicolon.EaziRent.data.constants.SubType;
 import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Landlord;
@@ -114,6 +116,12 @@ public class EaziApartmentService implements ApartmentService {
         UploadMediaResponse response = uploadMediaAndGetResponse(mediaFiles, apartment);
         log.info("Successfully uploaded media files for apartment with id: {}", id);
         return new EaziRentAPIResponse<>(true, response);
+    }
+
+    @Override
+    public ListApartmentResponse findApartmentsByStateAndType(State state, SubType type) {
+        List<Apartment> apartments = apartmentRepository.findAllApartmentsBy(state, type);
+        return getListApartmentResponse(apartments);
     }
 
     private UploadMediaResponse uploadMediaAndGetResponse(List<MultipartFile> mediaFiles, Apartment apartment) {

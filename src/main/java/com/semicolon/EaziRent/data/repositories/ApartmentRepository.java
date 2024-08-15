@@ -14,4 +14,6 @@ public interface ApartmentRepository extends JpaRepository<Apartment, Long> {
     List<Apartment> findAllApartmentsFor(Long id);
     @Query("SELECT a from Apartment a WHERE a.property.address.state=:state and a.type=:type and a.rentType=:rentType")
     List<Apartment> findByStateAndSubtypeAndRentType(State state, SubType type, RentType rentType);
+    @Query("SELECT a FROM Apartment a WHERE a.property.address.state=:state and a.type=:type")
+    List<Apartment> findAllApartmentsBy(State state, SubType type);
 }

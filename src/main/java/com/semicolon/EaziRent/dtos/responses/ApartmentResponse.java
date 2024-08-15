@@ -20,6 +20,7 @@ public class ApartmentResponse {
     private Boolean isAvailable;
     private Set<String> mediaUrls;
     private int ratings;
+    private AddressResponse addressResponse;
 
     public ApartmentResponse(Apartment apartment) {
         this.id = apartment.getId();
@@ -29,6 +30,7 @@ public class ApartmentResponse {
         this.number = apartment.getNumber();
         this.isAvailable = apartment.getIsAvailable();
         this.mediaUrls = apartment.getMediaUrls();
+        this.addressResponse = new AddressResponse(apartment.getProperty().getAddress());
         this.ratings = calculateRatings(apartment.getReviews());
     }
 

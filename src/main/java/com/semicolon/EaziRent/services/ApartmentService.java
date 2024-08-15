@@ -1,5 +1,7 @@
 package com.semicolon.EaziRent.services;
 
+import com.semicolon.EaziRent.data.constants.State;
+import com.semicolon.EaziRent.data.constants.SubType;
 import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
@@ -23,4 +25,6 @@ public interface ApartmentService {
 
     EaziRentAPIResponse<UploadMediaResponse> uploadMedia(List<MultipartFile> mediaFiles,
                                                          Long id, String email);
+
+    ListApartmentResponse findApartmentsByStateAndType(State state, SubType type);
 }

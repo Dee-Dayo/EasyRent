@@ -24,12 +24,6 @@ public class RenterServiceTest {
     private RenterService renterService;
 
     @Autowired
-    private ReviewRepository reviewRepository;
-    @Autowired
-    private PropertyRepository propertyRepository;
-    @Autowired
-    private ApartmentRepository apartmentRepository;
-    @Autowired
     private PropertyService propertyService;
 
     @Test
