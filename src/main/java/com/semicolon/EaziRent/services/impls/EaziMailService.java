@@ -7,14 +7,10 @@ import com.semicolon.EaziRent.dtos.requests.SendMailRequest;
 import com.semicolon.EaziRent.dtos.requests.Sender;
 import com.semicolon.EaziRent.dtos.responses.BrevoMailResponse;
 import com.semicolon.EaziRent.services.MailService;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
