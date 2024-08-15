@@ -28,7 +28,8 @@ public class Apartment {
     private BigDecimal price;
     private Integer number;
     private Boolean isAvailable;
-
+    @OneToOne
+    private Renter renter;
 
     @ElementCollection
     private Set<String> mediaUrls;

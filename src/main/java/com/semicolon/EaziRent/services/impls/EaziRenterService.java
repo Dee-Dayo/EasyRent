@@ -5,6 +5,7 @@ import com.semicolon.EaziRent.data.repositories.RenterRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
+import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.*;
@@ -164,6 +165,8 @@ public class EaziRenterService implements RenterService {
         propertyService.getPropertyBy(request.getPropertyId());
         Apartment apartment = apartmentService.getApartmentBy(request.getApartmentId());
         Renter renter = findById(request.getRenterId());
+        if(!apartment.getRenter().getId().equals(renter.getId()))
+            throw new EasyRentBaseException("review when you rent the apartment");
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, apartment, reviewer);
         return map(renter, review);
