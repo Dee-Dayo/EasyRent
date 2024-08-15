@@ -112,6 +112,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
                 .email(user.getUsername())
                 .mediaUrl(user.getMediaUrl())
                 .rating(user.getRating())
+                .role(user.getRole())
                 .token(token)
                 .build();
     }
