@@ -9,6 +9,7 @@ TRUNCATE TABLE account_details CASCADE;
 TRUNCATE TABLE apartments CASCADE;
 TRUNCATE TABLE apartment_media_urls CASCADE;
 TRUNCATE TABLE reviews CASCADE;
+TRUNCATE TABLE users_reviews CASCADE;
 
 
 insert into users(id, first_name, last_name, email, password, date_registered)values
@@ -50,7 +51,8 @@ INSERT INTO addresses(id, area, lga, state, number, street)VALUES
 (405, 'area', 'Ikotun', 'LAGOS', 'number', 'street');
 
 INSERT INTO agent_details(id, name, phone_number)VALUES
-(12, 'Dayo', '09022334556'),
+(9, 'Timi', '09022234556'),
+(10, 'Dayo', '09022334556'),
 (87, 'Ayo', '09022334556'),
 (76, 'Femi', '09022334556');
 
@@ -99,6 +101,19 @@ INSERT INTO reviews(id, comment, rating,review_date, property_id, reviewer_id)VA
 (55, 'bad house', 1, '2024-07-13T14:02:27.434315200', 502, 104),
 (56, 'bad house', 2, '2024-07-13T14:02:27.434315200', 502, 104),
 (57, 'bad house', 2, '2024-07-13T14:02:27.434315200', 502, 104);
+
+INSERT INTO users_reviews(bio_data_id, reviews_id)VALUES
+(104, 40),
+(104, 41),
+(104, 42),
+(104, 43),
+(104, 54),
+(104, 45),
+(104, 46),
+(104, 47),
+(104, 48),
+(104, 49),
+(104, 50);
 
 INSERT INTO properties_reviews(property_id, reviews_id) VALUES
 (500, 40),

@@ -9,6 +9,7 @@ import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.ErrorResponse;
 import com.semicolon.EaziRent.dtos.responses.LoginResponse;
 import com.semicolon.EaziRent.security.config.RsaKeyProperties;
+import com.semicolon.EaziRent.security.data.models.SecureUser;
 import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -72,7 +73,7 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         String token = generateAccessToken(authResult);
         Cookie cookie = createCookie(token);
         response.addCookie(cookie);
-        LoginResponse loginResponse = buildLoginResponse(token);
+        LoginResponse loginResponse = buildLoginResponse(token, authResult.getPrincipal());
         EaziRentAPIResponse<LoginResponse> apiResponse = new EaziRentAPIResponse<>( true, loginResponse);
         response.setContentType(APPLICATION_JSON_VALUE);
         response.getOutputStream().write(mapper.writeValueAsBytes(apiResponse));
@@ -101,12 +102,18 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         log.info("User authentication unsuccessful");
     }
 
-    private static LoginResponse buildLoginResponse(String token) {
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(token);
-        loginResponse.setMessage("Authentication succeeded");
-        loginResponse.setResponseTime(now());
-        return loginResponse;
+    private static LoginResponse buildLoginResponse(String token, Object principal) {
+        SecureUser user = (SecureUser) principal;
+        return LoginResponse.builder()
+                .responseTime(now())
+                .message("Login successful")
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getUsername())
+                .mediaUrl(user.getMediaUrl())
+                .rating(user.getRating())
+                .token(token)
+                .build();
     }
 
     private static Cookie createCookie(String token) {
