@@ -55,12 +55,12 @@ INSERT INTO agent_details(id, name, phone_number)VALUES
 (76, 'Femi', '09022334556');
 
 INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, media_url, agent_details_id)VALUES
-(500, 9, 400, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg',9),
-(501, 3, 401, 300, 'DUPLEX', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150403/file_v5traw.jpg', 10),
-(502, 4, 402, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150486/file_ibvzwj.jpg', 9),
-(503, 2, 403, 300, 'CONDO', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150799/file_jktfbh.jpg', 10),
-(504, 7, 404, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150840/file_voez6b.jpg', 9),
-(505, 10, 405, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg', 10);
+(500, 9, 400, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg',12),
+(501, 3, 401, 300, 'DUPLEX', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150403/file_v5traw.jpg', 12),
+(502, 4, 402, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150486/file_ibvzwj.jpg', 76),
+(503, 2, 403, 300, 'CONDO', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150799/file_jktfbh.jpg', 87),
+(504, 7, 404, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150840/file_voez6b.jpg', 12),
+(505, 10, 405, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg', 76);
 
 INSERT INTO account_details(id, account_name, account_number, bank_name, landlord_id) VALUES
 (700, 'account_name', '0123456789', 'bankName', 300);
