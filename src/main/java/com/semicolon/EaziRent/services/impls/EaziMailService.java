@@ -8,11 +8,16 @@ import com.semicolon.EaziRent.dtos.requests.Sender;
 import com.semicolon.EaziRent.dtos.responses.BrevoMailResponse;
 import com.semicolon.EaziRent.services.MailService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
