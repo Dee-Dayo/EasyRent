@@ -8,7 +8,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class BrevoMaiRequest {
+public class BrevoMailRequest {
     private Sender sender;
     @JsonProperty("to")
     private List<Recipient> recipients;
