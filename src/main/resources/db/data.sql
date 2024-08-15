@@ -54,6 +54,7 @@ INSERT INTO agent_details(id, name, phone_number)VALUES
 (9, 'Timi', '09022234556'),
 (10, 'Dayo', '09022334556'),
 (87, 'Ayo', '09022334556'),
+(12, 'Ayo', '09022334556'),
 (76, 'Femi', '09022334556');
 
 INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, media_url, agent_details_id)VALUES

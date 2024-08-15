@@ -20,6 +20,7 @@ public class LoginResponse {
     private String firstName = "";
     private String lastName = "";
     private String email;
+    private String role;
     private String mediaUrl = "";
     private int rating;
     private String token;

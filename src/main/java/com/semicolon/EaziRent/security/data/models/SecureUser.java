@@ -1,5 +1,6 @@
 package com.semicolon.EaziRent.security.data.models;
 
+import com.semicolon.EaziRent.data.constants.Role;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Review;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 public class SecureUser implements UserDetails {
     private final BioData user;
@@ -20,6 +22,8 @@ public class SecureUser implements UserDetails {
     private final String mediaUrl;
     @Getter
     private final int rating;
+    @Getter
+    private final String role;
 
     public SecureUser(BioData user) {
         this.user = user;
@@ -27,6 +31,7 @@ public class SecureUser implements UserDetails {
         this.lastName = user.getLastName();
         this.mediaUrl = user.getMediaUrl();
         this.rating = calculateRating(user.getReviews());
+        this.role = Objects.requireNonNull(user.getRoles().stream().findFirst().orElse(null)).name();
     }
 
     @Override
