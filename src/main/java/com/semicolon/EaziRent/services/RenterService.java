@@ -4,9 +4,11 @@ import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
 
+import java.io.IOException;
+
 public interface RenterService {
 
-    RegisterResponse register(RegisterRequest request);
+    RegisterResponse register(RegisterRequest request) throws IOException;
 
     UpdateDataResponse update(Long renterId, UpdateRequest request);
 

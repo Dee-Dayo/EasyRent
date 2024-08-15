@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,7 +33,7 @@ public class RenterServiceTest {
     private PropertyService propertyService;
 
     @Test
-    public void testRegisterRenter(){
+    public void testRegisterRenter() throws IOException {
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("first name");
         request.setLastName("last name");

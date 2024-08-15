@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.io.IOException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,7 +20,7 @@ public class BioDataServiceTest {
     private BioDataService bioDataService;
 
     @Test
-    public void testRegisterBioData(){
+    public void testRegisterBioData() throws IOException {
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("first name");
         request.setLastName("last name");
@@ -30,7 +32,7 @@ public class BioDataServiceTest {
     }
 
     @Test
-    public void testRegisterBioDataExistingEmail_throwsException(){
+    public void testRegisterBioDataExistingEmail_throwsException() throws IOException {
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("first name");
         request.setLastName("last name");

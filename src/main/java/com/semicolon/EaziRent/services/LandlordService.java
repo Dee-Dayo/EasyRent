@@ -8,10 +8,11 @@ import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface LandlordService {
-    RegisterResponse register(RegisterRequest request);
+    RegisterResponse register(RegisterRequest request) throws IOException;
     Landlord findLandlordBy(String email);
     EaziRentAPIResponse<UpdateDataResponse> update(UpdateRequest request, String email);
 

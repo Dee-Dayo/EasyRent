@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashSet;
 
 import static com.semicolon.EaziRent.utils.ServicesUtils.copyNonNullProperties;
@@ -31,7 +32,7 @@ public class EaziBioDataService implements BioDataService {
     private final MailService mailService;
 
     @Override
-    public BioData register(RegisterRequest request) {
+    public BioData register(RegisterRequest request) throws IOException {
         validateEmail(request);
         BioData bioData = modelMapper.map(request, BioData.class);
         bioData.setPassword(passwordEncoder.encode(bioData.getPassword()));

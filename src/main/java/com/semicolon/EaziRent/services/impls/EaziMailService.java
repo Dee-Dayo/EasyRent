@@ -2,7 +2,9 @@ package com.semicolon.EaziRent.services.impls;
 
 import com.semicolon.EaziRent.config.MailConfig;
 import com.semicolon.EaziRent.dtos.requests.BrevoMailRequest;
+import com.semicolon.EaziRent.dtos.requests.Recipient;
 import com.semicolon.EaziRent.dtos.requests.SendMailRequest;
+import com.semicolon.EaziRent.dtos.requests.Sender;
 import com.semicolon.EaziRent.dtos.responses.BrevoMailResponse;
 import com.semicolon.EaziRent.services.MailService;
 import jakarta.mail.MessagingException;
@@ -28,20 +30,22 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @AllArgsConstructor
 public class EaziMailService implements MailService {
     private final MailConfig mailConfig;
-    static String SENDER_EMAIL = "eazirent@gmail.com";
 
     @Override
-    public String sendMail(SendMailRequest sendMailRequest) {
+    public String sendMail(SendMailRequest sendMailRequest) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         String url = mailConfig.getMailApiUrl();
         BrevoMailRequest request = new BrevoMailRequest();
         request.setSubject("Registration successful");
+        Resource resource = new ClassPathResource("templates/registration_template.html");
+        String htmlTemplate = Files.readString(Paths.get(resource.getURI()));
+        String personalizedHtml = htmlTemplate.replace("{{recipientName}}", sendMailRequest.getRecipientName());
         request.setSender(new Sender());
         request.setRecipients(
                 List.of(
                         new Recipient(sendMailRequest.getRecipientEmail(), sendMailRequest.getRecipientName())
                 ));
-        request.setContent(sendMailRequest.getContent());
+        request.setContent(personalizedHtml);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(APPLICATION_JSON);
         headers.set("api-key", mailConfig.getMailApiKey());
@@ -53,7 +57,6 @@ public class EaziMailService implements MailService {
                 && response.getStatusCode()== HttpStatusCode.valueOf(201))
             return "mail sent successfully";
         else throw new RuntimeException("email not sent");
-
 
     }
 

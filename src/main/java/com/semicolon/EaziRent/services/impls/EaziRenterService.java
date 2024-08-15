@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,7 +58,7 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public RegisterResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) throws IOException {
         request.setRole(RENTER);
         BioData data = bioDataService.register(request);
         Renter renter = modelMapper.map(request, Renter.class);
