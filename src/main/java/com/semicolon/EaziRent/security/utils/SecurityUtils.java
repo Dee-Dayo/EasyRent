@@ -19,8 +19,7 @@ public class SecurityUtils {
                 "/api/v1/apartment/filter",
                 "/api/v1/property/findBy{id}",
                 "/api/v1/apartment/findBy{id}",
-                "/api/v1/paystack/pay",              //remove later ooo
-                "/api/v1/property/add"              //remove later too
+                "/api/v1/paystack/pay"              //remove later ooo
     );
 
     public static final String[] LANDLORD_AUTH_ENDPOINTS = {
