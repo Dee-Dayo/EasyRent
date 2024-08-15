@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -24,6 +26,8 @@ public class RenterController {
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), CREATED);
         } catch (EasyRentBaseException exception) {
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

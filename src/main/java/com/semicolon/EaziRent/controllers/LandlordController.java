@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,8 @@ public class LandlordController {
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), CREATED);
         } catch (EasyRentBaseException error){
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, error.getMessage()), BAD_REQUEST);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

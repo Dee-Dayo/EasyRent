@@ -5,9 +5,11 @@ import com.semicolon.EaziRent.dtos.requests.RegisterRequest;
 import com.semicolon.EaziRent.dtos.requests.UpdateRequest;
 import com.semicolon.EaziRent.dtos.responses.UpdateDataResponse;
 
+import java.io.IOException;
+
 public interface BioDataService {
 
-    BioData register(RegisterRequest request);
+    BioData register(RegisterRequest request) throws IOException;
 
     BioData getBioDataBy(String email);
 
