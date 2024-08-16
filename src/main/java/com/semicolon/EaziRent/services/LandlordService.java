@@ -28,4 +28,5 @@ public interface LandlordService {
     Landlord findBy(Long landlordId);
 
     ReviewListResponse getRenterReviews(Long renterId);
+
 }

@@ -113,6 +113,7 @@ public class EaziPropertyService implements PropertyService {
         property.setLandlord(landlord);
         property.setAgentDetails(agentDetails);
         property.setMediaUrl(mediaUrl);
+        property.setNoOfApartments(property.getNoOfApartments()+1);
         return propertyRepository.save(property);
     }
 
