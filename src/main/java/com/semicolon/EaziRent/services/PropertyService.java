@@ -23,4 +23,6 @@ public interface PropertyService {
     PropertyResponse findBy(Long id);
 
     Property save(Property property);
+
+    ViewPropertyResponse findPropertiesFor(Long landlordId);
 }

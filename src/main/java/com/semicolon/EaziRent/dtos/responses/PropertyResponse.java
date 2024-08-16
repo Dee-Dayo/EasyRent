@@ -1,11 +1,13 @@
 package com.semicolon.EaziRent.dtos.responses;
 
+import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.models.Review;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Setter
 @Getter
@@ -41,10 +43,10 @@ public class PropertyResponse {
         if (property.getLandlord().getBioData().getFirstName() != null)
             this.landlordName = property.getLandlord().getBioData().getFirstName();
         else this.landlordName = "default";
-
-
-
-
+        this.apartments = property.getApartments()
+                .stream().map(
+                        ApartmentResponse::new)
+                .collect(Collectors.toList());
         if (property.getAgentDetails() != null) {
             this.agentName = property.getAgentDetails().getName();
             this.agentPhoneNumber = property.getAgentDetails().getPhoneNumber();

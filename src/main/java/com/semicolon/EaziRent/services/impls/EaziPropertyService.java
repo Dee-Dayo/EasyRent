@@ -11,6 +11,7 @@ import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -72,12 +73,16 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public ViewPropertyResponse findAll() {
         List<Property> properties = propertyRepository.findAll();
+        return getViewPropertyResponse(properties);
+    }
+
+    private static @NotNull ViewPropertyResponse getViewPropertyResponse(List<Property> properties) {
         List<PropertyResponse> propertyresponseList = properties.stream()
             .map(PropertyResponse::new)
             .collect(Collectors.toList());
-    ViewPropertyResponse response = new ViewPropertyResponse();
-    response.setProperties(propertyresponseList);
-    return response;
+        ViewPropertyResponse response = new ViewPropertyResponse();
+        response.setProperties(propertyresponseList);
+        return response;
     }
 
     @Override
@@ -98,6 +103,12 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public Property save(Property property) {
         return propertyRepository.save(property);
+    }
+
+    @Override
+    public ViewPropertyResponse findPropertiesFor(Long landlordId) {
+        List<Property> properties = propertyRepository.findAllFor(landlordId);
+        return getViewPropertyResponse(properties);
     }
 
 
