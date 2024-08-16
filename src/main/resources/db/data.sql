@@ -5,17 +5,20 @@ truncate table landlords cascade;
 TRUNCATE TABLE blacklisted_tokens CASCADE;
 TRUNCATE TABLE addresses CASCADE;
 TRUNCATE TABLE properties CASCADE;
+TRUNCATE TABLE properties_reviews CASCADE;
 TRUNCATE TABLE account_details CASCADE;
 TRUNCATE TABLE apartments CASCADE;
 TRUNCATE TABLE apartment_media_urls CASCADE;
 TRUNCATE TABLE reviews CASCADE;
 TRUNCATE TABLE users_reviews CASCADE;
+TRUNCATE TABLE agent_details CASCADE;
 
 
 insert into users(id, first_name, last_name, email, password, date_registered)values
 (100, 'Doe', 'John', 'darhyor2050@gmail.com', 'password', '2024-07-23T15:03:03.792009700'),
 (101, 'Bull', 'Joe', 'bulljoe@gmail.com', 'password', '2024-07-23T15:03:03.792009700'),
 (103, 'Sam', 'Cole', 'colesam@gmail.com', '$2a$10$seAKbpBsTn/xgAg7nbRKWuH1dnRvMlLloxMOjH00zMmTu3vLCtlee', '2024-07-23T15:03:03.792009700'),
+(109, 'Sam', 'Cole', 'renter@email.com', '$2a$10$seAKbpBsTn/xgAg7nbRKWuH1dnRvMlLloxMOjH00zMmTu3vLCtlee', '2024-07-23T15:03:03.792009700'),
 (104, 'Palmer', 'James', 'jamespalmer@gmail.com', '$2a$10$seAKbpBsTn/xgAg7nbRKWuH1dnRvMlLloxMOjH00zMmTu3vLCtlee', '2024-07-23T15:03:03.792009700'),
 (105, 'Theodore', 'Bagwell', 'bagwell@gmail.com', 'password', '2024-07-23T15:03:03.792009700'),
 (106, 'john', 'Blakes', 'blakes@gmail.com', 'password', '2024-07-23T15:03:03.792009700');
@@ -24,6 +27,7 @@ insert into bio_data_roles(bio_data_id, roles)values
 (100, 'RENTER'),
 (101, 'RENTER'),
 (103, 'RENTER'),
+(109, 'RENTER'),
 (104, 'LANDLORD'),
 (105, 'LANDLORD'),
 (106, 'LANDLORD');
@@ -31,7 +35,8 @@ insert into bio_data_roles(bio_data_id, roles)values
 insert into renters(bio_data_id, id, occupation)values
 (100, 200, 'Software Engineering'),
 (101, 201, 'Accountant'),
-(103, 202, 'Civil Servant');
+(103, 202, 'Civil Servant'),
+(109, 203, 'Civil Servant');
 
 insert into landlords(bio_data_id, id) values
 (100, 300),
@@ -48,7 +53,8 @@ INSERT INTO addresses(id, area, lga, state, number, street)VALUES
 (402, 'area', 'Palmgrove', 'LAGOS', 'number', 'street'),
 (403, 'area', 'Sabo', 'LAGOS', 'number', 'street'),
 (404, 'area', 'Mushin', 'LAGOS', 'number', 'street'),
-(405, 'area', 'Ikotun', 'LAGOS', 'number', 'street');
+(405, 'area', 'Ikotun', 'LAGOS', 'number', 'street'),
+(407, 'area', 'lga', 'LAGOS', 'number', 'street');
 
 INSERT INTO agent_details(id, name, phone_number)VALUES
 (9, 'Timi', '09022234556'),
@@ -58,6 +64,7 @@ INSERT INTO agent_details(id, name, phone_number)VALUES
 (76, 'Femi', '09022334556');
 
 INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, media_url, agent_details_id)VALUES
+(2, 9, 407, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg',12),
 (500, 9, 400, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg',12),
 (501, 3, 401, 300, 'DUPLEX', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150403/file_v5traw.jpg', 12),
 (502, 4, 402, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150486/file_ibvzwj.jpg', 76),

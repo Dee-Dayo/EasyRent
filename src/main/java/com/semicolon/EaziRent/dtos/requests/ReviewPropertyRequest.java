@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 public class ReviewPropertyRequest {
     private Long propertyId;
-    private Long renterId;
     private int rating;
     private String comment;
+    private String email;
 }

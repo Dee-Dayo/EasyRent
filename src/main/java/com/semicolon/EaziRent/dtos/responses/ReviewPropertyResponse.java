@@ -9,4 +9,5 @@ public class ReviewPropertyResponse {
     private Long propertyId;
     private Long renterId;
     private int propertyRate;
+    private String comment;
 }

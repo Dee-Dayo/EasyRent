@@ -1,11 +1,11 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.security.services.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,15 +24,11 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request) {
-        String authHeader = request.getHeader(AUTHORIZATION);
-        if (authHeader != null && authHeader.startsWith(JWT_PREFIX)) {
-            String token = authHeader.replace(JWT_PREFIX, "").strip();
-            authService.blacklist(token);
-            SecurityContextHolder.clearContext();
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<Void> logout(@RequestHeader(AUTHORIZATION) String token) {
+        token = token.replace(JWT_PREFIX, "").strip();
+        authService.blacklist(token);
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.noContent().build();
     }
 
 }
