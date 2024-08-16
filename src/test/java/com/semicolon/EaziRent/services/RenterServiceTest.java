@@ -1,9 +1,6 @@
 package com.semicolon.EaziRent.services;
 
 import com.semicolon.EaziRent.data.models.Property;
-import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
-import com.semicolon.EaziRent.data.repositories.PropertyRepository;
-import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
@@ -75,7 +72,7 @@ public class RenterServiceTest {
     public void ratePropertyTest(){
         ReviewPropertyRequest request = new ReviewPropertyRequest();
         request.setPropertyId(500L);
-        request.setRenterId(200L);
+        request.setEmail("colesam@gmail.com");
         request.setRating(4);
         request.setComment("trying it");
 

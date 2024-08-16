@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
@@ -140,17 +141,17 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
+    @Transactional
     public ReviewPropertyResponse reviewProperty(ReviewPropertyRequest request) {
         Property property = propertyService.getPropertyBy(request.getPropertyId());
-        Renter renter = findById(request.getRenterId());
-        BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
+        Renter renter = getRenterBy(request.getEmail());
+        BioData reviewer = renter.getBioData();
         Review review = modelMapper.map(request, Review.class);
         review.setProperty(property);
         review.setReviewer(reviewer);
         review = reviewRepository.save(review);
         property.getReviews().add(review);
         propertyService.save(property);
-        propertyService.addReview(property, review);
         return map(review);
     }
 
@@ -200,6 +201,8 @@ public class EaziRenterService implements RenterService {
         response.setPropertyId(review.getProperty().getId());
         response.setRenterId(review.getReviewer().getId());
         response.setPropertyRate(review.getRating());
+        String comment = review.getComment() != null ? review.getComment() : "";
+        response.setComment(comment);
         return response;
     }
 

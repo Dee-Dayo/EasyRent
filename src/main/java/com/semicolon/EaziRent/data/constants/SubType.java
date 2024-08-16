@@ -8,5 +8,7 @@ public enum SubType {
     DOUBLE_SHARED_ROOM,
     QUAD_SHARED_ROOM,
     BOYS_QUARTERS,
-    LOFT
+    LOFT,
+    MULTIPLE_ROOMS,
+    TWO_BEDROOM_FLAT
 }
