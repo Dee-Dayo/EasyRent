@@ -11,6 +11,7 @@ import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -29,7 +30,6 @@ public class EaziPropertyService implements PropertyService {
     private final Cloudinary cloudinary;
     private final ModelMapper modelMapper;
     private final AddressRepository addressRepository;
-    private final AgentDetailsRepository agentDetailsRepository;
     private final PropertyRepository propertyRepository;
     private LandlordService landlordService;
     private ApartmentService apartmentService;
@@ -49,19 +49,11 @@ public class EaziPropertyService implements PropertyService {
         Uploader uploader = cloudinary.uploader();
         String mediaUrl = getMediaUrl(request.getMediaFile(), uploader);
         Address address = saveAddress(request);
-        AgentDetails agentDetails = saveAgentDetails(request);
-        Property property = saveProperty(request, landlord, mediaUrl, address, agentDetails);
+        Property property = saveProperty(request, landlord, mediaUrl, address);
         AddPropertyResponse response = createResponse(property, landlord);
         return new EaziRentAPIResponse<>(true, response);
     }
 
-    private AgentDetails saveAgentDetails(AddPropertyRequest request) {
-        AgentDetails details = new AgentDetails();
-        details.setName(request.getAgentName());
-        details.setPhoneNumber(request.getAgentPhoneNumber());
-        agentDetailsRepository.save(details);
-        return details;
-    }
 
     @Override
     public Property getPropertyBy(Long id) {
@@ -72,12 +64,16 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public ViewPropertyResponse findAll() {
         List<Property> properties = propertyRepository.findAll();
+        return getViewPropertyResponse(properties);
+    }
+
+    private static @NotNull ViewPropertyResponse getViewPropertyResponse(List<Property> properties) {
         List<PropertyResponse> propertyresponseList = properties.stream()
             .map(PropertyResponse::new)
             .collect(Collectors.toList());
-    ViewPropertyResponse response = new ViewPropertyResponse();
-    response.setProperties(propertyresponseList);
-    return response;
+        ViewPropertyResponse response = new ViewPropertyResponse();
+        response.setProperties(propertyresponseList);
+        return response;
     }
 
     @Override
@@ -100,6 +96,12 @@ public class EaziPropertyService implements PropertyService {
         return propertyRepository.save(property);
     }
 
+    @Override
+    public ViewPropertyResponse findPropertiesFor(Long landlordId) {
+        List<Property> properties = propertyRepository.findAllFor(landlordId);
+        return getViewPropertyResponse(properties);
+    }
+
 
     private Address saveAddress(AddPropertyRequest request) {
         Address address = modelMapper.map(request.getAddressRequest(), Address.class);
@@ -107,11 +109,10 @@ public class EaziPropertyService implements PropertyService {
         return addressRepository.save(address);
     }
 
-    private Property saveProperty(AddPropertyRequest request, Landlord landlord, String mediaUrl, Address address, AgentDetails agentDetails) {
+    private Property saveProperty(AddPropertyRequest request, Landlord landlord, String mediaUrl, Address address) {
         Property property = modelMapper.map(request, Property.class);
         property.setAddress(address);
         property.setLandlord(landlord);
-        property.setAgentDetails(agentDetails);
         property.setMediaUrl(mediaUrl);
         property.setNoOfApartments(property.getNoOfApartments()+1);
         return propertyRepository.save(property);

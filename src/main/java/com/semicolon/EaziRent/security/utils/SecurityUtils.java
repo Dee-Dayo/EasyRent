@@ -24,7 +24,8 @@ public class SecurityUtils {
                 "/api/v1/property/add",
                 "/api/v1/landlord/**",
                 "/api/v1/apartment/add",
-                "/api/v1/apartment/upload-media"
+                "/api/v1/apartment/upload-media",
+                "/api/v1/property/findByLandlordId{landlordId}"
     };
 
     public static final String[] RENTER_AUTH_ENDPOINTS = {

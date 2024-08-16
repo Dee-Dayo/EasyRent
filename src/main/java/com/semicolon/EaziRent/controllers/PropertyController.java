@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
@@ -54,6 +53,16 @@ public class PropertyController {
         }
         catch (EasyRentBaseException exception){
             return ResponseEntity.badRequest().body(exception.getMessage());
+        }
+    }
+    @GetMapping("/findByLandlordId{landlordId}")
+    public ResponseEntity<?> findByLandlordId( @PathVariable Long landlordId){
+        try {
+            ViewPropertyResponse response = propertyService.findPropertiesFor(landlordId);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false,exception.getMessage()), BAD_REQUEST);
         }
     }
 

@@ -11,7 +11,5 @@ public class AddPropertyRequest {
     private AddressRequest addressRequest;
     private int noOfApartments;
     private Type type;
-    private String agentName;
-    private String agentPhoneNumber;
     private MultipartFile mediaFile;
 }

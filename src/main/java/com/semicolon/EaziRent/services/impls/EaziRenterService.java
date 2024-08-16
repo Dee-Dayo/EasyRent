@@ -166,8 +166,8 @@ public class EaziRenterService implements RenterService {
         propertyService.getPropertyBy(request.getPropertyId());
         Apartment apartment = apartmentService.getApartmentBy(request.getApartmentId());
         Renter renter = findById(request.getRenterId());
-        if(!apartment.getRenter().getId().equals(renter.getId()))
-            throw new EasyRentBaseException("review when you rent the apartment");
+//        if(!apartment.getRenter().getId().equals(renter.getId()))
+//            throw new EasyRentBaseException("review when you rent the apartment");
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, apartment, reviewer);
         return map(renter, review);
