@@ -2,12 +2,14 @@ package com.semicolon.EaziRent.dtos.responses;
 
 import com.semicolon.EaziRent.data.models.Address;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class AddressResponse {
     private String number;
     private String street;

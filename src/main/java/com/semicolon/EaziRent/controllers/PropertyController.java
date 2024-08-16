@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
+import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
@@ -14,6 +15,7 @@ import java.security.Principal;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
@@ -30,8 +32,13 @@ public class PropertyController {
     @PostMapping(path = "/add", consumes = {MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> addProperty(@ModelAttribute AddPropertyRequest request,
                                          Principal principal) throws IOException {
-        String email = principal.getName();
-        return ResponseEntity.status(CREATED).body(propertyService.addProperty(request, email));
+        try {
+            String email = principal.getName();
+            var response = propertyService.addProperty(request, email);
+            return ResponseEntity.status(CREATED).body(new EaziRentAPIResponse<>(true, response));
+        } catch (EasyRentBaseException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/all")

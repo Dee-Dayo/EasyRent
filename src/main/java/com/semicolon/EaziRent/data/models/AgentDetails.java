@@ -16,9 +16,9 @@ public class AgentDetails {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @NotNull
+//    @NotNull
     private String name;
-    @NotNull
+//    @NotNull
     private String phoneNumber;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Property> properties;
