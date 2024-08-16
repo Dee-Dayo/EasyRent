@@ -7,6 +7,7 @@ import com.semicolon.EaziRent.data.repositories.AddressRepository;
 import com.semicolon.EaziRent.data.repositories.AgentDetailsRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
+import com.semicolon.EaziRent.dtos.requests.GetLandlordPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.*;
@@ -97,8 +98,8 @@ public class EaziPropertyService implements PropertyService {
     }
 
     @Override
-    public ViewPropertyResponse findPropertiesFor(Long landlordId) {
-        List<Property> properties = propertyRepository.findAllFor(landlordId);
+    public ViewPropertyResponse findPropertiesFor(GetLandlordPropertyRequest request) {
+        List<Property> properties = propertyRepository.findAllFor(request.getEmail());
         return getViewPropertyResponse(properties);
     }
 

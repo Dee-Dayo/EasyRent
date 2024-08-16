@@ -1,6 +1,7 @@
 package com.semicolon.EaziRent.controllers;
 
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
+import com.semicolon.EaziRent.dtos.requests.GetLandlordPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.ViewPropertyResponse;
@@ -55,10 +56,10 @@ public class PropertyController {
             return ResponseEntity.badRequest().body(exception.getMessage());
         }
     }
-    @GetMapping("/findByLandlordId{landlordId}")
-    public ResponseEntity<?> findByLandlordId( @PathVariable Long landlordId){
+    @PostMapping("/findByLandlord")
+    public ResponseEntity<?> findByLandlord(@RequestBody GetLandlordPropertyRequest request){
         try {
-            ViewPropertyResponse response = propertyService.findPropertiesFor(landlordId);
+            ViewPropertyResponse response = propertyService.findPropertiesFor(request);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
         }
         catch (EasyRentBaseException exception){
