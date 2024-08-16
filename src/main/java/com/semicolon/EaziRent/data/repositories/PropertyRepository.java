@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PropertyRepository extends JpaRepository<Property, Long> {
-    @Query("SELECT p from Property p WHERE p.landlord.id=:landlordId")
-    List<Property> findAllFor(Long landlordId);
+    @Query("SELECT p from Property p WHERE p.landlord.bioData.email=:email")
+    List<Property> findAllFor(String email);
 }

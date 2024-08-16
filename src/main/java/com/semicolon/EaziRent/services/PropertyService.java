@@ -3,6 +3,7 @@ package com.semicolon.EaziRent.services;
 import com.semicolon.EaziRent.data.models.Property;
 import com.semicolon.EaziRent.data.models.Review;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
+import com.semicolon.EaziRent.dtos.requests.GetLandlordPropertyRequest;
 import com.semicolon.EaziRent.dtos.responses.AddPropertyResponse;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.PropertyResponse;
@@ -24,5 +25,5 @@ public interface PropertyService {
 
     Property save(Property property);
 
-    ViewPropertyResponse findPropertiesFor(Long landlordId);
+    ViewPropertyResponse findPropertiesFor(GetLandlordPropertyRequest request);
 }
