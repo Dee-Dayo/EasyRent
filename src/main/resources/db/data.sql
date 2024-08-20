@@ -54,7 +54,9 @@ INSERT INTO addresses(id, area, lga, state, number, street)VALUES
 (403, 'area', 'Sabo', 'LAGOS', 'number', 'street'),
 (404, 'area', 'Mushin', 'LAGOS', 'number', 'street'),
 (405, 'area', 'Ikotun', 'LAGOS', 'number', 'street'),
-(407, 'area', 'lga', 'LAGOS', 'number', 'street');
+(407, 'area', 'lga', 'LAGOS', 'number', 'street'),
+(408, 'area', 'lga', 'LAGOS', 'number', 'street');
+
 
 INSERT INTO agent_details(id, name, phone_number)VALUES
 (9, 'Timi', '09022234556'),
@@ -70,7 +72,9 @@ INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, medi
 (502, 4, 402, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150486/file_ibvzwj.jpg', 76),
 (503, 2, 403, 300, 'CONDO', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150799/file_jktfbh.jpg', 87),
 (504, 7, 404, 300, 'BUNGALOW', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723150840/file_voez6b.jpg', 12),
-(505, 10, 405, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg', 76);
+(505, 10, 405, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg', 76),
+(506, 9, 408, 300, 'HOSTEL', 'http://res.cloudinary.com/dljjrwkky/image/upload/v1723148119/file_uwt8z1.jpg',12);
+
 
 INSERT INTO account_details(id, account_name, account_number, bank_name, landlord_id) VALUES
 (700, 'account_name', '0123456789', 'bankName', 300);
