@@ -99,10 +99,10 @@ public class EaziPaystackService implements PaystackService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.exchange(
-                paystackConfig.getUrl() + "/bank", HttpMethod.GET, entity, String.class);
+                "https://api.paystack.co/bank", HttpMethod.GET, entity, String.class);
 
         return response.getBody();
-    }
+}
 
     private void validateStatusOf(Apartment apartment) {
         if (!apartment.getIsAvailable()) throw new IllegalStateException("Apartment is not available");
