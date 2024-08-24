@@ -10,4 +10,6 @@ public interface PaystackService {
     EaziRentAPIResponse<String> initializePayment(String email, Long apartmentId) throws IOException;
 
     EaziRentAPIResponse<PaidRentResponse> verifyPayment(String reference, String email, Long apartmentId) throws IOException;
+
+    String getBanks();
 }

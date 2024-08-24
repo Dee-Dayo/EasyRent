@@ -15,8 +15,13 @@ import lombok.AllArgsConstructor;
 import okhttp3.*;
 import org.cloudinary.json.JSONObject;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -84,6 +89,19 @@ public class EaziPaystackService implements PaystackService {
             PaidRentResponse paidRentResponse = buildPaidRentResponse(rent, paystackResponse, renter, apartment);
             return new EaziRentAPIResponse<>(true, paidRentResponse);
         }
+    }
+
+    @Override
+    public String getBanks() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + paystackConfig.getSecretKey());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.exchange(
+                paystackConfig.getUrl() + "/bank", HttpMethod.GET, entity, String.class);
+
+        return response.getBody();
     }
 
     private void validateStatusOf(Apartment apartment) {

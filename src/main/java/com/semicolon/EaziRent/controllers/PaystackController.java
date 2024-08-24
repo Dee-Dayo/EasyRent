@@ -32,4 +32,9 @@ public class PaystackController {
         return ResponseEntity.status(CREATED)
                 .body(paystackService.verifyPayment(reference, principal.getName(), apartmentId));
     }
+
+    @GetMapping("/banks")
+    public ResponseEntity<String> getBanks() {
+        return ResponseEntity.ok(paystackService.getBanks());
+    }
 }
