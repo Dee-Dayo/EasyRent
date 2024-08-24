@@ -18,15 +18,17 @@ public class SecurityUtils {
                 "/api/v1/property/findBy{id}",
                 "/api/v1/apartment/findBy{id}",
                 "/api/v1/paystack/pay",
+                "/api/v1/apartment/all{propertyId}",
                 "/api/v1/paystack/banks"
-                //remove later ooo
     );
+                //remove later ooo
+
 
     public static final String[] LANDLORD_AUTH_ENDPOINTS = {
                 "/api/v1/property/add",
                 "/api/v1/landlord/**",
                 "/api/v1/apartment/add",
-                "/api/v1/apartment/upload-media",
+                "/api/v1/apartment/upload-media{apartmentId}",
                 "/api/v1/property/findByLandlord"
 
     };
