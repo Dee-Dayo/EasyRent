@@ -17,7 +17,8 @@ public class SecurityUtils {
                 "/api/v1/apartment/filter",
                 "/api/v1/property/findBy{id}",
                 "/api/v1/apartment/findBy{id}",
-                "/api/v1/paystack/pay"
+                "/api/v1/paystack/pay",
+                "/api/v1/paystack/banks"
                 //remove later ooo
     );
 
