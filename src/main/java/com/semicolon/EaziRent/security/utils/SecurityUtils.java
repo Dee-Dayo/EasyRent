@@ -21,7 +21,6 @@ public class SecurityUtils {
                 "/api/v1/apartment/all{propertyId}",
                 "/api/v1/paystack/banks"
     );
-                //remove later ooo
 
 
     public static final String[] LANDLORD_AUTH_ENDPOINTS = {
