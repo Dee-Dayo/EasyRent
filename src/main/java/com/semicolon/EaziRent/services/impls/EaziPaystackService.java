@@ -47,8 +47,6 @@ public class EaziPaystackService implements PaystackService {
         json.put("email", email);
         json.put("amount", apartment.getPrice());
         json.put("currency", "NGN");
-//        String[] channels = {"card", "bank"};
-//        json.put("channels", channels);
         RequestBody body = RequestBody.create(json.toString(), MediaType.parse("application/json"));
         Request request = new Request.Builder()
                 .url(paystackConfig.getUrl())
