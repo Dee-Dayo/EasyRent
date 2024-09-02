@@ -74,6 +74,7 @@ public class EaziApartmentService implements ApartmentService {
 
     @Override
     public void updateAndSave(Apartment apartment, int number) {
+        apartment.setIsAvailable(false);
         apartment.setNumber(apartment.getNumber() - number);
         apartment.setIsAvailable(apartment.getNumber() > 0);
         apartmentRepository.save(apartment);
@@ -82,6 +83,7 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public ListApartmentResponse findAllFor(Long propertyId) {
         List<Apartment> apartments = apartmentRepository.findAllApartmentsFor(propertyId);
+
         return getListApartmentResponse(apartments);
     }
 
