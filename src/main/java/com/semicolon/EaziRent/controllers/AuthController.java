@@ -4,10 +4,7 @@ import com.semicolon.EaziRent.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.semicolon.EaziRent.security.utils.SecurityUtils.JWT_PREFIX;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -30,5 +27,6 @@ public class AuthController {
         SecurityContextHolder.clearContext();
         return ResponseEntity.noContent().build();
     }
+
 
 }
