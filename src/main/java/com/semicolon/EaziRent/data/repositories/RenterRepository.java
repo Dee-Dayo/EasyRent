@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface RenterRepository extends JpaRepository<Renter, Long> {
     @Query("SELECT r FROM Renter r WHERE r.bioData.id=:bioDataId")
     Optional<Renter> findRenterBy(Long bioDataId);
+    @Query("SELECT r FROM Renter r WHERE r.bioData.email=:email")
+    Renter findByEmail(String email);
 }

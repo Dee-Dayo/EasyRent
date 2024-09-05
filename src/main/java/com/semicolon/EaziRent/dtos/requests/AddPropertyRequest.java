@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 public class AddPropertyRequest {
     private AddressRequest addressRequest;
-    private int noOfApartments;
     private Type type;
     private MultipartFile mediaFile;
 }

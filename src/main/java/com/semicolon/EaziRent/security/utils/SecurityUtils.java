@@ -29,7 +29,8 @@ public class SecurityUtils {
                 "/api/v1/apartment/add",
                 "/api/v1/apartment/upload-media/{apartmentId}",
                 "/api/v1/property/findByLandlord",
-                "/api/v1/landlord/add-account-details"
+                "/api/v1/landlord/add-account-details",
+                "/api/v1/renter/findByEmail"
 
     };
 
