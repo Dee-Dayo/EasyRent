@@ -148,8 +148,8 @@ public class EaziApartmentService implements ApartmentService {
     private Apartment createApartmentFromRequest(AddApartmentRequest request, Property property) {
         Apartment apartment = modelMapper.map(request, Apartment.class);
         apartment.setProperty(property);
+        apartment.setNumber(request.getNumber());
         apartment.setMediaUrls(new HashSet<>());
-        apartment.setNumber(apartment.getNumber() + 1);
         return apartment;
     }
 

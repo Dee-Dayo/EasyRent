@@ -30,4 +30,6 @@ public interface RenterService {
     ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request);
 
     ReviewListResponse getApartmentReviews(Long l);
+
+    RenterResponse findByEmail(FindRenterRequest request);
 }

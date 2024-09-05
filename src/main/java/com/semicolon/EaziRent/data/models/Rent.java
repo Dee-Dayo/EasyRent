@@ -20,7 +20,7 @@ public class Rent {
     private Long id;
     @ManyToOne
     private Apartment apartment;
-    @ManyToOne
+    @OneToOne
     private Renter renter;
     @Enumerated(STRING)
     private RentType rentType;

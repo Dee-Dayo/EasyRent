@@ -15,5 +15,6 @@ public class AddApartmentRequest {
     private BigDecimal price;
     private SubType type;
     private RentType rentType;
+    private Integer number;
     private MultipartFile mediaFile;
 }

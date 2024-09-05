@@ -20,5 +20,7 @@ public class Renter {
     @OneToOne
     private BioData bioData;
     private String occupation;
+    @OneToOne
+    private Rent rent;
 
 }

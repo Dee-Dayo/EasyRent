@@ -5,7 +5,6 @@ import com.semicolon.EaziRent.data.repositories.RenterRepository;
 import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.*;
 import com.semicolon.EaziRent.dtos.responses.*;
-import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.exceptions.UserNotFoundException;
 import com.semicolon.EaziRent.services.*;
@@ -184,6 +183,12 @@ public class EaziRenterService implements RenterService {
     public ReviewListResponse getApartmentReviews(Long apartmentId) {
         List<Review> reviews = reviewRepository.findApartmentReviews(apartmentId);
         return mapReviewResponses(reviews);
+    }
+
+    @Override
+    public RenterResponse findByEmail(FindRenterRequest request) {
+        Renter renter = renterRepository.findByEmail(request.getEmail());
+        return new RenterResponse(renter);
     }
 
     private static @NotNull ReviewListResponse mapReviewResponses(List<Review> reviews) {

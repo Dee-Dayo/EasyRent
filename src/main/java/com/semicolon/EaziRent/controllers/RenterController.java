@@ -94,4 +94,15 @@ public class RenterController {
         }
     }
 
+    @PostMapping("/findByEmail")
+    public ResponseEntity<?> getRenterByEmail(@RequestBody FindRenterRequest request){
+        try{
+            RenterResponse response = renterService.findByEmail(request);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+
 }

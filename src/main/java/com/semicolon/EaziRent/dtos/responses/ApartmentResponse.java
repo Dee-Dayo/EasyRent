@@ -21,8 +21,6 @@ public class ApartmentResponse {
     private Set<String> mediaUrls;
     private int ratings;
     private AddressResponse addressResponse;
-    private PropertyResponse propertyResponse;
-    private LandlordResponse landlordResponse;
 
     public ApartmentResponse(Apartment apartment) {
         id = apartment.getId();
@@ -34,8 +32,6 @@ public class ApartmentResponse {
         this.mediaUrls = apartment.getMediaUrls();
         this.addressResponse = new AddressResponse(apartment.getProperty().getAddress());
         this.ratings = calculateRatings(apartment.getReviews());
-        this.propertyResponse = new PropertyResponse(apartment.getProperty());
-        this.landlordResponse = new LandlordResponse(apartment.getProperty().getLandlord());
     }
 
     private int calculateRatings(List<Review> reviews) {
