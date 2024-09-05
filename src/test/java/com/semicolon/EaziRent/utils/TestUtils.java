@@ -51,7 +51,6 @@ public class TestUtils {
         request.setAddressRequest(addressRequest);
         request.setMediaFile(file);
         request.setType(HOSTEL);
-        request.setNoOfApartments(50);
         return request;
     }
 
