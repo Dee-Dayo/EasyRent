@@ -58,7 +58,7 @@ public class EaziApartmentService implements ApartmentService {
         Apartment apartment = createApartmentFromRequest(request, property);
         String mediaUrl = getMediaUrl(request.getMediaFile(), cloudinary.uploader());
         apartment.getMediaUrls().add(mediaUrl);
-        apartment.setIsAvailable(apartment.getNumber() > 0);
+        apartment.setIsAvailable(true);
         apartment = apartmentRepository.save(apartment);
         AddApartmentResponse response = buildAddApartmentResponse(apartment, property);
         return new EaziRentAPIResponse<>(true, response);
@@ -149,6 +149,7 @@ public class EaziApartmentService implements ApartmentService {
         Apartment apartment = modelMapper.map(request, Apartment.class);
         apartment.setProperty(property);
         apartment.setMediaUrls(new HashSet<>());
+        apartment.setNumber(apartment.getNumber() + 1);
         return apartment;
     }
 
