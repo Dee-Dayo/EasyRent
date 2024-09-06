@@ -120,7 +120,7 @@ public class EaziPaystackService implements PaystackService {
         paidRentResponse.setPaystackResponse(paystackResponse);
         paidRentResponse.setResponseTime(now());
         paidRentResponse.setRenterId(renter.getId());
-        paidRentResponse.setApartmentId(apartment.getId());
+        paidRentResponse.setApartmentId(apartment.getApartmentId());
         return paidRentResponse;
     }
 

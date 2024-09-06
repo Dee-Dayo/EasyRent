@@ -12,6 +12,7 @@ TRUNCATE TABLE apartment_media_urls CASCADE;
 TRUNCATE TABLE reviews CASCADE;
 TRUNCATE TABLE users_reviews CASCADE;
 TRUNCATE TABLE agent_details CASCADE;
+TRUNCATE TABLE rents CASCADE;
 
 
 insert into users(id, first_name, last_name, email, password, date_registered)values
@@ -21,7 +22,8 @@ insert into users(id, first_name, last_name, email, password, date_registered)va
 (109, 'Sam', 'Cole', 'renter@email.com', '$2a$10$seAKbpBsTn/xgAg7nbRKWuH1dnRvMlLloxMOjH00zMmTu3vLCtlee', '2024-07-23T15:03:03.792009700'),
 (104, 'Palmer', 'James', 'jamespalmer@gmail.com', '$2a$10$seAKbpBsTn/xgAg7nbRKWuH1dnRvMlLloxMOjH00zMmTu3vLCtlee', '2024-07-23T15:03:03.792009700'),
 (105, 'Theodore', 'Bagwell', 'bagwell@gmail.com', 'password', '2024-07-23T15:03:03.792009700'),
-(106, 'john', 'Blakes', 'blakes@gmail.com', 'password', '2024-07-23T15:03:03.792009700');
+(106, 'john', 'Blakes', 'blakes@gmail.com', 'password', '2024-07-23T15:03:03.792009700'),
+(107, 'Ashley', 'Cole', 'renter@gmail.com', '$2a$10$seAKbpBsTn/xgAg7nbRKWuH1dnRvMlLloxMOjH00zMmTu3vLCtlee', '2024-07-23T15:03:03.792009700');
 
 insert into bio_data_roles(bio_data_id, roles)values
 (100, 'RENTER'),
@@ -30,13 +32,9 @@ insert into bio_data_roles(bio_data_id, roles)values
 (109, 'RENTER'),
 (104, 'LANDLORD'),
 (105, 'LANDLORD'),
-(106, 'LANDLORD');
+(106, 'LANDLORD'),
+(107,'RENTER');
 
-insert into renters(bio_data_id, id, occupation)values
-(100, 200, 'Software Engineering'),
-(101, 201, 'Accountant'),
-(103, 202, 'Civil Servant'),
-(109, 203, 'Civil Servant');
 
 insert into landlords(bio_data_id, id) values
 (100, 300),
@@ -79,7 +77,7 @@ INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, medi
 INSERT INTO account_details(id, account_name, account_number, bank_name, landlord_id) VALUES
 (700, 'account_name', '0123456789', 'bankName', 300);
 
-INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
+INSERT INTO apartments(apartment_id, number, price, rent_type, type, is_available, property_id) VALUES
 (800, 25, 1000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (801, 26, 5000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 502),
@@ -90,8 +88,22 @@ INSERT INTO apartments(id, number, price, rent_type, type, is_available, propert
 (807, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500),
 (808, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500);
 
+insert into rents(id, price, apartment_apartment_id,payment_option, rent_type)values
+(100,5000, 801, 'PAYSTACK', 'MONTHLY'),
+(101,5000, 800, 'PAYSTACK', 'MONTHLY'),
+(102,5000, 802, 'PAYSTACK', 'MONTHLY'),
+(103, 5000, 803,'PAYSTACK', 'MONTHLY');
 
-INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
+insert into renters(bio_data_id, id, occupation, rent_id)values
+(100, 200, 'Software Engineering', 100),
+(101, 201, 'Accountant', 101),
+(103, 202, 'Civil Servant', 102),
+(107, 203, 'Civil Servant', 103);
+
+
+
+
+INSERT INTO apartment_media_urls(apartment_apartment_id, media_urls) VALUES
 (800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
 (800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372046/file.jpg');
 
@@ -145,3 +157,4 @@ INSERT INTO properties_reviews(property_id, reviews_id) VALUES
 (505, 55),
 (505, 56),
 (505, 57);
+
