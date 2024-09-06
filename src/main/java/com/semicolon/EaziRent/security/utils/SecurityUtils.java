@@ -29,14 +29,14 @@ public class SecurityUtils {
                 "/api/v1/apartment/add",
                 "/api/v1/apartment/upload-media/{apartmentId}",
                 "/api/v1/property/findByLandlord",
-                "/api/v1/landlord/add-account-details",
-                "/api/v1/renter/findByEmail"
+                "/api/v1/landlord/add-account-details"
 
     };
 
     public static final String[] RENTER_AUTH_ENDPOINTS = {
             "/api/v1/renter/**",
-            "/api/v1/paystack/**"
+            "/api/v1/paystack/**",
+            "/api/v1/renter/findByEmail"
     };
 
 }
