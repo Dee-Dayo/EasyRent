@@ -77,7 +77,7 @@ INSERT INTO properties(id, no_of_apartments, address_id, landlord_id, type, medi
 INSERT INTO account_details(id, account_name, account_number, bank_name, landlord_id) VALUES
 (700, 'account_name', '0123456789', 'bankName', 300);
 
-INSERT INTO apartments(apartment_id, number, price, rent_type, type, is_available, property_id) VALUES
+INSERT INTO apartments(id, number, price, rent_type, type, is_available, property_id) VALUES
 (800, 25, 1000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (801, 26, 5000.00, 'MONTHLY', 'ONE_ROOM', true, 500),
 (802, 27, 34000.00, 'MONTHLY', 'ONE_ROOM', true, 502),
@@ -88,7 +88,7 @@ INSERT INTO apartments(apartment_id, number, price, rent_type, type, is_availabl
 (807, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500),
 (808, 29, 10500.00, 'HALF_YEARLY', 'BOYS_QUARTERS', true, 500);
 
-insert into rents(id, price, apartment_apartment_id,payment_option, rent_type)values
+insert into rents(id, price, apartment_id,payment_option, rent_type)values
 (100,5000, 801, 'PAYSTACK', 'MONTHLY'),
 (101,5000, 800, 'PAYSTACK', 'MONTHLY'),
 (102,5000, 802, 'PAYSTACK', 'MONTHLY'),
@@ -103,7 +103,7 @@ insert into renters(bio_data_id, id, occupation, rent_id)values
 
 
 
-INSERT INTO apartment_media_urls(apartment_apartment_id, media_urls) VALUES
+INSERT INTO apartment_media_urls(apartment_id, media_urls) VALUES
 (800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372047/file.jpg'),
 (800, 'https://res.cloudinary.com/dvliop7es/image/upload/v1722372046/file.jpg');
 

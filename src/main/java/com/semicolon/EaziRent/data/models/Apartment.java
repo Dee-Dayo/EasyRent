@@ -19,7 +19,7 @@ import static jakarta.persistence.EnumType.STRING;
 public class Apartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long apartmentId;
+    private Long id;
 
     @Enumerated(STRING)
     private SubType type;

@@ -23,7 +23,7 @@ public class ApartmentResponse {
     private AddressResponse addressResponse;
 
     public ApartmentResponse(Apartment apartment) {
-        id = apartment.getApartmentId();
+        id = apartment.getId();
         this.subType = String.valueOf(apartment.getType());
         this.rentType = String.valueOf(apartment.getRentType());
         this.price = apartment.getPrice();

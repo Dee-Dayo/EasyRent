@@ -214,7 +214,7 @@ public class EaziRenterService implements RenterService {
 
     private @NotNull ReviewApartmentResponse map(Renter renter, Review review) {
         ReviewApartmentResponse response = modelMapper.map(renter, ReviewApartmentResponse.class);
-        response.setApartmentId(review.getApartment().getApartmentId());
+        response.setApartmentId(review.getApartment().getId());
         response.setRenterId(review.getReviewer().getId());
         return response;
     }
