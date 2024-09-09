@@ -19,7 +19,9 @@ public class RenterResponse {
         lastName = renter.getBioData().getLastName();
         email = renter.getBioData().getEmail();
         profileUrl = renter.getBioData().getMediaUrl();
-        apartment = new ApartmentResponse(renter.getRent().getApartment());
-        landlordResponse = new LandlordResponse(renter.getRent().getApartment().getProperty().getLandlord());
+        if(renter.getRent() != null) {
+            apartment = new ApartmentResponse(renter.getRent().getApartment());
+            landlordResponse = new LandlordResponse(renter.getRent().getApartment().getProperty().getLandlord());
+        }
     }
 }
