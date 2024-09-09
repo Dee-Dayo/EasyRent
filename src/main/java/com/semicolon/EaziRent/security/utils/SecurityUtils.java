@@ -36,7 +36,8 @@ public class SecurityUtils {
     public static final String[] RENTER_AUTH_ENDPOINTS = {
             "/api/v1/renter/**",
             "/api/v1/paystack/**",
-            "/api/v1/renter/findByEmail"
+            "/api/v1/renter/findByEmail",
+            "/api/v1/paystack/verify/{reference}"
     };
 
 }
