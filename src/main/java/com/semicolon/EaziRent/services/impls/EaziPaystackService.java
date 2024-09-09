@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import static com.semicolon.EaziRent.data.constants.PaymentOption.PAYSTACK;
 import static java.time.LocalDateTime.now;
@@ -45,8 +46,10 @@ public class EaziPaystackService implements PaystackService {
         OkHttpClient client = new OkHttpClient();
         JSONObject json = new JSONObject();
         json.put("email", email);
-        json.put("amount", apartment.getPrice());
+        String value = String.valueOf(apartment.getPrice().multiply(BigDecimal.valueOf(100)));
+        json.put("amount", value);
         json.put("currency", "NGN");
+        json.put("callback_url", "https://google.com");
         RequestBody body = RequestBody.create(json.toString(), MediaType.parse("application/json"));
         Request request = new Request.Builder()
                 .url(paystackConfig.getUrl())
@@ -69,7 +72,7 @@ public class EaziPaystackService implements PaystackService {
         validateStatusOf(apartment);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(paystackConfig.getVerifyUrl() + reference)
+                .url(paystackConfig.getVerificationUrl() + reference)
                 .get()
                 .addHeader("Authorization", "Bearer " + paystackConfig.getSecretKey())
                 .addHeader("Content-Type", "application/json")
