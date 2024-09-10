@@ -49,7 +49,7 @@ public class EaziPaystackService implements PaystackService {
         String value = String.valueOf(apartment.getPrice().multiply(BigDecimal.valueOf(100)));
         json.put("amount", value);
         json.put("currency", "NGN");
-        json.put("callback_url", "https://google.com");
+        json.put("callback_url", "https://eazi-rent-eight.vercel.app/verify-payment");
         RequestBody body = RequestBody.create(json.toString(), MediaType.parse("application/json"));
         Request request = new Request.Builder()
                 .url(paystackConfig.getUrl())
