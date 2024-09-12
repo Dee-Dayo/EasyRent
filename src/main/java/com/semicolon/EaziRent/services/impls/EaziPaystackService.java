@@ -6,6 +6,7 @@ import com.semicolon.EaziRent.data.models.Rent;
 import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.PaidRentResponse;
+import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.exceptions.UnsuccessfulTransactionException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import com.semicolon.EaziRent.services.PaystackService;
@@ -41,6 +42,8 @@ public class EaziPaystackService implements PaystackService {
 
     @Override
     public EaziRentAPIResponse<String> initializePayment(String email, Long apartmentId) throws IOException {
+        Renter renter = renterService.getRenterBy(email);
+        if(renter.getRent() != null)throw new EasyRentBaseException("You have an apartment");
         Apartment apartment = apartmentService.getApartmentBy(apartmentId);
         validateStatusOf(apartment);
         OkHttpClient client = new OkHttpClient();
@@ -68,6 +71,7 @@ public class EaziPaystackService implements PaystackService {
     @Override
     @Transactional
     public EaziRentAPIResponse<PaidRentResponse> verifyPayment(String reference, String email, Long apartmentId) throws IOException {
+        Renter renter = renterService.getRenterBy(email);
         Apartment apartment = apartmentService.getApartmentBy(apartmentId);
         validateStatusOf(apartment);
         OkHttpClient client = new OkHttpClient();
@@ -84,9 +88,8 @@ public class EaziPaystackService implements PaystackService {
             String paystackResponse = response.body().string();
             System.out.println("Paystack response: " + paystackResponse);
             validate(paystackResponse);
-            Renter renter = renterService.getRenterBy(email);
             Rent rent = getRent(apartment, renter);
-            apartmentService.updateAndSave(apartment, 1);
+            apartmentService.updateAndSave(apartment);
             PaidRentResponse paidRentResponse = buildPaidRentResponse(rent, paystackResponse, renter, apartment);
             return new EaziRentAPIResponse<>(true, paidRentResponse);
         }

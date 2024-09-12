@@ -79,10 +79,8 @@ public class EaziApartmentService implements ApartmentService {
 
 
     @Override
-    public void updateAndSave(Apartment apartment, int number) {
+    public void updateAndSave(Apartment apartment) {
         apartment.setIsAvailable(false);
-        apartment.setNumber(apartment.getNumber() - number);
-        apartment.setIsAvailable(apartment.getNumber() > 0);
         apartmentRepository.save(apartment);
     }
 
