@@ -15,7 +15,7 @@ public interface ApartmentService {
 
     Apartment getApartmentBy(Long id);
 
-    void updateAndSave(Apartment apartment, int number);
+    void updateAndSave(Apartment apartment);
 
     ListApartmentResponse findAllFor(Long propertyId);
 
