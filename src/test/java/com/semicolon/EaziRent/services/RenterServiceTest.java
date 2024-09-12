@@ -86,16 +86,6 @@ public class RenterServiceTest {
     }
 
 
-    @Test
-    public void reviewApartmentTest(){
-        ReviewApartmentRequest request = new ReviewApartmentRequest();
-        request.setPropertyId(500L);
-        request.setApartmentId(800L);
-        request.setRenterId(200L);
-        request.setRating(5);
-        request.setComment("good conditions");
-        ReviewApartmentResponse response = renterService.reviewApartment(request);
-        assertThat(response).isNotNull();
-    }
+
 
 }

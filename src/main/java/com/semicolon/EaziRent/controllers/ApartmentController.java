@@ -4,9 +4,8 @@ import com.semicolon.EaziRent.data.constants.State;
 import com.semicolon.EaziRent.data.constants.SubType;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
-import com.semicolon.EaziRent.dtos.responses.ApartmentResponse;
-import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
-import com.semicolon.EaziRent.dtos.responses.ListApartmentResponse;
+import com.semicolon.EaziRent.dtos.requests.ReviewApartmentRequest;
+import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.services.ApartmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +73,27 @@ public class ApartmentController {
         try{
             ListApartmentResponse response = apartmentService.findApartmentsByStateAndType(state, type);
             return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+    @PostMapping("/review")
+    public ResponseEntity<?> reviewApartment(@RequestBody ReviewApartmentRequest request){
+        try{
+            ReviewApartmentResponse response = apartmentService.reviewApartment(request);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, response), OK);
+        }
+        catch (EasyRentBaseException exception){
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/getApartmentReviews{apartmentId}")
+    public ResponseEntity<?> getApartmentReviews(@PathVariable Long apartmentId){
+        try{
+            ReviewListResponse reviews = apartmentService.getApartmentReviews(apartmentId);
+            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
         }
         catch (EasyRentBaseException exception){
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
