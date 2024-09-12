@@ -134,6 +134,8 @@ public class EaziPaystackService implements PaystackService {
         rent.setRentType(apartment.getRentType());
         rent.setPrice(apartment.getPrice());
         rent.setPaymentOption(PAYSTACK);
-        return rentService.save(rent);
+        rent = rentService.save(rent);
+        renter.setRent(rent);
+        return rent;
     }
 }
