@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    name: Buld image
+    name: Build image
     runs-on: ubuntu-latest
 
     steps:
@@ -43,3 +43,8 @@ jobs:
         with:
           push: true
           tags: olayemi14/eazirent:latest
+
+
+      - name: Trigger Render Deployment
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}

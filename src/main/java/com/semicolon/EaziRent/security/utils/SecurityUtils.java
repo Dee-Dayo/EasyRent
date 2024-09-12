@@ -20,7 +20,8 @@ public class SecurityUtils {
                 "/api/v1/property/findBy{id}",
                 "/api/v1/apartment/findBy{id}",
                 "/api/v1/apartment/all{propertyId}",
-                "/api/v1/paystack/banks"
+                "/api/v1/paystack/banks",
+                "/api/v1/renter/findByEmail"
     );
 
 
@@ -37,7 +38,6 @@ public class SecurityUtils {
     public static final String[] RENTER_AUTH_ENDPOINTS = {
             "/api/v1/renter/**",
             "/api/v1/paystack/**",
-            "/api/v1/renter/findByEmail",
             "/api/v1/paystack/verify/{reference}"
     };
 
