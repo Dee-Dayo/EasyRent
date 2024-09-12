@@ -42,8 +42,6 @@ public class EaziPaystackService implements PaystackService {
 
     @Override
     public EaziRentAPIResponse<String> initializePayment(String email, Long apartmentId) throws IOException {
-        Renter renter = renterService.getRenterBy(email);
-        if(renter.getRent() != null)throw new EasyRentBaseException("You have an apartment");
         Apartment apartment = apartmentService.getApartmentBy(apartmentId);
         validateStatusOf(apartment);
         OkHttpClient client = new OkHttpClient();
