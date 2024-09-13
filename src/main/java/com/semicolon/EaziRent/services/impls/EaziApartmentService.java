@@ -103,7 +103,6 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public ListApartmentResponse findAllFor(Long propertyId) {
         List<Apartment> apartments = apartmentRepository.findAllApartmentsFor(propertyId);
-
         return getListApartmentResponse(apartments);
     }
 
