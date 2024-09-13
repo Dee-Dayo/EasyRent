@@ -22,14 +22,9 @@ public interface RenterService {
 
     ReviewListResponse getLandlordReviews(Long landlordId);
 
-
     ReviewPropertyResponse reviewProperty(ReviewPropertyRequest request);
 
     ReviewListResponse findPropertyReviews(Long propertyId);
-
-    ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request);
-
-    ReviewListResponse getApartmentReviews(Long l);
 
     RenterResponse findByEmail(FindRenterRequest request);
 }

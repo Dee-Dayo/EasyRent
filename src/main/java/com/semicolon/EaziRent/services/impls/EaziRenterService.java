@@ -161,29 +161,12 @@ public class EaziRenterService implements RenterService {
     }
 
     @Override
-    public ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request) {
-        propertyService.getPropertyBy(request.getPropertyId());
-        Apartment apartment = apartmentService.getApartmentBy(request.getApartmentId());
-        Renter renter = findById(request.getRenterId());
-//        if(!apartment.getRenter().getId().equals(renter.getId()))
-//            throw new EasyRentBaseException("review when you rent the apartment");
-        BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
-        Review review = map(request, apartment, reviewer);
-        return map(renter, review);
-    }
-
-    @Override
     public Renter getRenterBy(String email) {
         BioData bioData = bioDataService.getBioDataBy(email);
         return renterRepository.findRenterBy(bioData.getId())
                 .orElseThrow(()-> new ResourceNotFoundException("Renter not found with email: " + email));
     }
 
-    @Override
-    public ReviewListResponse getApartmentReviews(Long apartmentId) {
-        List<Review> reviews = reviewRepository.findApartmentReviews(apartmentId);
-        return mapReviewResponses(reviews);
-    }
 
     @Override
     public RenterResponse findByEmail(FindRenterRequest request) {
@@ -210,22 +193,4 @@ public class EaziRenterService implements RenterService {
         response.setComment(comment);
         return response;
     }
-
-
-    private @NotNull ReviewApartmentResponse map(Renter renter, Review review) {
-        ReviewApartmentResponse response = modelMapper.map(renter, ReviewApartmentResponse.class);
-        response.setApartmentId(review.getApartment().getId());
-        response.setRenterId(review.getReviewer().getId());
-        return response;
-    }
-
-    private @NotNull Review map(ReviewApartmentRequest request, Apartment apartment, BioData reviewer) {
-        Review review = modelMapper.map(request, Review.class);
-        review.setApartment(apartment);
-        review.setReviewer(reviewer);
-        reviewRepository.save(review);
-        return review;
-    }
-
-
 }

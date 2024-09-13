@@ -5,6 +5,7 @@ import com.semicolon.EaziRent.data.constants.SubType;
 import com.semicolon.EaziRent.data.models.Apartment;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,4 +28,7 @@ public interface ApartmentService {
                                                          Long id, String email);
 
     ListApartmentResponse findApartmentsByStateAndType(State state, SubType type);
+
+    ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request);
+    ReviewListResponse getApartmentReviews(Long l);
 }

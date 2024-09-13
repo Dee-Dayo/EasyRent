@@ -3,18 +3,19 @@ package com.semicolon.EaziRent.services.impls;
 import com.cloudinary.Cloudinary;
 import com.semicolon.EaziRent.data.constants.State;
 import com.semicolon.EaziRent.data.constants.SubType;
-import com.semicolon.EaziRent.data.models.Apartment;
-import com.semicolon.EaziRent.data.models.BioData;
-import com.semicolon.EaziRent.data.models.Landlord;
-import com.semicolon.EaziRent.data.models.Property;
+import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.ApartmentRepository;
+import com.semicolon.EaziRent.data.repositories.ReviewRepository;
 import com.semicolon.EaziRent.dtos.requests.AddApartmentRequest;
 import com.semicolon.EaziRent.dtos.requests.GetApartmentRequest;
+import com.semicolon.EaziRent.dtos.requests.ReviewApartmentRequest;
 import com.semicolon.EaziRent.dtos.responses.*;
 import com.semicolon.EaziRent.exceptions.InvalidDataException;
 import com.semicolon.EaziRent.exceptions.ResourceNotFoundException;
 import com.semicolon.EaziRent.services.ApartmentService;
+import com.semicolon.EaziRent.services.BioDataService;
 import com.semicolon.EaziRent.services.PropertyService;
+import com.semicolon.EaziRent.services.RenterService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
@@ -36,12 +37,16 @@ public class EaziApartmentService implements ApartmentService {
     private PropertyService propertyService;
     private final ApartmentRepository apartmentRepository;
     private final ModelMapper modelMapper;
+    private final ReviewRepository reviewRepository;
     private final Cloudinary cloudinary;
+    private RenterService renterService;
+    private BioDataService bioDataService;
 
     public EaziApartmentService(ApartmentRepository apartmentRepository,
-                                ModelMapper modelMapper, Cloudinary cloudinary){
+                                ModelMapper modelMapper, ReviewRepository reviewRepository, Cloudinary cloudinary){
         this.apartmentRepository = apartmentRepository;
         this.modelMapper = modelMapper;
+        this.reviewRepository = reviewRepository;
         this.cloudinary = cloudinary;
     }
 
@@ -51,6 +56,17 @@ public class EaziApartmentService implements ApartmentService {
         this.propertyService = propertyService;
     }
 
+    @Autowired
+    @Lazy
+    public void setRenterService(RenterService renterService) {
+        this.renterService = renterService;
+    }
+
+    @Autowired
+    @Lazy
+    public void setBioDataService(BioDataService bioDataService) {
+        this.bioDataService = bioDataService;
+    }
 
     @Override
     public EaziRentAPIResponse<AddApartmentResponse> addApartment(AddApartmentRequest request) {
@@ -105,6 +121,11 @@ public class EaziApartmentService implements ApartmentService {
         Apartment apartment = getApartmentBy(id);
         return new ApartmentResponse(apartment);
     }
+    @Override
+    public ReviewListResponse getApartmentReviews(Long apartmentId) {
+        List<Review> reviews = reviewRepository.findApartmentReviews(apartmentId);
+        return mapReviewResponses(reviews);
+    }
 
     @Override
     public ListApartmentResponse findApartmentsBy(GetApartmentRequest request) {
@@ -128,6 +149,15 @@ public class EaziApartmentService implements ApartmentService {
     public ListApartmentResponse findApartmentsByStateAndType(State state, SubType type) {
         List<Apartment> apartments = apartmentRepository.findAllApartmentsBy(state, type);
         return getListApartmentResponse(apartments);
+    }
+
+    @Override
+    public ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request) {
+        Apartment apartment = getApartmentBy(request.getPropertyId());
+        Renter renter = renterService.findById(request.getRenterId());
+        BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
+        Review review = map(request, apartment, reviewer);
+        return map(renter, review);
     }
 
     private UploadMediaResponse uploadMediaAndGetResponse(List<MultipartFile> mediaFiles, Apartment apartment) {
@@ -162,6 +192,27 @@ public class EaziApartmentService implements ApartmentService {
         AddApartmentResponse response = modelMapper.map(apartment, AddApartmentResponse.class);
         response.setResponseTime(now());
         response.setPropertyId(property.getId());
+        return response;
+    }
+    private Review map(ReviewApartmentRequest request, Apartment apartment, BioData reviewer){
+        Review review = modelMapper.map(request, Review.class);
+        review.setApartment(apartment);
+        review.setReviewer(reviewer);
+        reviewRepository.save(review);
+        return review;
+    }
+    private @NotNull ReviewApartmentResponse map(Renter renter, Review review) {
+        ReviewApartmentResponse response = modelMapper.map(renter, ReviewApartmentResponse.class);
+        response.setApartmentId(review.getApartment().getId());
+        response.setRenterId(review.getReviewer().getId());
+        return response;
+    }
+    private static @NotNull ReviewListResponse mapReviewResponses(List<Review> reviews) {
+        List<ReviewResponse> reviewResponses
+                = reviews.stream().map(ReviewResponse::new)
+                .collect(Collectors.toList());
+        ReviewListResponse response = new ReviewListResponse();
+        response.setReviews(reviewResponses);
         return response;
     }
 

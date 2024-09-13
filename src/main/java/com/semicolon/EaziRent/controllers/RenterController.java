@@ -83,16 +83,6 @@ public class RenterController {
             return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
         }
     }
-    @GetMapping("/getApartmentReviews{apartmentId}")
-    public ResponseEntity<?> getApartmentReviews(@PathVariable Long apartmentId){
-        try{
-            ReviewListResponse reviews = renterService.getApartmentReviews(apartmentId);
-            return new ResponseEntity<>(new EaziRentAPIResponse<>(true, reviews), OK);
-        }
-        catch (EasyRentBaseException exception){
-            return new ResponseEntity<>(new EaziRentAPIResponse<>(false, exception.getMessage()), BAD_REQUEST);
-        }
-    }
 
     @PostMapping("/findByEmail")
     public ResponseEntity<?> getRenterByEmail(@RequestBody FindRenterRequest request){
