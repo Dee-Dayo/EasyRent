@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RenterResponse {
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -15,6 +16,7 @@ public class RenterResponse {
     private LandlordResponse landlordResponse;
 
     public RenterResponse(Renter renter){
+        id = renter.getId();
         firstName = renter.getBioData().getFirstName();
         lastName = renter.getBioData().getLastName();
         email = renter.getBioData().getEmail();
