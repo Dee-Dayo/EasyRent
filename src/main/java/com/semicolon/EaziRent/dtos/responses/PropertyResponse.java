@@ -21,6 +21,7 @@ public class PropertyResponse {
     private String agentPhoneNumber;
     private String landlordMediaUrl;
     private String landlordName;
+    private Long landlordId;
     private int landlordRating;
     private String type;
     private int averageRating;
@@ -40,6 +41,7 @@ public class PropertyResponse {
         if (property.getLandlord().getBioData().getMediaUrl() != null)
             this.landlordMediaUrl = property.getLandlord().getBioData().getMediaUrl();
         else this.landlordMediaUrl = "default";
+        this.landlordId = property.getLandlord().getId();
         if (property.getLandlord().getBioData().getFirstName() != null)
             this.landlordName = property.getLandlord().getBioData().getFirstName();
         else this.landlordName = "default";
