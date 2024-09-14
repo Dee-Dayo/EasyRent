@@ -46,6 +46,7 @@ public class PropertyController {
         ViewPropertyResponse response =  propertyService.findAll();
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/findBy{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
         try{
