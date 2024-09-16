@@ -24,7 +24,8 @@ public class SecurityUtils {
                 "/api/v1/renter/findByEmail",
                 "/api/v1/renter/getPropertyReviews{propertyId}",
                 "/api/v1/renter/getLandlordReviews{landlordId}",
-                "/api/v1/renter/reviewLandlord"
+                "/api/v1/renter/reviewLandlord",
+                "/api/v1/apartment/review"
     );
 
 
