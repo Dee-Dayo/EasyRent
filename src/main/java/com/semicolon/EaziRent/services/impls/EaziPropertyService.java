@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.semicolon.EaziRent.utils.ServicesUtils.getMediaUrl;
 import static java.time.LocalDateTime.now;
@@ -69,9 +70,19 @@ public class EaziPropertyService implements PropertyService {
     }
 
     private static @NotNull ViewPropertyResponse getViewPropertyResponse(List<Property> properties) {
-        List<PropertyResponse> propertyresponseList = properties.stream()
-            .map(PropertyResponse::new)
-            .collect(Collectors.toList());
+        List<Property> topListed = properties.stream()
+                .filter(property -> property.getLandlord().isVerified())
+                .toList();
+        List<Property> listedProperties = properties.stream()
+                .filter(property -> !property.getLandlord().isVerified())
+                .toList();
+
+        List<PropertyResponse> propertyresponseList = Stream.concat(
+                topListed.stream(),
+                listedProperties.stream()
+        )
+                .map(PropertyResponse::new)
+                .collect(Collectors.toList());
         ViewPropertyResponse response = new ViewPropertyResponse();
         response.setProperties(propertyresponseList);
         return response;
@@ -102,7 +113,6 @@ public class EaziPropertyService implements PropertyService {
         List<Property> properties = propertyRepository.findAllFor(request.getEmail());
         return getViewPropertyResponse(properties);
     }
-
 
     private Address saveAddress(AddPropertyRequest request) {
         Address address = modelMapper.map(request.getAddressRequest(), Address.class);
