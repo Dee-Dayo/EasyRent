@@ -153,7 +153,7 @@ public class EaziApartmentService implements ApartmentService {
     @Override
     public ReviewApartmentResponse reviewApartment(ReviewApartmentRequest request) {
         Apartment apartment = getApartmentBy(request.getPropertyId());
-        Renter renter = renterService.findById(request.getRenterId());
+        Renter renter = renterService.getRenterBy(request.getEmail());
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, apartment, reviewer);
         return map(renter, review);

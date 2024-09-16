@@ -8,7 +8,7 @@ import lombok.Setter;
 public class ReviewApartmentRequest {
     private Long propertyId;
     private Long apartmentId;
-    private Long renterId;
+    private String email;
     private int rating;
     private String comment;
 }
