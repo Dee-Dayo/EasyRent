@@ -29,4 +29,5 @@ public interface LandlordService {
 
     ReviewListResponse getRenterReviews(Long renterId);
 
+    void save(Landlord landlord);
 }

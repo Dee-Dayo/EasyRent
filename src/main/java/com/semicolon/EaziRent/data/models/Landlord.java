@@ -21,7 +21,7 @@ public class Landlord {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Property> properties;
-
+    private boolean isVerified;
     @OneToOne
     @JsonSerialize(using = BioDataSerializer.class)
     @JsonDeserialize

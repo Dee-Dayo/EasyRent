@@ -2,16 +2,13 @@ package com.semicolon.EaziRent.services.impls;
 
 import com.semicolon.EaziRent.config.PaystackConfig;
 import com.semicolon.EaziRent.data.models.Apartment;
+import com.semicolon.EaziRent.data.models.Landlord;
 import com.semicolon.EaziRent.data.models.Rent;
 import com.semicolon.EaziRent.data.models.Renter;
 import com.semicolon.EaziRent.dtos.responses.EaziRentAPIResponse;
 import com.semicolon.EaziRent.dtos.responses.PaidRentResponse;
-import com.semicolon.EaziRent.exceptions.EasyRentBaseException;
 import com.semicolon.EaziRent.exceptions.UnsuccessfulTransactionException;
-import com.semicolon.EaziRent.services.ApartmentService;
-import com.semicolon.EaziRent.services.PaystackService;
-import com.semicolon.EaziRent.services.RentService;
-import com.semicolon.EaziRent.services.RenterService;
+import com.semicolon.EaziRent.services.*;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
 import org.cloudinary.json.JSONObject;
@@ -38,6 +35,7 @@ public class EaziPaystackService implements PaystackService {
     private final RenterService renterService;
     private final RentService rentService;
     private final ModelMapper modelMapper;
+    private final LandlordService landlordService;
 
 
     @Override
@@ -137,6 +135,17 @@ public class EaziPaystackService implements PaystackService {
         rent.setPaymentOption(PAYSTACK);
         rent = rentService.save(rent);
         renter.setRent(rent);
+        Landlord landlord = apartment.getProperty().getLandlord();
+        validateAndVerify(landlord);
         return rent;
+    }
+
+    private void validateAndVerify(Landlord landlord) {
+        long rentedApartments = landlord.getProperties().stream()
+                .flatMap(property -> property.getApartments().stream())
+                .filter(apartment1 -> !apartment1.getIsAvailable())
+                .count();
+        if(rentedApartments>2) landlord.setVerified(true);
+        landlordService.save(landlord);
     }
 }
