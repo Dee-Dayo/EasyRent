@@ -28,7 +28,6 @@ public class SecurityUtils {
                 "/api/v1/apartment/review"
     );
 
-
     public static final String[] LANDLORD_AUTH_ENDPOINTS = {
                 "/api/v1/property/add",
                 "/api/v1/landlord/**",
