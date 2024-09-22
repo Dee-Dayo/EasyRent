@@ -6,9 +6,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ReviewApartmentRequest {
-    private Long propertyId;
     private Long apartmentId;
-    private String email;
+    private Long renterId;
     private int rating;
     private String comment;
 }
