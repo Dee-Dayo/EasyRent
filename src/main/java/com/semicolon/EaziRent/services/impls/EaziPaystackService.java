@@ -145,7 +145,7 @@ public class EaziPaystackService implements PaystackService {
                 .flatMap(property -> property.getApartments().stream())
                 .filter(apartment1 -> !apartment1.getIsAvailable())
                 .count();
-        if(rentedApartments>2) landlord.setVerified(true);
+        if(rentedApartments > 2) landlord.getBioData().setVerified(true);
         landlordService.save(landlord);
     }
 }

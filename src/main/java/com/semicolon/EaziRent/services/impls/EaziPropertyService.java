@@ -71,10 +71,10 @@ public class EaziPropertyService implements PropertyService {
 
     private static @NotNull ViewPropertyResponse getViewPropertyResponse(List<Property> properties) {
         List<Property> topListed = properties.stream()
-                .filter(property -> property.getLandlord().isVerified())
+                .filter(property -> property.getLandlord().getBioData().isVerified())
                 .toList();
         List<Property> listedProperties = properties.stream()
-                .filter(property -> !property.getLandlord().isVerified())
+                .filter(property -> !property.getLandlord().getBioData().isVerified())
                 .toList();
 
         List<PropertyResponse> propertyresponseList = Stream.concat(
