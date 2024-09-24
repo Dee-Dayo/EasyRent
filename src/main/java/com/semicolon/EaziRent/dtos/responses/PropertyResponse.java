@@ -23,6 +23,7 @@ public class PropertyResponse {
     private String landlordName;
     private Long landlordId;
     private int landlordRating;
+    private boolean landlord_verified;
     private String type;
     private int averageRating;
     private AddressResponse addressResponse;
@@ -42,6 +43,7 @@ public class PropertyResponse {
             this.landlordMediaUrl = property.getLandlord().getBioData().getMediaUrl();
         else this.landlordMediaUrl = "default";
         this.landlordId = property.getLandlord().getId();
+        this.landlord_verified = property.getLandlord().getBioData().isVerified();
         if (property.getLandlord().getBioData().getFirstName() != null)
             this.landlordName = property.getLandlord().getBioData().getFirstName();
         else this.landlordName = "default";
