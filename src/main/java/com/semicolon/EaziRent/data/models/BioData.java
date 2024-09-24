@@ -42,7 +42,6 @@ public class BioData {
     private Set<Role> roles;
     private boolean isVerified;
 
-
     @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
 
