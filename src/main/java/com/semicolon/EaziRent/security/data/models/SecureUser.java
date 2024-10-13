@@ -1,6 +1,5 @@
 package com.semicolon.EaziRent.security.data.models;
 
-import com.semicolon.EaziRent.data.constants.Role;
 import com.semicolon.EaziRent.data.models.BioData;
 import com.semicolon.EaziRent.data.models.Review;
 import lombok.Getter;
@@ -24,6 +23,8 @@ public class SecureUser implements UserDetails {
     private final int rating;
     @Getter
     private final String role;
+    @Getter
+    private final boolean isVerified;
 
     public SecureUser(BioData user) {
         this.user = user;
@@ -32,6 +33,7 @@ public class SecureUser implements UserDetails {
         this.mediaUrl = user.getMediaUrl();
         this.rating = calculateRating(user.getReviews());
         this.role = Objects.requireNonNull(user.getRoles().stream().findFirst().orElse(null)).name();
+        this.isVerified = user.isVerified();
     }
 
     @Override

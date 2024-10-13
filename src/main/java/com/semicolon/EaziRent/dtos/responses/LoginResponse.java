@@ -21,6 +21,7 @@ public class LoginResponse {
     private String lastName = "";
     private String email;
     private String role;
+    private boolean isVerified;
     private String mediaUrl = "";
     private int rating;
     private String token;

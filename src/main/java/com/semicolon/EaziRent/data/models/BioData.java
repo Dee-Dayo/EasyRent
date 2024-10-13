@@ -36,16 +36,12 @@ public class BioData {
     private String email;
     private String password;
     private String mediaUrl;
-
     @ElementCollection(fetch=EAGER)
     @Enumerated(STRING)
     private Set<Role> roles;
     private boolean isVerified;
-
-
     @OneToMany(fetch = EAGER, cascade = CascadeType.ALL)
     private List<Review> reviews;
-
     @Setter(AccessLevel.NONE)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
