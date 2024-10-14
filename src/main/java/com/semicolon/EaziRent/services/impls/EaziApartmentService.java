@@ -39,7 +39,7 @@ public class EaziApartmentService implements ApartmentService {
     private final ModelMapper modelMapper;
     private final ReviewRepository reviewRepository;
     private final Cloudinary cloudinary;
-    private RenterService renterService;
+    private RenterService renterService; 
     private BioDataService bioDataService;
 
     public EaziApartmentService(ApartmentRepository apartmentRepository,
@@ -156,6 +156,8 @@ public class EaziApartmentService implements ApartmentService {
         Renter renter = renterService.findById(request.getRenterId());
         BioData reviewer = bioDataService.findBioDataBy(renter.getBioData().getId());
         Review review = map(request, apartment, reviewer);
+        apartment.getReviews().add(review);
+        apartmentRepository.save(apartment);
         return map(renter, review);
     }
 
