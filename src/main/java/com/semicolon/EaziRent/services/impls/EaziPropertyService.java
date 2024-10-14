@@ -68,8 +68,7 @@ public class EaziPropertyService implements PropertyService {
         List<Property> properties = propertyRepository.findAll();
 
         properties = properties.stream()
-            .filter(property -> property.getApartments() != null && !property.getApartments().isEmpty())
-            .toList();
+                .filter(property -> property.getApartments().isEmpty()).toList();
         return getViewPropertyResponse(properties);
     }
 
