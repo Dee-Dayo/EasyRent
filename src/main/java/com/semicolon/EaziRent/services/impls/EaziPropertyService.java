@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,6 +67,10 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public ViewPropertyResponse findAll() {
         List<Property> properties = propertyRepository.findAll();
+
+        properties = properties.stream()
+                .filter(property -> property.getNoOfApartments() > 0)
+                .toList();
         return getViewPropertyResponse(properties);
     }
 
