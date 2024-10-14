@@ -66,6 +66,9 @@ public class EaziPropertyService implements PropertyService {
     @Override
     public ViewPropertyResponse findAll() {
         List<Property> properties = propertyRepository.findAll();
+        properties = properties.stream()
+                .filter(property -> !property.getApartments().isEmpty())
+                .toList();
         return getViewPropertyResponse(properties);
     }
 
