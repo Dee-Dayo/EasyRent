@@ -4,7 +4,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.Uploader;
 import com.semicolon.EaziRent.data.models.*;
 import com.semicolon.EaziRent.data.repositories.AddressRepository;
-import com.semicolon.EaziRent.data.repositories.AgentDetailsRepository;
 import com.semicolon.EaziRent.data.repositories.PropertyRepository;
 import com.semicolon.EaziRent.dtos.requests.AddPropertyRequest;
 import com.semicolon.EaziRent.dtos.requests.GetLandlordPropertyRequest;
@@ -19,7 +18,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
